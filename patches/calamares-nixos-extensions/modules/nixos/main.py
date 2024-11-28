@@ -33,6 +33,7 @@ cfghead = """
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./glf
+      @@has_nvidia@@./glf/nvidia.nix
     ];
 
 """
@@ -158,6 +159,12 @@ cfgmisc = """  # Enable CUPS to print documents.
 
 """
 
+cfgprime = """  # Configure nvidia prime
+  hardware.nvidia.prime = {
+@@prime_busids@@
+  };
+"""
+
 cfgusers = """  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.@@username@@ = {
     isNormalUser = true;
@@ -277,6 +284,53 @@ def catenate(d, key, *values):
     d[key] = "".join(values)
 
 
+## helpers to detect nvidia boards and pci bus ids of GPUs
+def get_vga_devices():
+    result = subprocess.run(['lspci'], stdout=subprocess.PIPE, text=True)
+    lines = result.stdout.strip().splitlines()
+    vga_devices = []
+    for line in lines:
+        if ' VGA compatible controller: ' in line:
+            address, description = line.split(' VGA compatible controller: ', 1)
+            pci_address = convert_to_pci_format(address)
+            vga_devices.append((pci_address, description))
+    return vga_devices
+
+
+def convert_to_pci_format(address):
+    devid = re.split(r"[:\.]", address)
+    if len(devid) < 3:
+        return ""
+    bus = devid[-3]
+    device = devid[-2]
+    function = devid[-1]
+    return f"PCI:{int(bus, 16)}:{int(device, 16)}:{int(function)}"
+
+
+def has_nvidia_device(vga_devices):
+    for pci_address, description in vga_devices:
+        if "nvidia" in description.lower():
+            return True
+    return False
+
+
+def generate_prime_entries(vga_devices):
+    output_lines = ""
+    for pci_address, description in vga_devices:
+        if "intel" in description.lower():
+            var_name = "intelBusId"
+        elif "nvidia" in description.lower():
+            var_name = "nvidiaBusId"
+        elif "amd" in description.lower():
+            var_name = "amdgpuBusId"
+        else:
+            continue 
+        output_lines += f"    # {description}\n"
+        output_lines += f"    {var_name} = \"{pci_address}\";\n"
+    return output_lines
+
+
+## Execution start here
 def run():
     """NixOS Configuration."""
 
@@ -288,6 +342,14 @@ def run():
     cfg = cfghead
     gs = libcalamares.globalstorage
     variables = dict()
+
+
+    # Check if nvidia import is needed otherwise comment the import
+    vga_devices = get_vga_devices()
+    has_nvidia = has_nvidia_device(vga_devices)
+    if has_nvidia == False:
+        catenate(variables, "has_nvidia", "# " )
+
 
     # Setup variables
     root_mount_point = gs.value("rootMountPoint")
@@ -548,6 +610,19 @@ def run():
         and gs.value("packagechooser_packagechooser") != ""
     ):
         cfg += cfgmisc
+
+
+    # Configure nvidia prime if needed
+    # if we have more than one GPU and one of them is nvidia then assume it is laptop (NOTE: valid criteria?)
+    # Inverted logic for debugging (comment out the bloc when useless)
+    # if has_nvidia and len(vga_devices) > 1:
+    if has_nvidia == False or len(vga_devices) < 2:
+        cfg += "/*\n"
+    cfg += cfgprime
+    catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )
+    if has_nvidia == False or len(vga_devices) < 2:
+        cfg += "*/\n"
+
 
     if gs.value("username") is not None:
         fullname = gs.value("fullname")

@@ -6,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ./glf
+    ./glf/nvidia.nix
   ];
 
   users.users.test = {

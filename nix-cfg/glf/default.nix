@@ -10,6 +10,5 @@
     ./paquets.nix
 
     ./system.nix
-    ./nvidia.nix
   ];
 }
