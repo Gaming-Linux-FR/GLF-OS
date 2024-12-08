@@ -17,19 +17,22 @@ update:
 clean:
 	@if [ -L "result" ]; then rm result; fi
 	nix-collect-garbage
+	@if [ -d "iso" ]; then rm -r iso; fi
 
 # Copy image and compute sha256sum
 SRC_DIR = result/iso
 DEST_DIR = iso
+GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 install:
-	@IMG_FILE=$$(ls -t $(SRC_DIR) | tail -1); \
-	if [ -n "$$IMG_FILE" ]; then \
-		echo "Copying $$IMG_FILE ..."; \
+	@SRC_IMG=$$(ls -t $(SRC_DIR) | tail -1); \
+	DST_IMG="$${SRC_IMG/-x86_64-linux.iso/_$(GIT_BRANCH).iso}"; \
+	if [ -n "$$SRC_IMG" ]; then \
+		echo "Copying $(SRC_DIR)/$$SRC_IMG to $(DEST_DIR)/$$DST_IMG ..."; \
 		install -d $(DEST_DIR); \
-		install "$(SRC_DIR)/$$IMG_FILE" $(DEST_DIR)/ && \
+		install -m 644 "$(SRC_DIR)/$$SRC_IMG" $(DEST_DIR)/$$DST_IMG && \
 		cd $(DEST_DIR) && \
-		sha256sum "$$IMG_FILE" > "$$IMG_FILE.sha256sum"; \
-		cat "$$IMG_FILE.sha256sum"; \
+		sha256sum "$$DST_IMG" > "$$DST_IMG.sha256sum"; \
+		cat "$$DST_IMG.sha256sum"; \
 	fi
 
 .PHONY: all test clean iso update install
