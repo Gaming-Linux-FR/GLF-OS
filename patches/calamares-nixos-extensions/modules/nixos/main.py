@@ -640,7 +640,7 @@ def run():
             dest_file = os.path.join(root_mount_point, "etc/nixos/")
             subprocess.run(["sudo", "cp", "-r", src_file, dest_file], check=True)
             hw_modified = True
-                
+
         temp_filepath = ""
         if hw_modified:
             # Restore generated hardware-configuration

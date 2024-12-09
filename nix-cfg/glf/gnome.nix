@@ -82,6 +82,13 @@
             icon-theme = "Tela-circle";
           };
 
+          "org/gnome/desktop/background" = {
+            color-shading-type = "solid";
+            picture-options = "zoom";
+            picture-uri = "file:///etc/nixos/glf/white.jpg";
+            picture-uri-dark = "file:///etc/nixos/glf/dark.jpg";
+          };
+
           "org/gnome/desktop/peripherals/touchpad" = {
             click-method = "areas";
             tap-to-click = true;
@@ -108,7 +115,7 @@
               "discord.desktop"
               "thunderbird.desktop"
               "org.gnome.Nautilus.desktop"
-              "org.gnome.Software.desktop"
+              "org.dupot.easyflatpak.desktop"
               "org.gnome.Calendar.desktop"
             ];
           };

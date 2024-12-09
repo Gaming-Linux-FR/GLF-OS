@@ -8,6 +8,14 @@
     ./glf
   ];
 
+  console.keyMap = "fr";
+  services.xserver = {
+    enable = true;
+    xkb.layout = "fr";
+    xkb.variant = "";
+    excludePackages = [ pkgs.xterm ];
+  };
+
   users.users.test = {
     isNormalUser = true;
     description = "test";

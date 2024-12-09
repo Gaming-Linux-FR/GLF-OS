@@ -14,7 +14,6 @@
 
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
-            "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
             ./nix-cfg/configuration.nix
             {
               nixpkgs.overlays = [
