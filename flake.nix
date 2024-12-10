@@ -38,7 +38,7 @@
             }
             ({ config, ... }: {
               isoImage = {
-                # volumeID = nixpkgs.lib.mkDefault "GLF-OS_${config.system.nixos.version}";
+                volumeID = nixpkgs.lib.mkDefault "GLF-OS_${config.system.nixos.version}";
 
                 includeSystemBuildDependencies = false;
                 storeContents = [ config.system.build.toplevel ];
