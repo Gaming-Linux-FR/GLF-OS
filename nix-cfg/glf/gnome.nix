@@ -47,7 +47,6 @@
     atomix
     yelp
     geary
-    xterm
 
     epiphany
     packagekit
