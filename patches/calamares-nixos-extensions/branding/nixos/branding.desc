@@ -47,11 +47,11 @@ strings:
     versionedName:       GLF-OS
     shortVersionedName:  GLF-OS
     bootloaderEntryName: GLF-OS
-    productUrl:          https://nixos.org/
-    supportUrl:          https://nixos.org/manual/nixos
-    knownIssuesUrl:      https://github.com/NixOS/nixpkgs/issues
-    releaseNotesUrl:     https://nixos.org/manual/nixos/stable/release-notes.html
-    donateUrl:           https://nixos.org/donate.html
+    productUrl:          https://github.com/GLF-OS/Nixos-by-GLF
+    supportUrl:          https://github.com/GLF-OS/Nixos-by-GLF
+    knownIssuesUrl:      https://github.com/GLF-OS/Nixos-by-GLF/issues
+    releaseNotesUrl:     https://github.com/GLF-OS/Nixos-by-GLF/releases
+    donateUrl:           https://github.com/GLF-OS/Nixos-by-GLF
 
 images:
     # productBanner:       "banner.png"
