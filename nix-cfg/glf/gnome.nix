@@ -29,7 +29,7 @@
 
     # gnome
     gnome-tweaks
-    
+
 
     # Extension
     gnomeExtensions.caffeine
@@ -86,8 +86,8 @@
           "org/gnome/desktop/background" = {
             color-shading-type = "solid";
             picture-options = "zoom";
-            picture-uri = "file:///etc/nixos/glf/white.jpg";
-            picture-uri-dark = "file:///etc/nixos/glf/dark.jpg";
+            picture-uri = "file:///etc/nixos/glf/rice/white.jpg";
+            picture-uri-dark = "file:///etc/nixos/glf/rice/dark.jpg";
           };
 
           "org/gnome/desktop/peripherals/touchpad" = {
@@ -108,6 +108,7 @@
               "appindicatorsupport@rgcjonas.gmail.com"
               "dash-to-dock@micxgx.gmail.com"
             ];
+
             favorite-apps = [
               "firefox.desktop"
               "steam.desktop"
