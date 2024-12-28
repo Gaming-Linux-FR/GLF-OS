@@ -218,12 +218,13 @@ def get_vga_devices():
     keywords = [' VGA compatible controller: ', ' 3D controller: ']
     for line in lines:
         for k in keywords:
-            if k in line:
-                address, description = line.split(k, 1)
-                pci_address = convert_to_pci_format(address)
-                if pci_address != "":
-                    vga_devices.append((pci_address, description))
-                break
+            if k not in line:
+                continue
+            address, description = line.split(k, 1)
+            pci_address = convert_to_pci_format(address)
+            if pci_address != "":
+                vga_devices.append((pci_address, description))
+            break
     return vga_devices
 
 
@@ -248,12 +249,13 @@ def has_nvidia_laptop(vga_devices):
         dev_desc = description.lower()
         keywords = ['laptop', 'mobile']
         pattern = r'\b\d{3}M\b'  # three digits followed by 'M'
-        if "nvidia" in dev_desc:
-            for k in keywords: 
-                if k in dev_desc:
-                    return True
-            if re.search(pattern, description):
+        if "nvidia" not in dev_desc:
+            continue
+        for k in keywords:
+            if k in dev_desc:
                 return True
+        if re.search(pattern, description):
+            return True
     return False
 
 def generate_prime_entries(vga_devices):
