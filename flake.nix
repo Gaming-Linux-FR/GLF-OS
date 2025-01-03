@@ -34,7 +34,7 @@
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}   $out/share/calamares/branding/nixos/branding.desc
                 
                       mkdir $out/share/calamares/branding/nixos/lang
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/lang/calamares-nixos_fr.ts}   $out/share/calamares/branding/nixos/lang/calamares-nixos_fr.ts
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/lang/calamares-nixos_fr.qm}   $out/share/calamares/branding/nixos/lang/calamares-nixos_fr.qm
                     '';
                   });
                 })
