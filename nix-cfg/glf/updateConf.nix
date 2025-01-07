@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   updateScript = ''
@@ -33,6 +33,9 @@ in
   # Ajouter le script à /usr/local/bin
   systemd.services.update-glf-config = {
     description = "Update GLF module from git";
+    environment = lib.mkForce {
+      PATH = "${pkgs.coreutils}/bin:${pkgs.git}/bin:${pkgs.rsync}/bin";
+    };
     serviceConfig = {
       ExecStart = "${pkgs.bash}/bin/bash /etc/update-glf-config.sh";
     };
