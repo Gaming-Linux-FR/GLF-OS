@@ -3,10 +3,12 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 { config, pkgs, lib, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-    ./glf
-  ];
+  imports = [./hardware-configuration.nix]
+  ++ map (f: ./glf + "/${f}")
+    (builtins.filter
+      (path: builtins.match ".*\\.nix" path != null)
+      (builtins.attrNames (builtins.readDir ./glf))
+    );
 
   i18n.defaultLocale = "fr_FR.UTF-8";
 
