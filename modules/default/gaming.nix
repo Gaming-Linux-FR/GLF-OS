@@ -16,12 +16,16 @@
       mangohud
       wineWowPackages.staging
       winetricks
+
+      # Steering wheels
+      oversteer
+      linuxKernel.packages.linux_zen.new-lg4ff	# This one need to be manually updated for "stable" and "latest" kernels, because of kernel version on package name. No problem for currently used "zen" kernel
     ];
 
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       MANGOHUD_CONFIG = "control=mangohud,legacy_layout=0,horizontal,battery,time,time_format=%H\\:%M,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,frametime=1,frame_timing=1,hud_no_margin,table_columns=14";
-    }; 
+    };
 
     services.udev.extraRules = ''
       # USB
@@ -33,7 +37,7 @@
     '';
 
     hardware.steam-hardware.enable = true;
-    
+
     programs.steam = {
       enable = true;
       package = pkgs.steam.override { extraEnv = { MANGOHUD = true; OBS_VKCAPTURE = true; }; };
@@ -41,7 +45,7 @@
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
-    
+
   };
 
 }
