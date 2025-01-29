@@ -36,6 +36,8 @@
       ];
     };
 
+    programs.fish.enable = true;
+
     zramSwap = {
       enable = false;
       algorithm = "zstd";
