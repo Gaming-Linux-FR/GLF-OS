@@ -21,6 +21,7 @@
       mangohud
       wineWowPackages.staging
       winetricks
+      oversteer
     ];
 
     environment.sessionVariables = {
@@ -38,6 +39,9 @@
     '';
 
     hardware.steam-hardware.enable = true;
+    hardware.new-lg4ff.enable = true;
+
+    boot.kernelPackages = pkgs.linuxPackages;	# Needed for new-lg4ff
 
     programs.steam = {
       enable = true;
