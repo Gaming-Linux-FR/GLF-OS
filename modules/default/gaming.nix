@@ -19,7 +19,6 @@
 
       # Steering wheels
       oversteer
-      linuxKernel.packages.linux_zen.new-lg4ff	# This one need to be manually updated for "stable" and "latest" kernels, because of kernel version on package name. No problem for currently used "zen" kernel
     ];
 
     environment.sessionVariables = {
@@ -37,6 +36,7 @@
     '';
 
     hardware.steam-hardware.enable = true;
+    hardware.new-lg4ff.enable = true;  # Compatible only with the base NixOS kernel
 
     programs.steam = {
       enable = true;
