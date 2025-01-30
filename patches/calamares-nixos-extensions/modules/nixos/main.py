@@ -32,7 +32,7 @@ cfghead = """  { inputs, config, pkgs, lib, ... }:
   imports =
     [ # Include the results of the hardware scan + GLF modules
       ./hardware-configuration.nix
-      ./customConfig 
+      ./customConfig
 
     ];
 
@@ -111,14 +111,14 @@ cfglocaleextra = """  i18n.extraLocaleSettings = {
 
 cfggnome = """  # Enable the X11 windowing system.
   services.xserver.enable = true;
- 
+
   services.xserver.excludePackages = [ pkgs.xterm ];
-  
+
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
+
 """
 
 cfgkeymap = """  # Configure keymap in X11
@@ -159,9 +159,46 @@ cfgautologintty = """  # Enable automatic login for the user.
 
 """
 
-cfgtail = """  
-  system.stateVersion = "@@nixosversion@@"; # DO NOT TOUCH 
+cfgtail = """
+  system.stateVersion = "@@nixosversion@@"; # DO NOT TOUCH
 }
+"""
+
+cfgbtrfs = """  # BTRFS Configuration
+  fileSystems = {
+    "/" = {
+      device = "@@rootdev@@";
+      fsType = "btrfs";
+      options = [ "subvol=@" "compress=zstd" "noatime" ];
+    };
+    "/home" = {
+      device = "@@rootdev@@";
+      fsType = "btrfs";
+      options = [ "subvol=@home" "compress=zstd" "noatime" ];
+    };
+    "/nix" = {
+      device = "@@rootdev@@";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" "compress=zstd" "noatime" ];
+    };
+    "/var" = {
+      device = "@@rootdev@@";
+      fsType = "btrfs";
+      options = [ "subvol=@var" "compress=zstd" "noatime" ];
+    };
+    "/.snapshots" = {
+      device = "@@rootdev@@";
+      fsType = "btrfs";
+      options = [ "subvol=@snapshots" "compress=zstd" "noatime" ];
+    };
+  };
+
+  # Enable BTRFS services
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
 """
 
 # =================================================
@@ -187,6 +224,52 @@ def generateProxyStrings():
         proxyEnv.insert(0, "env")
 
     return proxyEnv
+
+def create_btrfs_subvolumes(root_device, root_mount_point):
+    try:
+        subprocess.run(["mount", root_device, root_mount_point], check=True)
+
+        subvolumes = ["@", "@home", "@nix", "@var", "@snapshots"]
+        for subvol in subvolumes:
+            subprocess.run(
+                ["btrfs", "subvolume", "create", f"{root_mount_point}/{subvol}"],
+                check=True
+            )
+
+        subprocess.run(
+            ["btrfs", "subvolume", "set-default", f"{root_mount_point}/@"],
+            check=True
+        )
+
+        subprocess.run(["umount", root_mount_point], check=True)
+        subprocess.run(["mount", "-o", "subvol=@", root_device, root_mount_point], check=True)
+        os.makedirs(f"{root_mount_point}/home", exist_ok=True)
+        os.makedirs(f"{root_mount_point}/nix", exist_ok=True)
+        os.makedirs(f"{root_mount_point}/var", exist_ok=True)
+        os.makedirs(f"{root_mount_point}/.snapshots", exist_ok=True)
+
+        subprocess.run(["mount", "-o", "subvol=@home", root_device, f"{root_mount_point}/home"], check=True)
+        subprocess.run(["mount", "-o", "subvol=@nix", root_device, f"{root_mount_point}/nix"], check=True)
+        subprocess.run(["mount", "-o", "subvol=@var", root_device, f"{root_mount_point}/var"], check=True)
+        subprocess.run(["mount", "-o", "subvol=@snapshots", root_device, f"{root_mount_point}/.snapshots"], check=True)
+
+        return True
+    except subprocess.CalledProcessError as e:
+        libcalamares.utils.error(f"Failed to create BTRFS subvolumes: {str(e)}")
+        return False
+
+def is_btrfs_root(partitions):
+    for part in partitions:
+        if part["mountPoint"] == "/" and part["fs"] == "btrfs":
+            return True
+    return False
+
+def get_root_device(partitions):
+    for part in partitions:
+        if part["mountPoint"] == "/":
+            return part["device"]
+    return None
+
 
 def pretty_name():
     return _("Installing GLF-OS.")
@@ -251,7 +334,7 @@ def has_nvidia_laptop(vga_devices):
         keywords = ['laptop', 'mobile']
         pattern = r'\b\d{3}M\b'  # three digits followed by 'M'
         if "nvidia" in dev_desc:
-            for k in keywords: 
+            for k in keywords:
                 if k in dev_desc:
                     return True
             if re.search(pattern, description):
@@ -268,10 +351,11 @@ def generate_prime_entries(vga_devices):
         elif "amd" in description.lower():
             var_name = "amdgpuBusId"
         else:
-            continue 
+            continue
         output_lines += f"    # {description}\n"
         output_lines += f"    {var_name} = \"{pci_address}\";\n"
     return output_lines
+
 
 ## Execution start here
 def run():
@@ -285,6 +369,18 @@ def run():
     cfg = cfghead
     gs = libcalamares.globalstorage
     variables = dict()
+
+    partitions = gs.value("partitions")
+    if is_btrfs_root(partitions):
+        root_device = get_root_device(partitions)
+        if root_device:
+            cfg += cfgbtrfs
+            catenate(variables, "rootdev", root_device)
+
+            root_mount_point = gs.value("rootMountPoint")
+            if not create_btrfs_subvolumes(root_device, root_mount_point):
+                return (_("BTRFS Configuration Failed"),
+                       _("Failed to create BTRFS subvolumes. Check the logs for details."))
 
     # Nvidia support
     vga_devices = get_vga_devices()
@@ -440,7 +536,7 @@ def run():
 
     status = _("Configuring NixOS")
     libcalamares.job.setprogress(0.18)
-   
+
     # Network
     cfg += cfgnetwork
     cfg += cfgnetworkmanager
@@ -605,7 +701,7 @@ def run():
         if e.output is not None:
             libcalamares.utils.error(e.output.decode("utf8"))
         return (_("nixos-generate-config failed"), _(e.output.decode("utf8")))
- 
+
     # Write the configuration.nix file
     libcalamares.utils.host_env_process_output(["cp", "/dev/stdin", config], None, cfg)
 
@@ -616,7 +712,7 @@ def run():
     dynamic_config = "/tmp/iso-cfg/configuration.nix" # Generated by calamares
     iso_config = "/iso/iso-cfg/configuration.nix"     # From GLF (used for condition)
     glf_flake = "/iso/iso-cfg/flake.nix"              # GLF Flake
-    glf_flake_lock = "/iso/iso-cfg/flake.lock"        # GLF Flake lock 
+    glf_flake_lock = "/iso/iso-cfg/flake.lock"        # GLF Flake lock
     glf_custom_config = "/iso/iso-cfg/customConfig"   # GLF Custom Config
 
     hw_cfg_dest = os.path.join(root_mount_point, "etc/nixos/hardware-configuration.nix")
