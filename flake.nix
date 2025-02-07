@@ -76,6 +76,7 @@
                 };
               }
             )
+            (if builtins.pathExists ./local then ./local else null)
           ];
         };
 
@@ -100,6 +101,8 @@
       };
 
       inherit nixosModules;
+
+      packages.x86_64-linux.default = import ./packages { inherit nixpkgs; };
     }
     // utils.lib.eachDefaultSystem (
       system:
@@ -125,4 +128,5 @@
         };
       }
     );
+
 }
