@@ -16,11 +16,10 @@ pkgs.stdenv.mkDerivation rec {
 
   propagatedBuildInputs = [
     pkgs.fastfetch
-    pkgs.nerd-fonts.fantasque-sans-mono
   ];
 
   buildPhase = ''
-    sed -i s#\\~/\\.config/fastfetch/GLFfetch#$out#g challenge.jsonc
+    sed -i s#\\~/\\.config/fastfetch/GLFfetch#$out#g challenge.jsonc scripts/*.sh
   '';
 
   installPhase = ''
