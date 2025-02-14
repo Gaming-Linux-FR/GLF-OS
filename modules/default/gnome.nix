@@ -51,7 +51,7 @@
         # theme
         adw-gtk3
         graphite-gtk-theme
-        #tela-circle-icon-theme
+        tela-circle-icon-theme
 
         # gnome
         gnome-tweaks
