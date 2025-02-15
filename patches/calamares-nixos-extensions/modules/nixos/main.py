@@ -124,6 +124,14 @@ cfggnome = """  # Enable the X11 windowing system.
   
 """
 
+cfgkde = """ # Enable the X11 windowing system
+    services.xserver.enable = true;
+
+  # Enable the KDE Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;  
+"""
+
 cfgkeymap = """  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "@@kblayout@@";
@@ -481,6 +489,8 @@ def run():
     # Choose desktop environment
     if gs.value("packagechooser_packagechooser") == "gnome":
         cfg += cfggnome
+    if gs.value("packagechooser_packagechooser") == "kde-plasma":
+        cfg += cfgkde   
 
     # Keyboard layout settings
     if (
