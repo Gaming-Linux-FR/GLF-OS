@@ -40,8 +40,9 @@
       pciutils
       usbutils
       git
-      btop
+      btop-rocm
       htop
+      ollama-rocm
       transmission_4-gtk
 
       # Compression
@@ -66,9 +67,7 @@
       zip
       zstd
 
-      # Fetch en attendant GLF-FETCH
-      fastfetch
-
+      
       # Bureautique
       libreoffice-fresh
       hunspell
