@@ -67,6 +67,12 @@
       zip
       zstd
 
+      # Language
+      poppler_data
+      hunspell
+      hunspellDicts.fr-any
+      hyphen
+      texlivePackages.hyphen-french
       
       # Bureautique
       libreoffice-fresh
