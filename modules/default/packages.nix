@@ -42,7 +42,7 @@
       git
       btop-rocm
       htop
-      ollama-rocm
+      
       transmission_4-gtk
 
       # Compression
