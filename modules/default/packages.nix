@@ -66,8 +66,8 @@
       zip
       zstd
 
-      # Fetch en attendant GLF-FETCH
-      fastfetch
+      # GLF fetch
+      (import ./../../packages/GLFfetch { inherit pkgs; })
 
       # Bureautique
       libreoffice-fresh
