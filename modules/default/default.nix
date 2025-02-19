@@ -7,7 +7,7 @@
     ./firefox.nix
     ./fstrim.nix
     ./gaming.nix
-    #./gnome.nix
+    ./gnome.nix
     ./nh.nix
     ./nvidia.nix
     ./packages.nix
