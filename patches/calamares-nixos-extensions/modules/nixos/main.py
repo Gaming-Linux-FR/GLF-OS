@@ -38,8 +38,17 @@ cfghead = """{ inputs, config, pkgs, lib, ... }:
 
 """
 
-cfg_nvidia = """  glf.nvidia_config = {
+cfg_nvidia_opensource = """  glf.nvidia_config = {
     enable = true;
+    version = "opensource";
+    laptop = @@has_laptop@@;
+@@prime_busids@@  };
+
+"""
+
+cfg_nvidia_proprietary = """  glf.nvidia_config = {
+    enable = true;
+    version = "proprietary";
     laptop = @@has_laptop@@;
 @@prime_busids@@  };
 
@@ -224,6 +233,16 @@ def convert_to_pci_format(address):
     return f"PCI:{int(bus, 16)}:{int(device, 16)}:{int(function)}"
 
 
+## Get the current nvidia specialisation
+def get_nvidia_specialisation():
+    result = subprocess.run(['cat /run/booted-system/nixos-version'], stdout=subprocess.PIPE, text=True)
+    if result is None:
+        specialisation = ""
+    else:
+        specialisation = result.stdout.strip().splitlines()[0]
+    return specialisation
+
+
 def has_nvidia_device(vga_devices):
     for pci_address, description in vga_devices:
         if "nvidia" in description.lower():
@@ -283,7 +302,11 @@ def run():
     vga_devices = get_vga_devices()
     has_nvidia = has_nvidia_device(vga_devices)
     if has_nvidia == True:
-        cfg += cfg_nvidia
+        specialisation = get_nvidia_specialisation()
+        if "nvidia_proprietary_driver" in specialisation:
+            cfg += cfg_nvidia_proprietary
+        else:
+            cfg += cfg_nvidia_opensource
         has_laptop = has_nvidia_laptop(vga_devices)
         catenate(variables, "has_laptop", f"{has_laptop}".lower() )
         catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )

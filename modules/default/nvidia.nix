@@ -11,6 +11,11 @@ in
       default = false;
       description = "Enable nvidia support";
     };
+    type = mkOption {
+      type = with types; enum [ "opensource" "proprietary" ];
+      default = "opensource";
+      description = "Select the nvidia driver version to use";
+    };
     laptop = mkOption {
       type = with types; bool;
       default = false;
@@ -32,14 +37,21 @@ in
 
   # nvidia configuration
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
+    boot.blacklistedKernelModules = [ "nouveau" ];
 
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
-      open = true;
+
+      open =
+        if cfg.type == "opensource" then
+          true
+        else
+          false;
+
+      modesetting.enable = true;
 
       nvidiaSettings = true;
-      modesetting.enable = true;
 
       prime = {
         intelBusId = optionalAttrs (cfg.intelBusId != null) cfg.intelBusId;
