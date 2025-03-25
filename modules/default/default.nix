@@ -12,7 +12,7 @@
     ./nvidia.nix
     ./packages.nix
     ./pipewire.nix
-    ./printing.nix
+    #./printing.nix
     ./system.nix
     ./update.nix
     ./version.nix
