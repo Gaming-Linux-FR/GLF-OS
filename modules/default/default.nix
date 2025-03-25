@@ -4,10 +4,10 @@
     ./debug.nix
     ./aliases.nix
     ./boot.nix
+    ./environment.nix
     ./firefox.nix
     ./fstrim.nix
     ./gaming.nix
-    ./gnome.nix
     ./nh.nix
     ./nvidia.nix
     ./packages.nix
