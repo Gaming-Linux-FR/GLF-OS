@@ -38,8 +38,17 @@ cfghead = """{ inputs, config, pkgs, lib, ... }:
 
 """
 
-cfg_nvidia = """  glf.nvidia_config = {
+cfg_nvidia_opensource = """  glf.nvidia_config = {
     enable = true;
+    version = "opensource";
+    laptop = @@has_laptop@@;
+@@prime_busids@@  };
+
+"""
+
+cfg_nvidia_proprietary = """  glf.nvidia_config = {
+    enable = true;
+    version = "proprietary";
     laptop = @@has_laptop@@;
 @@prime_busids@@  };
 
@@ -112,18 +121,6 @@ cfglocaleextra = """  i18n.extraLocaleSettings = {
 
 """
 
-cfggnome = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
- 
-  services.xserver.excludePackages = [ pkgs.xterm ];
-  
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
-"""
-
 cfgkeymap = """  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "@@kblayout@@";
@@ -148,12 +145,6 @@ cfgusers = """  # Define a user account. Don't forget to set a password with ‘
 cfgautologin = """  # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "@@username@@";
-
-"""
-
-cfgautologingdm = """  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
 
 """
 
@@ -242,6 +233,16 @@ def convert_to_pci_format(address):
     return f"PCI:{int(bus, 16)}:{int(device, 16)}:{int(function)}"
 
 
+## Get the current nvidia specialisation
+def get_nvidia_specialisation():
+    result = subprocess.run(['cat /run/booted-system/nixos-version'], stdout=subprocess.PIPE, text=True)
+    if result is None:
+        specialisation = ""
+    else:
+        specialisation = result.stdout.strip().splitlines()[0]
+    return specialisation
+
+
 def has_nvidia_device(vga_devices):
     for pci_address, description in vga_devices:
         if "nvidia" in description.lower():
@@ -289,11 +290,23 @@ def run():
     gs = libcalamares.globalstorage
     variables = dict()
 
+    # Select desktop environment
+    cfg += """  glf.environment = {
+    enable = true;
+    type = """ + '"' + gs.value("packagechooser_packagechooser") + '";' + """
+  };
+
+"""
+
     # Nvidia support
     vga_devices = get_vga_devices()
     has_nvidia = has_nvidia_device(vga_devices)
     if has_nvidia == True:
-        cfg += cfg_nvidia
+        specialisation = get_nvidia_specialisation()
+        if "nvidia_proprietary_driver" in specialisation:
+            cfg += cfg_nvidia_proprietary
+        else:
+            cfg += cfg_nvidia_opensource
         has_laptop = has_nvidia_laptop(vga_devices)
         catenate(variables, "has_laptop", f"{has_laptop}".lower() )
         catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )
@@ -478,10 +491,6 @@ def run():
             for conf in localeconf:
                 catenate(variables, conf, localeconf.get(conf).split("/")[0])
 
-    # Choose desktop environment
-    if gs.value("packagechooser_packagechooser") == "gnome":
-        cfg += cfggnome
-
     # Keyboard layout settings
     if (
         gs.value("keyboardLayout") is not None
@@ -566,8 +575,6 @@ def run():
             and gs.value("packagechooser_packagechooser") != ""
         ):
             cfg += cfgautologin
-            if gs.value("packagechooser_packagechooser") == "gnome":
-                cfg += cfgautologingdm
         elif gs.value("autoLoginUser") is not None:
             cfg += cfgautologintty
 
