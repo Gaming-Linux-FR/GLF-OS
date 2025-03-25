@@ -16,6 +16,15 @@
     let
       allUsers = builtins.attrNames config.users.users;
       normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser) allUsers;
+
+      # contexte: https://github.com/NixOS/nixpkgs/issues/391727
+      hplipPluginMirror = "https://www.openprinting.org/download/printdriver/auxfiles/HP/plugins";
+      hplipWithPluginFix = pkgs.hplipWithPlugin.overrideAttrs (prev: {
+        plugin = pkgs.fetchurl {
+          url = "${hplipPluginMirror}/${prev.pname}-${prev.version}-plugin.run";
+          hash = "sha256-Hzxr3SVmGoouGBU2VdbwbwKMHZwwjWnI7P13Z6LQxao=";
+        };
+      });
     in
     {
       services = {
@@ -32,8 +41,7 @@
             epkowa
             gutenprint
             gutenprintBin
-            hplip
-            hplipWithPlugin
+            hplipWithPluginFix
             samsung-unified-linux-driver
             splix
           ];
