@@ -86,18 +86,16 @@ Nous proposons uniquement des paquets stables et nous vous déconseillons d'util
 
 ## Comment mettre à jour GLF OS ?
 
-Les mises à jour sont automatiques et vous n’avez pas besoin de vous en occuper, GLF OS le fait pour vous !
+Les mises à jour sont automatiques et vous n’avez pas besoin de vous en occuper, GLF OS le fait pour vous ! Il vous faudra juste redémarrer votre système de temps en temps pour que l'ensemble des mises à jour s'appliquent.
 
-## Faut-il redémarrer après une mise à jour ? 
+Il est également possible de vérifier et d'appliquer les mises à jour via les commandes suivantes :
 
-Il y a deux réponses à la question dépendamment de si le noyau linux a été mis à jour ou non. 
-
-Dans le premier cas, le noyau a été mis à jour, il est préférable de redémarrer pour exécuter le nouveau noyau.
-
-Dans le second cas, le noyau n'a pas été mis à jour, vous pouvez continuer à utiliser votre système sans redémarrer. 
+- `glf-update` : Permet de mettre à jour les dépôts
+- `glf-build` : Teste la mise à jour
+- `glf-switch` : Applique la mise à jour
 
 {: .info }
-> Dans les deux cas, vous souhaiterez redémarrer ne serait-ce que pour confirmer que la nouvelle version n'implémente pas de problèmes.
+> Un redémarrage est conseillé pour l'application de l'ensemble des mises à jour et vérifier que tout fonctionne.
 
 
 
