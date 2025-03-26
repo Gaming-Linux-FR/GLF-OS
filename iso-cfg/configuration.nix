@@ -1,14 +1,13 @@
-{ pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
   glf.autoUpgrade = lib.mkForce false;
   glf.nvidia_config.enable = true;
-  system.nixos.tags = lib.mkDefault [ "Alpha.v2" ];
   specialisation = {
     nvidia_proprietary_driver = {
       configuration = {
-        system.nixos.tags = lib.mkForce [ "nvidia_proprietary_driver-Alpha.v2" ];
+        system.nixos.tags = lib.mkForce [ "nvidia_proprietary_driver" ];
         glf.nvidia_config.type = "proprietary";
       };
     };

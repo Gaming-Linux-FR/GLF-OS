@@ -25,7 +25,7 @@
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+      extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
       xdgOpenUsePortal = true;
     };
 
@@ -40,11 +40,11 @@
     programs.kdeconnect.enable = true;
 
     environment = {
-      systemPackages = with pkgs; [
-        writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+      systemPackages = [
+        (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
           [General]
-          background = ${config.environment.etc."wallpapers/glf/white.jpg".source}
-        ''
+          background=/etc/wallpapers/glf/white.jpg
+        '')
       ];
     };
   };

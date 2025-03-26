@@ -40,7 +40,7 @@ cfghead = """{ inputs, config, pkgs, lib, ... }:
 
 cfg_nvidia_opensource = """  glf.nvidia_config = {
     enable = true;
-    version = "opensource";
+    type = "opensource";
     laptop = @@has_laptop@@;
 @@prime_busids@@  };
 
@@ -48,7 +48,7 @@ cfg_nvidia_opensource = """  glf.nvidia_config = {
 
 cfg_nvidia_proprietary = """  glf.nvidia_config = {
     enable = true;
-    version = "proprietary";
+    type = "proprietary";
     laptop = @@has_laptop@@;
 @@prime_busids@@  };
 
@@ -94,6 +94,11 @@ cfgnetwork = """  networking.hostName = "GLF-OS"; # Define your hostname.
 
 cfgnetworkmanager = """  # Enable networking
   networking.networkmanager.enable = true;
+
+"""
+
+cfgbluetooth = """  # Enable bluetooth
+  hardware.bluetooth.enable = true;
 
 """
 
@@ -235,7 +240,7 @@ def convert_to_pci_format(address):
 
 ## Get the current nvidia specialisation
 def get_nvidia_specialisation():
-    result = subprocess.run(['cat /run/booted-system/nixos-version'], stdout=subprocess.PIPE, text=True)
+    result = subprocess.run(['cat', '/run/booted-system/nixos-version'], stdout=subprocess.PIPE, text=True)
     if result is None:
         specialisation = ""
     else:
@@ -461,6 +466,7 @@ def run():
     # Network
     cfg += cfgnetwork
     cfg += cfgnetworkmanager
+    cfg += cfgbluetooth
 
     # Hostname
     if gs.value("hostname") is None:

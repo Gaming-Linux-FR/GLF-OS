@@ -60,8 +60,9 @@
               ];
             }
             (
-              { config, ... }:
+              { config, lib, pkgs, ... }:
               {
+                image.baseName = lib.mkForce "${config.isoImage.volumeID}-${pkgs.stdenv.hostPlatform.system}";
                 isoImage = {
                   volumeID = "GLF-OS-ALPHA-OMNISLASH_2"; #Nom à changer en fonction de la nomination GLF OS
                   includeSystemBuildDependencies = false;

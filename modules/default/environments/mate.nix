@@ -13,6 +13,7 @@
     # Activation de Mate
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     services = {
+      blueman.enable = true;
       displayManager.defaultSession = "mate";
       power-profiles-daemon.enable = true;
       xserver = {
@@ -54,24 +55,31 @@
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Paramètres Mate
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    programs.dconf = {
-      enable = true;
-      profiles.user.databases = [
-        {
-          settings = {
-            "org/mate/desktop/interface" = {
-              gtk-theme = "adw-gtk3";
-              icon-theme = "Tela-circle";
-            };
+    programs = {
+      nm-applet.enable = true;
+      dconf = {
+        enable = true;
+        profiles.user.databases = [
+          {
+            settings = {
+              "org/mate/desktop/interface" = {
+                gtk-theme = "adw-gtk3";
+                icon-theme = "Tela-circle-light";
+              };
 
-            "org/mate/desktop/background" = {
-              color-shading-type = "solid";
-              picture-options = "zoom";
-              picture-filename = "file:///etc/wallpapers/glf/white.jpg";
+              "org/mate/marco/general" = {
+                theme = "Graphite";
+              };
+
+              "org/mate/desktop/background" = {
+                color-shading-type = "solid";
+                picture-options = "zoom";
+                picture-filename = "file:///etc/wallpapers/glf/white.jpg";
+              };
             };
-          };
-        }
-      ];
+          }
+        ];
+      };
     };
   };
 

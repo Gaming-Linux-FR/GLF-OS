@@ -13,6 +13,7 @@
     # Activation de Xfce
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     services = {
+      blueman.enable = true;
       displayManager.defaultSession = "xfce";
       xserver = {
         displayManager.lightdm.enable = true;
