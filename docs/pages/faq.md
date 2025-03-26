@@ -5,16 +5,41 @@ layout: default
 
 # F.A.Q 
 
-## GLF-OS prends-t'il en charge le secureboot ? 
+## Qu’est-ce que GLF OS ?
 
-Non pas actuellement, c'est un objectif que nous souhaitons atteindre à l'avenir. 
+GLF OS est le nom d’un des projets réalisés par la communauté Gaming Linux Fr.
+Ce projet consiste à réaliser un système d’exploitation, autour d’un cahier des charges stricte et 100% réalisé par la communauté pour la communauté.
 
-{: .info }
-> Notez d'ailleurs que secureboot doit être désactivé pour que GLF-OS fonctionne. 
+GLF OS est basé sur [NixOS](https://nixos.org/), avec une orientation gaming et multimédia.
 
-## Comptez-vous proposer une installation entièrement hors-ligne ? 
+Pour en savoir plus, je vous invite à visiter [cette page](https://www.gaminglinux.fr/?page_id=8365).
+
+## Quelle est la configuration requise ?
+
+Celle-ci est indiquée sur la [page suivante](./documentation/minimalConfiguration.html).
+
+## GLF OS peut-il être installé avec le secureboot actif ? 
+
+Actuellement non. C'est un objectif que nous souhaitons atteindre à l'avenir.
+
+## Une installation sans connexion internet est-elle possible ? 
 
 Non, nous utilisons une fonctionnalité de NixOS appelé *Flocon* qui a besoin d'internet pour fonctionner. 
+
+## Je souhaite installer GLF OS sur mon PC, comment dois-je procéder ?
+
+{: .info }
+> Pré-requis : Avoir désactivé le secure boot et avoir une connexion internet active
+
+Une fois les pré-requis validé, il suffit alors de créer une clé USB bootable. Plusieurs logiciels permettent la réalisation d’une clé USB Bootable. Dans les plus connus, on peut citer :
+
+- Ventoy
+- Rufus
+- Balena Etcher
+- Mint Stick (l’outil de Linux Mint)
+- etc…
+
+Cela dit, suite à quelques retours, nous vous conseillons l’utilisation de Balena Etcher pour éviter tout désagrément. Pour cela, vous pouvez consulter le tuto que nous avons réalisé et qui est disponible [ici](https://codeberg.org/Gaming-Linux-FR/usb-bootable).
 
 ## Quelle est la durée moyenne d'installation ?
 
@@ -51,13 +76,17 @@ Vous pouvez cliquer sur la petite loupe en bas à droite de l'installateur pour 
 Actuellement, nous prenons uniquement en charge GNOME. 
 Nous souhaitons d'abord nous concentrer sur l'ajout d'améliorations à GLF-OS, ensuite nous ajouterons probablement KDE. 
 
-## Puis-je passer GLF-OS en "unstable" ? 
+## Puis-je passer GLF OS en "unstable" ? 
 
-Actuellement, GLF-OS suit nixos stable. Un version instable existe et propose des paquets plus récents.
+Actuellement, GLF OS suit nixos stable. Un version instable existe et propose des paquets plus récents.
 Nous proposons uniquement des paquets stables et nous vous déconseillons d'utiliser unstable pour le moment. 
 
 {: .info }
 > A l'avenir, un de nos objectifs et de permettre l'installation de paquets unstable en conservant une base stable. 
+
+## Comment mettre à jour GLF OS ?
+
+Les mises à jour sont automatiques et vous n’avez pas besoin de vous en occuper, GLF OS le fait pour vous !
 
 ## Faut-il redémarrer après une mise à jour ? 
 
