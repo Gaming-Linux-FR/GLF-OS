@@ -16,6 +16,7 @@
     ./system.nix
     ./update.nix
     ./version.nix
+    ./nix-disk-manager.nix
     ./standBy.nix
     ./GLFfetch.nix
   ];
