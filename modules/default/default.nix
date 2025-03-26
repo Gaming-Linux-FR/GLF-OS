@@ -9,7 +9,7 @@
     ./gaming.nix
     ./gnome.nix
     ./nh.nix
-    ./nvidia.nix
+    #./nvidia.nix
     ./packages.nix
     ./pipewire.nix
     #./printing.nix
