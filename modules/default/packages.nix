@@ -15,18 +15,7 @@
 
   config = lib.mkIf config.glf.packages.enable {
 
-    services.flatpak.enable = true;
-    systemd.services.flatpak-repo = {
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      path = [ pkgs.flatpak ];
-      script = ''
-        	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && flatpak install -y flathub org.dupot.easyflatpak
-      '';
-    };
-
-    # Enable AppImage
+        # Enable AppImage
     programs.appimage = {
       enable = true;
       binfmt = true;
@@ -39,10 +28,10 @@
       pciutils
       usbutils
       git
-      btop
-      htop
+      btop-rocm
+      
       transmission_4-gtk
-      vivaldi
+      
       libva-utils
 
       # Compression
