@@ -7,38 +7,39 @@
 
 {
 
-  options.glf.gnome.enable = lib.mkOption {
-    description = "Enable GLF Gnome configurations";
-    type = lib.types.bool;
-    default = true;
-  };
-
-  config = lib.mkIf config.glf.gnome.enable {
+  config = lib.mkIf (config.glf.environment.type == "gnome") {
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # Activation de GNOME
+    # Activation de Gnome
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     services = {
+      displayManager.defaultSession = "gnome";
+      power-profiles-daemon.enable = true;
       udev.packages = [ pkgs.gnome-settings-daemon ];
       xserver = {
         displayManager.gdm.enable = lib.mkDefault true;
         desktopManager.gnome = {
           enable = lib.mkDefault true;
-
           # Activation du Fractional Scaling
           extraGSettingsOverridePackages = [ pkgs.mutter ];
           extraGSettingsOverrides = ''
-              [org.gnome.mutter]
+            [org.gnome.mutter]
             experimental-features=['scale-monitor-framebuffer']
           '';
         };
       };
     };
 
-    documentation.nixos.enable = false;
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+      xdgOpenUsePortal = true;
+    };
 
     systemd.services."getty@tty1".enable = false;
     systemd.services."autovt@tty1".enable = false;
+
+    documentation.nixos.enable = false;
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Packages système
@@ -51,12 +52,12 @@
     environment = {
       systemPackages = with pkgs; [
 
-        # theme
+        # Theme
         adw-gtk3
         graphite-gtk-theme
         tela-circle-icon-theme
 
-        # gnome
+        # Gnome
         gnome-tweaks
 
         # Extension
@@ -64,7 +65,6 @@
         gnomeExtensions.gsconnect
         gnomeExtensions.appindicator
         gnomeExtensions.dash-to-dock
-
       ];
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,15 +90,10 @@
         gnome-packagekit
         gnome-font-viewer
       ];
-
-      etc = {
-        "wallpapers/glf/white.jpg".source = ../../assets/wallpaper/white.jpg;
-        "wallpapers/glf/dark.jpg".source = ../../assets/wallpaper/dark.jpg;
-      };
     };
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # Paramètres GNOME
+    # Paramètres Gnome
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     programs.dconf = {
       enable = true;
@@ -121,8 +116,8 @@
             "org/gnome/desktop/background" = {
               color-shading-type = "solid";
               picture-options = "zoom";
-              picture-uri = "file:///${config.environment.etc."wallpapers/glf/white.jpg".source}";
-              picture-uri-dark = "file:///${config.environment.etc."wallpapers/glf/dark.jpg".source}";
+              picture-uri = "file:///etc/wallpapers/glf/white.jpg";
+              picture-uri-dark = "file:///etc/wallpapers/glf/dark.jpg";
             };
 
             "org/gnome/desktop/peripherals/touchpad" = {
@@ -149,7 +144,6 @@
                 "net.lutris.Lutris.desktop"
                 "com.heroicgameslauncher.hgl.desktop"
                 "discord.desktop"
-                "thunderbird.desktop"
                 "org.gnome.Nautilus.desktop"
                 "org.dupot.easyflatpak.desktop"
                 "org.gnome.Calendar.desktop"
