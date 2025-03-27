@@ -49,7 +49,7 @@
   };
 };
 hardware.xone.enable = true; # support for the xbox controller USB dongle
-services.getty.autologinUser = "your_user";
+services.getty.autologinUser = "cammi";
 environment = {
   loginShellInit = ''
     [[ "$(tty)" = "/dev/tty1" ]] && ./gs.sh
