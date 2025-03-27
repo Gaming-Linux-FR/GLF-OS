@@ -38,23 +38,20 @@
     '';
 
     hardware.steam-hardware.enable = true;
-    programs = {
-  gamescope = {
-    enable = true;
-    capSysNice = true;
-  };
-  steam = {
-    enable = true;
-    gamescopeSession.enable = true;
-  };
-};
-hardware.xone.enable = true; # support for the xbox controller USB dongle
-services.getty.autologinUser = "cammi";
-environment = {
-  loginShellInit = ''
-    [[ "$(tty)" = "/dev/tty1" ]] && ./gs.sh
-  '';
-};
+    programs.steam.gamescopeSession.enable = true;
+
+    programs.steam = {
+      enable = true;
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = true;
+          OBS_VKCAPTURE = true;
+        };
+      };
+      remotePlay.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+    };
 
   };
 
