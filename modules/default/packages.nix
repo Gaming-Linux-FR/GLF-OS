@@ -39,7 +39,7 @@
       pciutils
       usbutils
       git
-      btop
+      btop-rocm
       htop
       transmission_4-gtk
       vivaldi
