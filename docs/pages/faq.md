@@ -97,6 +97,11 @@ Il est également possible de vérifier et d'appliquer les mises à jour via les
 {: .info }
 > Un redémarrage est conseillé pour l'application de l'ensemble des mises à jour et vérifier que tout fonctionne.
 
+## Comment retirer les informations affichées en haut de l'écran lorsqu'on lance un jeu ?
+
+Il suffit d'utiliser le raccourci clavier `MAJ droite + F12`.
+Ces informations proviennent de Mangohud et un outil devrait arriver avec la version Beta pour pouvoir gérer cela.
+
 ## J’ai un problème avec GLF OS, que faire ?
 
 Le mieux est de nous en faire part pour que l’on puisse vous aider à le résoudre ou à identifier un bug à faire corriger. Pour cela, vous pouvez nous en faire part sur Discord ou sur le Github dont les liens sont disponibles [ici](https://www.gaminglinux.fr/?page_id=8365#brxe-dd7c57).
