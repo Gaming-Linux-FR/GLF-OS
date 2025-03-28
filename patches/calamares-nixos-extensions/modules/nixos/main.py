@@ -88,6 +88,11 @@ cfgnetworkmanager = """  # Enable networking
 
 """
 
+cfgbluetooth = """  # Enable bluetooth
+  hardware.bluetooth.enable = true;
+
+"""
+
 cfgtime = """  # Set your time zone.
   time.timeZone = "@@timezone@@";
 
@@ -110,18 +115,6 @@ cfglocaleextra = """  i18n.extraLocaleSettings = {
     LC_TIME = "@@LC_TIME@@";
   };
 
-"""
-
-cfggnome = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
- 
-  services.xserver.excludePackages = [ pkgs.xterm ];
-  
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
 """
 
 cfgkeymap = """  # Configure keymap in X11
@@ -148,12 +141,6 @@ cfgusers = """  # Define a user account. Don't forget to set a password with ‘
 cfgautologin = """  # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "@@username@@";
-
-"""
-
-cfgautologingdm = """  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
 
 """
 
@@ -288,6 +275,11 @@ def run():
     cfg = cfghead
     gs = libcalamares.globalstorage
     variables = dict()
+
+    # Select desktop environment
+    cfg += """  glf.environment.type = """ + '"' + gs.value("packagechooser_packagechooser") + '";' + """
+
+"""
 
     # Nvidia support
     vga_devices = get_vga_devices()
@@ -448,6 +440,7 @@ def run():
     # Network
     cfg += cfgnetwork
     cfg += cfgnetworkmanager
+    cfg += cfgbluetooth
 
     # Hostname
     if gs.value("hostname") is None:
@@ -477,10 +470,6 @@ def run():
             cfg += cfglocaleextra
             for conf in localeconf:
                 catenate(variables, conf, localeconf.get(conf).split("/")[0])
-
-    # Choose desktop environment
-    if gs.value("packagechooser_packagechooser") == "gnome":
-        cfg += cfggnome
 
     # Keyboard layout settings
     if (
@@ -566,8 +555,6 @@ def run():
             and gs.value("packagechooser_packagechooser") != ""
         ):
             cfg += cfgautologin
-            if gs.value("packagechooser_packagechooser") == "gnome":
-                cfg += cfgautologingdm
         elif gs.value("autoLoginUser") is not None:
             cfg += cfgautologintty
 

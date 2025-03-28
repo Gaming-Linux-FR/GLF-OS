@@ -65,7 +65,7 @@ stdenvNoCC.mkDerivation rec {
   
   meta = {
     description = "A customized neofetch config file built for the GLF Linux challenges (github.com/minegameYTB/GLFfetch-nixos is it's fork)";
-    homepage = "https://github.com/Gaming-Linux-FR/GLFfetch";
+    homepage = "https://codeberg.org/Gaming-Linux-FR/GLFfetch";
     license = lib.licenses.mit;
     mainProgram = "GLFfetch";
   };

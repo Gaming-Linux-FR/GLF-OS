@@ -38,6 +38,7 @@
     '';
 
     hardware.steam-hardware.enable = true;
+    programs.steam.gamescopeSession.enable = true;
 
     programs.steam = {
       enable = true;
