@@ -4,15 +4,15 @@
     ./debug.nix
     ./aliases.nix
     ./boot.nix
-    ./firefox.nix
+    #./firefox.nix
     ./fstrim.nix
-    ./gaming.nix
+    #./gaming.nix
     ./gnome.nix
     ./nh.nix
-    ./nvidia.nix
+    #./nvidia.nix
     ./packages.nix
     ./pipewire.nix
-    ./printing.nix
+    #./printing.nix
     ./system.nix
     ./update.nix
     ./version.nix
