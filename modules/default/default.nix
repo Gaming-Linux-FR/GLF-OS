@@ -6,7 +6,7 @@
     ./boot.nix
     #./firefox.nix
     ./fstrim.nix
-    #./gaming.nix
+    ./gaming.nix
     ./gnome.nix
     ./nh.nix
     ./nvidia.nix
