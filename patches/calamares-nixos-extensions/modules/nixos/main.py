@@ -47,11 +47,11 @@ cfg_nvidia = """  glf.nvidia_config = {
 
 cfgbootefi = """  # Bootloader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "@@bootdev@@";
+  boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.efiInstallAsRemovable = true;
 """
 
 cfgbootbios = """  # Bootloader.
