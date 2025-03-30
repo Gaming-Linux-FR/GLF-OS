@@ -13,14 +13,14 @@
     # Activation de Plasma
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     services = {
-      displayManager.defaultSession = "plasma";
-      xserver = {
-        displayManager.sddm = {
+      displayManager = {
+        defaultSession = "plasma";
+        sddm = {
           enable = true;
           theme = "breeze";
         };
-        desktopManager.plasma6.enable = true;
       };
+      desktopManager.plasma6.enable = true;
     };
 
     xdg.portal = {
