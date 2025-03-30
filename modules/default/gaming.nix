@@ -21,7 +21,9 @@
       mangohud
       wineWowPackages.staging
       winetricks
-    ];
+      linuxKernel.packages.linux_zen.xone
+      linuxKernel.packages.linux_zen.xpadneo
+    ]
 
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
