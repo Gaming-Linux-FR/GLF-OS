@@ -6,6 +6,7 @@
 }:
 
 {
+
   options.glf.gaming.enable = lib.mkOption {
     description = "Enable GLF Gaming configurations";
     type = lib.types.bool;
@@ -13,6 +14,7 @@
   };
 
   config = lib.mkIf config.glf.gaming.enable {
+
     environment.systemPackages = with pkgs; [
       heroic
       lutris
@@ -22,8 +24,8 @@
     ];
 
     environment.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d"; # Ajout du point-virgule
-      MANGOHUD_CONFIG = "text=GLF OS,text_color=ffffff,gpu_temp,kernel,driver,control=mangohud,legacy_layout=0,horizontal,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,frametime=1,frame_timing=1,hud_no_margin,table_columns=14,font_size=12,position=top-right";
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      MANGOHUD_CONFIG = "control=mangohud,legacy_layout=0,horizontal,battery,time,time_format=%H\\:%M,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,frametime=1,frame_timing=1,hud_no_margin,table_columns=14";
     };
 
     services.udev.extraRules = ''
@@ -51,5 +53,7 @@
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
+
   };
+
 }
