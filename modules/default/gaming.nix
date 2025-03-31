@@ -25,7 +25,7 @@
 
     environment.sessionVariables = {
   STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-  MANGOHUD_CONFIG = "control=mangohud,legacy_layout=0,horizontal,background_alpha=0,custom_text_center=GLF_OS,gpu_stats,gpu_power,cpu_stats,ram,vram,fps_metrics=avg,0,1,font_scale=1.05";
+  MANGOHUD_CONFIG = "control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps_metrics=avg,0,1,font_scale=1.05";
 };
 
     services.udev.extraRules = ''
