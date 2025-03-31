@@ -24,9 +24,9 @@
     ];
 
     environment.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-      MANGOHUD_CONFIG = "control=mangohud,legacy_layout=0,horizontal,alpha=0,custom_text="GLF OS",gpu_stats,gpu_power,cpu_stats,ram,vram,fps_metrics,hud_no_margin,table_columns=14";
-    };
+  STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+  MANGOHUD_CONFIG = "control=mangohud,legacy_layout=0,horizontal,alpha=0,custom_text=\"GLF OS\",gpu_stats,gpu_power,cpu_stats,ram,vram,fps_metrics,hud_no_margin,table_columns=14";
+};
 
     services.udev.extraRules = ''
       # USB
