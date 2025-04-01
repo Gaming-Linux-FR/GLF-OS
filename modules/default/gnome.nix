@@ -8,9 +8,12 @@
 {
 
   # Enable numlock on tty with a systemd service, for GDM and Gnome too
-  # Seems needed to be before the config in file
   systemd.services.numLockOnTty = {
-    wantedBy = [ "multi-user.target" ];
+    enable = true;
+    description = "Enable Numlock on TTYs";
+    unitConfig = {
+      Type = "simple";
+    };
     serviceConfig = {
       ExecStart = lib.mkForce (pkgs.writeShellScript "numLockOnTty" ''
         for tty in /dev/tty{1..6}; do
@@ -18,6 +21,7 @@
         done
       '');
     };
+    wantedBy = [ "multi-user.target" ];
   };
 
   options.glf.gnome.enable = lib.mkOption {
