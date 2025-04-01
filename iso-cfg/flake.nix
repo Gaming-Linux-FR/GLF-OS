@@ -4,11 +4,12 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24_11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     glf.url = "github:Gaming-Linux-FR/GLF-OS/main";
   };
 
   outputs =
-    { nixpkgs, glf, ... }@inputs:
+    { nixpkgs, nixpkgs-unstable, glf, ... }@inputs:
     let
       pkgsSettings =
         system:
@@ -23,8 +24,13 @@
         modules = [
           ./configuration.nix
           inputs.glf.nixosModules.default
+        {
+            environment.systemPackages = with nixpkgs-unstable.legacyPackages.${system}; [
+              nixpkgs-unstable.legacyPackages.${system}.heroic
+              nixpkgs-unstable.legacyPackages.${system}.lutris
+            ];
+          }
         ];
       };
     };
-
 }
