@@ -7,13 +7,8 @@
 
 {
 
-  options.glf.gnome.enable = lib.mkOption {
-    description = "Enable GLF Gnome configurations";
-    type = lib.types.bool;
-    default = true;
-  };
-
   # Enable numlock on tty with a systemd service, for GDM and Gnome too
+  # Seems needed to be before the config in file
   systemd.services.numLockOnTty = {
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -23,6 +18,12 @@
         done
       '');
     };
+  };
+
+  options.glf.gnome.enable = lib.mkOption {
+    description = "Enable GLF Gnome configurations";
+    type = lib.types.bool;
+    default = true;
   };
 
   config = lib.mkIf config.glf.gnome.enable {
