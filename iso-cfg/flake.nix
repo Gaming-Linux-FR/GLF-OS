@@ -1,19 +1,30 @@
 {
-
-  description = "GLF-OS";
+  description = "GLF-OS ISO Configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     glf.url = "github:Gaming-Linux-FR/GLF-OS/main";
   };
 
   outputs =
-    { nixpkgs, nixpkgs-unstable, glf, ... }@inputs:
+    {
+      nixpkgs,
+      nixpkgs-unstable, # Assurez-vous que ceci est présent
+      glf,
+      ...
+    }:
     let
+      system = "x86_64-linux";
       pkgsSettings =
         system:
         import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      unstablePkgs = # Définir unstablePkgs
+        system:
+        import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
         };
@@ -24,12 +35,10 @@
         modules = [
           ./configuration.nix
           inputs.glf.nixosModules.default
-        {
-            environment.systemPackages = let
-              system = "x86_64-linux";
-            in with nixpkgs-unstable.legacyPackages.${system}; [
-              nixpkgs-unstable.legacyPackages.${system}.heroic
-              nixpkgs-unstable.legacyPackages.${system}.lutris
+          {
+            environment.systemPackages = with (unstablePkgs "x86_64-linux").legacyPackages; [ # Utiliser unstablePkgs
+              heroic
+              lutris
             ];
           }
         ];
