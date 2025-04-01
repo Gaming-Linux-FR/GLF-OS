@@ -25,7 +25,6 @@ in
 
     ### NerdFonts
  #fonts.packages = with pkgs; [ pkgs.nerd-fonts.noto ];
- fonts.packages = with pkgs; [ nerdfonts.Noto ]; #à modifier en passant à 25.05 et décommenter ligne précédente
-  };
+ fonts.packages = with pkgs; [ nerdfonts.NotoSansMono ];
 
 }
