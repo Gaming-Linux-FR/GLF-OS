@@ -25,6 +25,6 @@ in
 
     ### NerdFonts
  #fonts.packages = with pkgs; [ pkgs.nerd-fonts.noto ];
- fonts.packages = with pkgs; [ nerdfonts.FiraCode ];
+ fonts.packages = with pkgs; [ fira-code-nerdfont ];
 };
 }
