@@ -20,15 +20,20 @@
       nixpkgsConfig = {
         allowUnfree = true;
       };
+      unstablePkgs = import nixpkgs-unstable {
+        inherit system;
+        config = nixpkgsConfig;
+      };
       nixosModules = {
         default = import ./modules/default;
-        gaming = import ./modules/default/gaming.nix { inherit nixpkgs-unstable; };
+        gaming = import ./modules/default/gaming.nix {
+          inherit (unstablePkgs) pkgs;
+        }; # Provide pkgs from nixpkgs-unstable
       };
 
       baseModules = [
         nixosModules.default
         nixosModules.gaming
-
         { nixpkgs.config = nixpkgsConfig; }
       ];
 
@@ -37,7 +42,6 @@
       iso = self.nixosConfigurations."glf-installer".config.system.build.isoImage;
 
       nixosConfigurations = {
-        # Configuration pour l'ISO d'installation avec Calamares
         "glf-installer" = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = baseModules ++ [
@@ -68,7 +72,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = "GLF-OS-ALPHA-OMNISLASH_3"; #Nom à changer en fonction de la nomination GLF OS
+                  volumeID = "GLF-OS-ALPHA-OMNISLASH_3";
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";
@@ -84,7 +88,6 @@
           ];
         };
 
-        # Configuration de test utilisateur simulée
         "user-test" = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = baseModules ++ [
@@ -123,6 +126,7 @@
           shellHook = ''
             cd docs || exit 1
             echo "Running bundle install and starting Jekyll server..."
+            bundle config set path 'vendor/bundle'
             bundle config set path 'vendor/bundle'
             bundle install
             bundle exec jekyll serve
