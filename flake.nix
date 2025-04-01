@@ -26,15 +26,16 @@
       };
       nixosModules = {
         default = import ./modules/default;
-        gaming = import ./modules/default/gaming.nix {
-          inherit (unstablePkgs) pkgs;
-        }; # Provide pkgs from nixpkgs-unstable
+        gaming = import ./modules/default/gaming.nix; # Ne pas passer nixpkgs-unstable ici
       };
 
       baseModules = [
         nixosModules.default
         nixosModules.gaming
         { nixpkgs.config = nixpkgsConfig; }
+        {
+          config.nixpkgs.unstable = unstablePkgs; # Fournir nixpkgs.unstable
+        }
       ];
 
     in
