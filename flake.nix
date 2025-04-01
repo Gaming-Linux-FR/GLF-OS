@@ -26,16 +26,13 @@
       };
       nixosModules = {
         default = import ./modules/default;
-        gaming = import ./modules/default/gaming.nix; # Ne pas passer nixpkgs-unstable ici
+        gaming = import ./modules/default/gaming.nix { pkgs-unstable = unstablePkgs.legacyPackages.${system}; }; # Passer explicitement
       };
 
       baseModules = [
         nixosModules.default
         nixosModules.gaming
         { nixpkgs.config = nixpkgsConfig; }
-        {
-          config.nixpkgs.unstable = unstablePkgs; # Fournir nixpkgs.unstable
-        }
       ];
 
     in
@@ -61,7 +58,7 @@
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/white.png}       $out/share/calamares/branding/nixos/white.png
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/base.png}        $out/share/calamares/branding/nixos/base.png
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/fast.png}        $out/share/calamares/branding/nixos/fast.png
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/gaming.png}      $out/share/calamares/branding/nixos/gaming.png
+                      cp -r ${./patches/calamares-extensions/branding/nixos/gaming.png}      $out/share/calamares/branding/nixos/gaming.png
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/logo-glf-os.svg} $out/share/calamares/branding/nixos/logo-glf-os.svg
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}   $out/share/calamares/branding/nixos/branding.desc
                     '';
