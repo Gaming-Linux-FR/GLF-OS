@@ -15,29 +15,24 @@
       utils,
       ...
     }:
-    let
+     let
       system = "x86_64-linux";
       nixpkgsConfig = {
         allowUnfree = true;
       };
-      # Définir pkgs-unstable ici pour le passer via specialArgs
+    
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config = nixpkgsConfig;
       };
 
-      # Simplification : pas besoin de prédéfinir les modules ici si on utilise les chemins
-      # On garde juste la configuration nixpkgs
       baseModules = [
-        ./modules/default # Chemin direct vers l'index des modules par défaut
-                          # (qui importe déjà gaming.nix)
+        ./modules/default
         { nixpkgs.config = nixpkgsConfig; }
       ];
 
-      # Argument spécial à passer à tous les modules
       specialArgs = {
-        # Rend pkgs-unstable disponible comme argument dans les modules
-        pkgs-unstable = pkgs-unstable.legacyPackages.${system};
+        pkgs-unstable = pkgs-unstable; 
       };
 
     in
