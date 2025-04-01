@@ -22,10 +22,13 @@
       };
       nixosModules = {
         default = import ./modules/default;
+        gaming = import ./modules/gaming.nix { inherit nixpkgs-unstable; };
       };
 
       baseModules = [
         nixosModules.default
+        nixosModules.gaming
+
         { nixpkgs.config = nixpkgsConfig; }
       ];
 
