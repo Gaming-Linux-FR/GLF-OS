@@ -15,13 +15,13 @@
 
   config = lib.mkIf config.glf.gaming.enable {
 
-    environment.systemPackages = with pkgs; [
-      heroic
-      lutris
-      mangohud
-      wineWowPackages.staging
-      winetricks
-    ];
+     environment.systemPackages = with nixpkgs-unstable.legacyPackages.${system}; [
+    heroic
+    lutris
+    mangohud
+    wineWowPackages.staging
+    winetricks
+  ];
 
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
