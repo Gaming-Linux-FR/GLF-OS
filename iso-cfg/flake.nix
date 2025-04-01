@@ -30,10 +30,11 @@
           ./configuration.nix
           inputs.glf.nixosModules.default
           {
-            environment.systemPackages = with (import nixpkgs-unstable { # Appel direct
+            config.nixpkgs.unstable = import nixpkgs-unstable { # Fournir nixpkgs.unstable
               inherit system;
               config.allowUnfree = true;
-            }).legacyPackages.${system}; [
+            };
+            environment.systemPackages = with config.nixpkgs.unstable.legacyPackages.${system}; [ # Utiliser config.nixpkgs.unstable
               heroic
               lutris
             ];
