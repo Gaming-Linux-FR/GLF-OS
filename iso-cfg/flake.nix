@@ -10,7 +10,7 @@
   outputs =
     {
       nixpkgs,
-      nixpkgs-unstable, # Assurez-vous que ceci est présent
+      nixpkgs-unstable,
       glf,
       ...
     }:
@@ -22,12 +22,6 @@
           inherit system;
           config.allowUnfree = true;
         };
-      unstablePkgs = # Définir unstablePkgs
-        system:
-        import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
     in
     {
       nixosConfigurations."GLF-OS" = nixpkgs.lib.nixosSystem {
@@ -36,7 +30,10 @@
           ./configuration.nix
           inputs.glf.nixosModules.default
           {
-            environment.systemPackages = with (unstablePkgs "x86_64-linux").legacyPackages; [ # Utiliser unstablePkgs
+            environment.systemPackages = with (import nixpkgs-unstable { # Appel direct
+              inherit system;
+              config.allowUnfree = true;
+            }).legacyPackages.${system}; [
               heroic
               lutris
             ];
