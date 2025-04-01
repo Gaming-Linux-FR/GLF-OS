@@ -3,7 +3,7 @@
   description = "GLF-OS";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24_11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     glf.url = "github:Gaming-Linux-FR/GLF-OS/main";
   };
