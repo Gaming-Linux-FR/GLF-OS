@@ -25,7 +25,9 @@
           ./configuration.nix
           inputs.glf.nixosModules.default
         {
-            environment.systemPackages = with nixpkgs-unstable.legacyPackages.${system}; [
+            environment.systemPackages = let
+              system = "x86_64-linux";
+            in with nixpkgs-unstable.legacyPackages.${system}; [
               nixpkgs-unstable.legacyPackages.${system}.heroic
               nixpkgs-unstable.legacyPackages.${system}.lutris
             ];
