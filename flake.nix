@@ -41,7 +41,7 @@
 
       nixosConfigurations = {
         "glf-installer" = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs; # <<< Passer specialArgs ici
+          inherit system specialArgs; 
           modules = baseModules ++ [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
             "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
@@ -88,7 +88,7 @@
         };
 
         "user-test" = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs; # <<< Passer specialArgs ici aussi
+          inherit system specialArgs; 
           modules = baseModules ++ [
             {
               boot.loader.grub = {
@@ -106,7 +106,7 @@
         };
       };
 
-      # Pas besoin de `inherit nixosModules;` si vous ne l'utilisez pas ailleurs
+    
 
     }
     // utils.lib.eachDefaultSystem (
@@ -130,7 +130,7 @@
             if [ -d "docs" ]; then
               cd docs || exit 1
               echo "Running bundle install and starting Jekyll server..."
-              bundle config set path 'vendor/bundle' --local # Utiliser --local pour éviter de modifier le global
+              bundle config set path 'vendor/bundle' --local 
               # Pas besoin de répéter la commande bundle config set path
               bundle install
               bundle exec jekyll serve
