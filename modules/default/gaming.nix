@@ -1,9 +1,9 @@
-{ config, pkgs, ... }: # Pas de nixpkgs-unstable ici
+{ config, pkgs, pkgs-unstable, ... }: # Accepter pkgs-unstable
 let
   system = "x86_64-linux";
 in
 {
-  environment.systemPackages = with config.nixpkgs.unstable.legacyPackages.${system}; [ # Utiliser config.nixpkgs.unstable
+  environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
     heroic
     lutris
     mangohud
