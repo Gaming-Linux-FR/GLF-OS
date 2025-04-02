@@ -1,59 +1,52 @@
-# flake.nix (CORRIGÉ - Placer dans projet_racine/iso-cfg/flake.nix)
+# flake.nix (CORRIGÉ - Pour iso-cfg - Version "via GitHub")
 {
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
 
-  # Inputs minimums requis pour évaluer la config
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # Plus besoin de glfRoot
+
+    # Input pointant vers le dépôt EXTERNE qui contient les modules GLF
+    # Assurez-vous que ce dépôt/branche exporte bien nixosModules.default !
+    glf = { url = "github:vinceff/GLF-OS-stable/glf-os-stable"; follows = "nixpkgs"; };
   };
 
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
-      self, # Ajouter self car on définit nixosConfigurations
+      glf, # Input externe GLF
+      self,
       ...
     }:
     let
       system = "x86_64-linux";
       nixpkgsConfig = { allowUnfree = true; };
 
-      # Import stable
-      pkgs = import nixpkgs {
-        inherit system;
-        config = nixpkgsConfig;
-      };
+      pkgs = import nixpkgs { inherit system; config = nixpkgsConfig; };
 
-      # Import unstable et définition du jeu de paquets
-      unstablePkgsImport = import nixpkgs-unstable {
-        inherit system;
-        config = nixpkgsConfig;
-      };
+      unstablePkgsImport = import nixpkgs-unstable { inherit system; config = nixpkgsConfig; };
       pkgs-unstable = unstablePkgsImport; # Correction legacyPackages
 
-      # Modules de base locaux (seront copiés par main.py dans ./modules)
-      baseModules = [
-         # Référence le dossier ./modules qui existera dans /mnt/etc/nixos
-         ./modules/default
-         { nixpkgs.config = nixpkgsConfig; }
-      ];
+      # Récupère les modules depuis l'input EXTERNE 'glf' via 'let' pour éviter pb de scope
+      # **REQUIERT** que le flake 'glf' exporte nixosModules.default
+      glfDefaultModules = glf.nixosModules.default;
 
     in
     {
-      # Configuration que Calamares installera
       nixosConfigurations."GLF-OS" = nixpkgs.lib.nixosSystem {
          inherit system pkgs; # Base stable
 
-         # Passer unstable aux modules via specialArgs
+         # Passer pkgs-unstable aux modules venant de 'glf'
          specialArgs = {
             inherit pkgs-unstable;
+            # On pourrait aussi passer 'glf' si les modules en ont besoin
+            # inherit glf;
          };
 
-         # Utilise les baseModules (locaux après copie) + config générée
-         modules = baseModules ++ [
-           ./configuration.nix # Généré par main.py, contient import hardware-config
+         modules = [
+           ./configuration.nix # Généré par Calamares
+           glfDefaultModules   # Modules venant du dépôt GitHub externe
          ];
       };
     };
