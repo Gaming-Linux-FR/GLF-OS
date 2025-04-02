@@ -36,7 +36,14 @@
    
       pkgs-unstable = unstablePkgsImport;
 
-      glfDefaultModules = glfRoot.nixosModules.default;
+     # --- Débogage ---
+      # On essaie d'accéder à nixosModules SANS le .default d'abord
+      glfModulesTemp = glfRoot.nixosModules or null; # Utilise 'or null' pour éviter une erreur si nixosModules manque
+      # On affiche ce qu'on a trouvé (ou null)
+      _ = builtins.trace "TRACE iso-cfg: Contenu de glfRoot.nixosModules: ${builtins.toJSON glfModulesTemp}" null;
+      # On tente ensuite d'accéder à .default SEULEMENT si glfModulesTemp n'est pas null
+      glfDefaultModules = if glfModulesTemp == null then {} else glfModulesTemp.default;
+      # --- Fin Débogage ---
 
     in
     {
