@@ -89,7 +89,7 @@
                     contents = [
                       {
                         source = ./iso-cfg;
-                        target = "/iso-cfg";
+                        { source = ./modules; target = "/iso-modules"; }
                       }
                     ];
                   };
