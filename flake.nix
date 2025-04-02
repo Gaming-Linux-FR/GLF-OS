@@ -14,10 +14,7 @@
       nixpkgs-unstable,
       utils,
       ...
-    }: {
-nixosModules.default = ./modules/default;
-};
-
+    }:
       let
         system = "x86_64-linux";
         nixpkgsConfig = {
@@ -35,14 +32,14 @@ nixosModules.default = ./modules/default;
 
         # Modules de base locaux (suppose que ./modules/default existe)
         baseModules = [
-          ./modules/default
+          ./modules/default # Référence le point d'entrée des modules
           { nixpkgs.config = nixpkgsConfig; }
         ];
 
         # Arguments spéciaux à passer aux modules
         specialArgs = {
           # Passer le jeu de paquets unstable
-          inherit pkgs-unstable; # Raccourci pour pkgs-unstable = pkgs-unstable;
+          inherit pkgs-unstable;
         };
 
       in
@@ -85,18 +82,18 @@ nixosModules.default = ./modules/default;
                     storeContents = [ config.system.build.toplevel ];
                     squashfsCompression = "zstd -Xcompression-level 22";
                     contents = [
-                      # --- Correction ici ---
+                      # === SECTION CORRIGÉE ===
                       { # Élément 1: iso-cfg
                         source = ./iso-cfg;
                         target = "/iso-cfg";
-                      } # Fin Élément 1
+                      } # Fin Élément 1 (Correctement fermé)
 
-                      # Élément 2: modules (maintenant correctement séparé)
+                      # Élément 2: modules
                       {
-                        source = ./modules/default;
+                        source = ./modules/default;  # Chemin source corrigé
                         target = "/iso-modules";
-                      } # Fin Élément 2
-                      # --- Fin Correction ---
+                      } # Fin Élément 2 (Correctement séparé)
+                      # === FIN CORRECTION ===
                     ]; # Fin de la liste contents
                   }; # Fin de isoImage
                 }
