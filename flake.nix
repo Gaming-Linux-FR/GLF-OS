@@ -90,7 +90,7 @@
 
                       # Élément 2: modules (maintenant correctement séparé)
                       {
-                        source = ./modules;
+                        source = ./modules/default;
                         target = "/iso-modules";
                       } # Fin Élément 2
                       # --- Fin Correction ---
