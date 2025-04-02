@@ -13,9 +13,11 @@
       nixpkgs,
       nixpkgs-unstable,
       utils,
-       nixosModules.default = ./modules/default;
       ...
-    }:
+    }: {
+nixosModules.default = ./modules/default;
+};
+
       let
         system = "x86_64-linux";
         nixpkgsConfig = {
