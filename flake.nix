@@ -27,7 +27,7 @@
           config = nixpkgsConfig;
         };
         # Jeu de paquets unstable pour ce système
-        pkgs-unstable = pkgs-unstable-import.legacyPackages.${system};
+       pkgs-unstable = pkgs-unstable-import;
 
 
         # Modules de base locaux (suppose que ./modules/default existe)
