@@ -27,7 +27,7 @@
           config = nixpkgsConfig;
         };
         # Jeu de paquets unstable pour ce système
-       pkgs-unstable = pkgs-unstable-import;
+        pkgs-unstable = pkgs-unstable-import;
 
 
         # Modules de base locaux (suppose que ./modules/default existe)
@@ -41,11 +41,6 @@
           # Passer le jeu de paquets unstable
           inherit pkgs-unstable; # Raccourci pour pkgs-unstable = pkgs-unstable;
         };
-
-        # Optionnel : définir nixosModules ici si vous préférez
-        # nixosModulesDefinition = {
-        #   default = ./modules/default;
-        # };
 
       in
       { # Début des outputs du flake
@@ -87,19 +82,26 @@
                     storeContents = [ config.system.build.toplevel ];
                     squashfsCompression = "zstd -Xcompression-level 22";
                     contents = [
-                      {
+                      # --- Correction ici ---
+                      { # Élément 1: iso-cfg
                         source = ./iso-cfg;
-                        { source = ./modules; target = "/iso-modules"; }
-                      }
-                    ];
-                  };
+                        target = "/iso-cfg";
+                      } # Fin Élément 1
+
+                      # Élément 2: modules (maintenant correctement séparé)
+                      {
+                        source = ./modules;
+                        target = "/iso-modules";
+                      } # Fin Élément 2
+                      # --- Fin Correction ---
+                    ]; # Fin de la liste contents
+                  }; # Fin de isoImage
                 }
-              )
-            ];
-          };
+              ) # Fin du module pour isoImage
+            ]; # Fin de la liste modules pour glf-installer
+          }; # Fin de glf-installer
 
           # Configuration pour un système utilisateur réel (exemple)
-          # Vous devriez adapter ou supprimer cette partie selon vos besoins
           "GLF-OS" = nixpkgs.lib.nixosSystem {
             inherit system specialArgs;
             modules = baseModules ++ [
@@ -127,12 +129,10 @@
           };
         }; # Fin de nixosConfigurations
 
-        # === AJOUT DE L'EXPORT DES MODULES NIXOS ===
+        # === EXPORT DES MODULES NIXOS ===
         nixosModules = {
            # Expose le point d'entrée de vos modules locaux
            default = ./modules/default;
-           # Vous pourriez aussi exporter des modules individuels ici si nécessaire
-           # gaming = ./modules/default/gaming.nix;
         };
         # ==========================================
 
