@@ -1,4 +1,4 @@
-# flake.nix 
+# flake.nix iso-cfg
 {
   description = "GLF-OS ISO Configuration - Installer Flake";
 
