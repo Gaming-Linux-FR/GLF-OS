@@ -38,7 +38,7 @@ install:
 		ISO_FILE=$(find result/iso -name "*.iso") # Trouve le fichier ISO généré par NixOS
 	if [ -n "$ISO_FILE" ]; then
 		echo "Found ISO: $ISO_FILE"
-		cp "$ISO_FILE" "GGLF-OS-BETA-OMNISLASH_stable.iso" # Copie avec la nomination GLF OS
+		cp "$ISO_FILE" "GLF-OS-BETA-OMNISLASH_stable.iso" # Copie avec la nomination GLF OS
 		sha256sum "GLF-OS-ALPHA-OMNISLASH_3.iso" > "GLF-OS-BETA-OMNISLASH_stable.iso.sha256sum"
 		cat "GLF-OS-BETA-OMNISLASH_stable.iso.sha256sum"
 	else
