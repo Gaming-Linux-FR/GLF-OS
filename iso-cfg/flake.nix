@@ -18,21 +18,31 @@
     }@inputs:
 
     let
-      pkgsSettings =
-        system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
+ # Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
+      pkgsStable = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      # Configuration pour le nixpkgs unstable (sera passé en argument spécial)
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
-    {
+     {
       nixosConfigurations."GLF-OS" = nixpkgs.lib.nixosSystem {
-        pkgs = pkgsSettings "x86_64-linux";
+        inherit system; 
+        pkgs = pkgsStable; 
         modules = [
-          ./configuration.nix
-          inputs.glf.nixosModules.default
+          ./configuration.nix       
+          glf.nixosModules.default.gaming  # Les modules de GLF qui nécessitent pkgs-unstable
         ];
+
+        # C'est ici que la magie opère :
+        specialArgs = {
+          pkgs-unstable = pkgsUnstable; 
+        };
       };
     };
-
 }
