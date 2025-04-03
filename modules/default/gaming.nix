@@ -9,7 +9,6 @@ in
     mangohud
     wineWowPackages.staging
     winetricks
-    mesa
   ];
 
   environment.sessionVariables = {
