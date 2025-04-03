@@ -15,7 +15,7 @@
       glf, 
       self,
       ...
-    }:
+    }@inputs:
 
     let
       pkgsSettings =
