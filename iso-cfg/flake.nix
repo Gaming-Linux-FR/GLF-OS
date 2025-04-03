@@ -3,7 +3,8 @@
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    glf-channels.url = "github:vinceff/glf-os-channels"; #Repos responsable de la bascule d'une stable à une autre
+    nixpkgs.follows = "glf-channels/nixpkgs";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     glf.url = "github:vinceff/GLF-OS-stable/glf-os-stable"; # Référence le flake racine
   };
