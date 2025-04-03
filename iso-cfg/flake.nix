@@ -1,24 +1,26 @@
-# flake.nix (CORRIGÉ - Pour iso-cfg - Version "via GitHub")
+# flake.nix (CORRIGÉ - Pour iso-cfg - Version "via GitHub" - Révisé)
 {
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    glf.url = "github:vinceff/GLF-OS-stable/glf-os-stable";
+    glf.url = "github:vinceff/GLF-OS-stable/glf-os-stable"; # Référence le flake racine
   };
 
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
-      glf, 
+      glf,
       self,
       ...
-    }@inputs:
+    }: 
 
     let
- # Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
+      system = "x86_64-linux"; 
+
+      # Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
       pkgsStable = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -30,16 +32,15 @@
         config.allowUnfree = true;
       };
     in
-     {
+    {
       nixosConfigurations."GLF-OS" = nixpkgs.lib.nixosSystem {
-        inherit system; 
+        inherit system; # Maintenant 'system' est défini
         pkgs = pkgsStable; 
         modules = [
-          ./configuration.nix       
-          glf.nixosModules.default.gaming  # Les modules de GLF qui nécessitent pkgs-unstable
+          ./configuration.nix 
+          glf.nixosModules.default 
         ];
 
-        # C'est ici que la magie opère :
         specialArgs = {
           pkgs-unstable = pkgsUnstable; 
         };
