@@ -23,7 +23,7 @@ systemd.services.numLockOnTty = {
       done
     '');
   };
-
+};
   config = lib.mkIf config.glf.gnome.enable {
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
