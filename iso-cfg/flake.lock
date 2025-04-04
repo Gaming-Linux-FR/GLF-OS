@@ -7,11 +7,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1743753011,
-        "narHash": "sha256-2MrMD4jjgk/ncrf8vaUAz0tweYRANOw/fk6DVQnDKHM=",
+        "lastModified": 1743754268,
+        "narHash": "sha256-JHHH/8hWmX3LQmo//SvqmXvjPl8peVcMvWTZ4Z2rv2w=",
         "owner": "Gaming-Linux-FR",
         "repo": "GLF-OS",
-        "rev": "4e6d0295a8035c565ff623ee6d1fce0cabb76ebf",
+        "rev": "10384fe6c35590bc9130855b7ff99420688d8eef",
         "type": "github"
       },
       "original": {
