@@ -13,6 +13,12 @@
     default = true;
   };
 
+
+  config = lib.mkIf config.glf.gnome.enable {
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # Activation de GNOME
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 systemd.services.numLockOnTty = {
   wantedBy = [ "multi-user.target" ];
   serviceConfig = {
@@ -24,11 +30,7 @@ systemd.services.numLockOnTty = {
     '');
   };
 };
-  config = lib.mkIf config.glf.gnome.enable {
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # Activation de GNOME
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     services = {
       udev.packages = [ pkgs.gnome-settings-daemon ];
       xserver = {
