@@ -132,6 +132,7 @@
             };
 
             "org/gnome/desktop/peripherals/keyboard" = {
+              remember-numlock-state = true;
               numlock-state = true;
             };
 
