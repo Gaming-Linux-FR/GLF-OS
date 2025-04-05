@@ -64,6 +64,8 @@
         gnomeExtensions.gsconnect
         gnomeExtensions.appindicator
         gnomeExtensions.dash-to-dock
+        gnomeExtensions.bing-wallpaper-changer
+        gnomeExtensions.quick-settings-audio-panel
 
       ];
 

@@ -24,6 +24,12 @@ sudo nano /etc/nixos/customConfig/default.nix
 
 {
 
+  environment.systemPackages = with pkgs; [
+  # Add your apps here
+
+  ];
+
+
   # Ajoutez ici vos configurations
 
 }

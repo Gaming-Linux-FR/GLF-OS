@@ -18,6 +18,7 @@
     environment.systemPackages = with pkgs; [
       heroic
       lutris
+      vulkan-tools
       mangohud
       wineWowPackages.staging
       winetricks
