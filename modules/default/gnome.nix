@@ -7,6 +7,23 @@
 
 {
 
+  # Enable numlock on tty with a systemd service, for GDM and Gnome too
+  systemd.services.numLockOnTty = {
+    enable = true;
+    description = "Enable Numlock on TTYs";
+    unitConfig = {
+      Type = "simple";
+    };
+    serviceConfig = {
+      ExecStart = lib.mkForce (pkgs.writeShellScript "numLockOnTty" ''
+        for tty in /dev/tty{1..6}; do
+          ${pkgs.kbd}/bin/setleds -D +num < "$tty";
+        done
+      '');
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
   options.glf.gnome.enable = lib.mkOption {
     description = "Enable GLF Gnome configurations";
     type = lib.types.bool;
@@ -30,6 +47,10 @@
           extraGSettingsOverrides = ''
               [org.gnome.mutter]
             experimental-features=['scale-monitor-framebuffer']
+
+              [org.gnome.desktop.periphericals.keyboard]
+            remember-numlock-state=['true']
+            numlock-state=['true']
           '';
         };
       };
