@@ -18,6 +18,7 @@
     ./version.nix
     ./standBy.nix
     ./GLFfetch.nix
+    ./nix-disk-manager.nix
   ];
 
 }
