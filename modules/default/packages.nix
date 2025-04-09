@@ -32,8 +32,11 @@
       binfmt = true;
     };
 
+    services.hardware.openrgb.enable = true;
+
     environment.systemPackages = with pkgs; [
       # APP
+      openrgb-with-all-plugins
       discord
       celluloid
       pciutils
