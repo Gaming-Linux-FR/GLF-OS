@@ -45,6 +45,7 @@
       vivaldi
       libva-utils
       ffmpeg
+      vulkan-tools
 
       # Compression
       arj
