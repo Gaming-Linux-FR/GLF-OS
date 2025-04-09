@@ -35,7 +35,7 @@ sudo nixos-rebuild switch --upgrade
 ```bash
 glf-update 
 ```
-Cela aura pour effet de télecharger les paquets mis à jour ou d'installer vos nouveaux paquets que vous avez déclaré dans le customConfig. Cette action sera appliquée desuite sans avoir besoin de reboot (hors changement de kernel)
+
 
 
 ## Mettre à jour le système
@@ -46,4 +46,5 @@ Maintenant que le flocon pointe sur la dernière version en date disponible, vou
 glf-switch
 ```
 
+Cela aura pour effet de télecharger les paquets mis à jour ou d'installer vos nouveaux paquets que vous avez déclaré dans le customConfig. Cette action sera appliquée desuite sans avoir besoin de reboot (hors changement de kernel)
 
