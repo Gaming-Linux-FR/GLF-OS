@@ -6,43 +6,26 @@ parent: Documentation
 
 # A quelle fréquence apparaissent les mises à jours ?
 
-Il y a deux types de mises à jours dans glf-os : 
-
-## Mise à jours des paquets 
-
-Les mises à jours de vos paquets suivent celle du projet NixOS et sont effectués une fois par semaine en tâche de fond. 
-
-## Mise à jour du module GLF 
-
-GLF-OS propose dans vos configurations `/etc/nixos` un module GLF (`/etc/nixos/glf`) contenant des options pré-configuré. 
-
-Après l'installation, tous les trois jours, vous recevez une mise à jour des options.
-
-{: .warning }
-> Les mises à jours du module sont en cours de modifications et utiliseront les flocons. 
+GLF-OS ira chercher si de nouvelles mise à jour sont dispobible (glf-update) 5 minutes après le boot de votre PC puis toutes les 12 heures si le pc reste allumé.
+Une fois cette recherche effectuée , si de nouveaux paquets sont disponible ,la mise à jour sera appliquée en tâche de fond et au prochain reboot vous serez sur une GLF-OS avec les dernières update.
 
 ## Comment mettre à jour manuellement ? 
 
 Actuellement, aucun outil graphique n'est disponible, il est donc nécessaire d'ouvrir l'application `console`. 
 
 ### Mettre à jour manuellement le module GLF 
+Le flocon cherche la dernière version disponible des paquets nix et les modules GLF puis référence les informations de versions dans un fichier `flake.lock`.
 
 ```bash
 sudo bash /etc/update-glf-config.sh
 ```
+Le fait de mettre à jour manuellement peut devenir utile dans le cas où vous auriez modifié le customConifg prévu pour installé vos propres paquets nixos ou pour appliquer une config de votre choix.
 
 ### Mettre à jour manuellement les paquets
 
 ```bash
 sudo nixos-rebuild switch --upgrade
 ```
-
-# Post-flake : 
-
-Le flocon fournis à l'utilisateur gère en un seul point le suivis des paquets nix (nixpkgs) et le suivis du module GLF. 
-Le flocon cherche la dernière version disponible des paquets nix et le module GLF puis référence les informations de versions dans un fichier `flake.lock`.
-
-Ce qui implique que tant que le fichier n'est pas mis à jour, nixos-rebuild reconstruira en pointant sur la même version. 
 
 ## Mettre à jour le flocon 
 
@@ -52,8 +35,8 @@ Ce qui implique que tant que le fichier n'est pas mis à jour, nixos-rebuild rec
 ```bash
 glf-update 
 ```
+Cela aura pour effet de télecharger les paquets mis à jour ou d'installer vos nouveaux paquets que vous avez déclaré dans le customConfig. Cette action sera appliquée desuite sans avoir besoin de reboot (hors changement de kernel)
 
-Si vous voyez une ligne comme `Updated input "nixpkgs"` ou `Updated input "glf"`, ça signifie qu'un input pointe sur une nouvelle version plus récente alors la prochaine reconstruction effectuera une mise à jour.
 
 ## Mettre à jour le système
 
