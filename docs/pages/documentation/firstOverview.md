@@ -27,7 +27,7 @@ Les imprimantes sont pris en charge, vous n'avez qu'à l'ajouter à GNOME !
 > Les principaux pilotes sont présents pour répondre à un large panel de matériel. 
 > Si votre imprimante n'est pas pris en charge, faites-le nous savoir en ouvrant une issue sur github ou via discord. 
 
-Chromium est disponible si vous souhaitez jouer aux jeux en streaming.
+Vivaldi est disponible si vous souhaitez jouer aux jeux en streaming.
 
 Si GLF-OS ne vous satisfait pas complètement, nous vous avons laissé à disposition `Easy Flatpak` qui est un magasin d'applications pour Flatpak. 
 
