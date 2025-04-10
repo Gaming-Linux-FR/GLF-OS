@@ -11,10 +11,15 @@ in
       default = true;
       description = "Enable desktop environment";
     };
-    type = lib.mkOption {
+    type = mkOption {
       description = "Desktop environment selection";
       type = with types; enum [ "gnome" "plasma" ];
       default = "gnome";
+    };
+    edition = mkOption {
+      description = "Edition selection";
+      type = with types; enum [ "mini" "standard" "studio" "studio-pro" ];
+      default = "standard";
     };
   };
 
@@ -22,6 +27,7 @@ in
   imports = [
     ./environments/gnome.nix
     ./environments/plasma.nix
+    ./environments/studio.nix
   ];
 
   # Wallpapers

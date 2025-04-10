@@ -10,7 +10,10 @@
   options.glf.gaming.enable = lib.mkOption {
     description = "Enable GLF Gaming configurations";
     type = lib.types.bool;
-    default = true;
+    default = if (config.glf.environment.edition != "mini") then
+      true
+    else
+      false;
   };
 
   config = lib.mkIf config.glf.gaming.enable {

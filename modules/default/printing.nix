@@ -9,7 +9,10 @@
   options.glf.printing.enable = lib.mkOption {
     description = "Enable GLF printing configurations.";
     type = lib.types.bool;
-    default = true;
+    default = if (config.glf.environment.edition != "mini") then
+      true
+    else
+      false;
   };
 
   config = lib.mkIf config.glf.printing.enable (

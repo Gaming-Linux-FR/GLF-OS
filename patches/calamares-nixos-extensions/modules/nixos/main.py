@@ -277,7 +277,8 @@ def run():
     variables = dict()
 
     # Select desktop environment
-    cfg += """  glf.environment.type = """ + '"' + gs.value("packagechooser_packagechooser") + '";' + """
+    cfg += """  glf.environment.type = """ + '"' + gs.value("packagechooser_environment") + '";' + """
+  glf.environment.edition = """ + '"' + gs.value("packagechooser_edition") + '";' + """
 
 """
 

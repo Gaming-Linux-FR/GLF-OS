@@ -7,7 +7,7 @@
 
 {
 
-  config = lib.mkIf (config.glf.environment.type == "gnome") {
+  config = lib.mkIf (config.glf.environment.enable && config.glf.environment.type == "gnome") {
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Activation de Gnome
