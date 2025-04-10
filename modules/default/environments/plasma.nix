@@ -7,7 +7,7 @@
 
 {
 
-  config = lib.mkIf (config.glf.environment.type == "plasma") {
+  config = lib.mkIf (config.glf.environment.enable && config.glf.environment.type == "plasma") {
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Activation de Plasma

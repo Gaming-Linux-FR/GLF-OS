@@ -3,6 +3,7 @@
 {
 
   glf.autoUpgrade = lib.mkForce false;
+  glf.packages.glf-os-environment-selection.enable = lib.mkForce false;
   glf.nvidia_config.enable = true;
 
   i18n.defaultLocale = "fr_FR.UTF-8";
