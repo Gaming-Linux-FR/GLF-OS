@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.glf.environment;
+  glf-os-icons = pkgs.callPackage ../../pkgs/glf-os-icons {};
 in
 {
   # declare option
@@ -41,6 +42,7 @@ in
          "wallpapers/glf/white.jpg".source = ../../assets/wallpaper/white.jpg;
          "wallpapers/glf/dark.jpg".source = ../../assets/wallpaper/dark.jpg;
       };
+      systemPackages = with pkgs; [ glf-os-icons ];
     };
   };
 
