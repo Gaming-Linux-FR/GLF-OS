@@ -15,17 +15,6 @@
 
   config = lib.mkIf config.glf.packages.enable {
 
-    services.flatpak.enable = true;
-    systemd.services.flatpak-repo = {
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      path = [ pkgs.flatpak ];
-      script = ''
-        	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && flatpak install -y flathub org.dupot.easyflatpak
-      '';
-    };
-
     # Enable AppImage
     programs.appimage = {
       enable = true;
@@ -34,15 +23,9 @@
 
     environment.systemPackages = with pkgs; [
       # APP
-      discord
-      celluloid
       pciutils
       usbutils
       git
-      btop
-      htop
-      transmission_4-gtk
-      vivaldi
       libva-utils
 
       # Compression
@@ -70,16 +53,21 @@
       # Fetch en attendant GLF-FETCH
       fastfetch
 
-      # Bureautique
-      libreoffice-fresh
-
       # Language
       poppler_data
       hunspell
       hunspellDicts.fr-any
       hyphen
       texlivePackages.hyphen-french
-    ];
+    ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
+      btop
+      celluloid
+      discord
+      htop
+      libreoffice-fresh
+      transmission_4-gtk
+      vivaldi
+    ]);
 
   };
 
