@@ -16,34 +16,35 @@
       ...
     }:
       let
-        system = "x86_64-linux";
-        nixpkgsConfig = {
-          allowUnfree = true;
-        };
+        system = "x86_64-linux";
 
-        # Import brut de nixpkgs-unstable
-        pkgs-unstable-import = import nixpkgs-unstable {
-          inherit system;
-          config = nixpkgsConfig;
-        };
-        # Jeu de paquets unstable pour ce système
-        pkgs-unstable = pkgs-unstable-import;
+      # 1. Définir la configuration Nixpkgs ici
+      nixpkgsConfig = {
+        allowUnfree = true;
+  
+      };
 
+      pkgsStable = import nixpkgs {
+        inherit system;
+        config = nixpkgsConfig; 
+      };
 
-        # Modules de base locaux (suppose que ./modules/default existe)
-        baseModules = [
-          ./modules/default # Référence le point d'entrée des modules
-          { nixpkgs.config = nixpkgsConfig; }
-        ];
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit system;
+        config = nixpkgsConfig; 
+      };
 
-        # Arguments spéciaux à passer aux modules
-        specialArgs = {
-          # Passer le jeu de paquets unstable
-          inherit pkgs-unstable;
-        };
+      nixosModules = {
+        default = import ./modules/default;
+      };
+
+      baseModules = [
+        nixosModules.default
+        { nixpkgs.config = nixpkgsConfig; }
+      ];
 
       in
-      { # Début des outputs du flake
+      { 
         iso = self.nixosConfigurations."glf-installer".config.system.build.isoImage;
 
         nixosConfigurations = {
