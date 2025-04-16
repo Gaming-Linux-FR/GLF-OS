@@ -30,8 +30,8 @@ python3Packages.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "Gaming-Linux-FR";
     repo = "glfos-updater";
-    rev = "5f25f521a09cdb5079c1d8c9bb127b8031f270a4";
-    sha256 = "sha256-zjUgVRAT+FRrbAPaDg5G6qlOpEf39B45ra8D0j4W/b8=";
+    rev = "9e01d98e684124399d897ecf4b1c987a8fba91a5";
+    sha256 = "sha256-WUfS8i8/cDUEUXNOwchvA5E06tFzWgWhUQs5boKmkBA=";
   };
 
   format = "other";
