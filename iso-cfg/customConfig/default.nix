@@ -2,16 +2,20 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
 {
-  environment.systemPackages = with pkgs; [
-  # Add your apps here
+  environment.systemPackages = [
+  # Add your stable apps here (exemple: pkgs.btop)
+
+
+
+  # Add your unstable apps here (exemple: pkgs-unstable.btop)
 
 
   ];
-
 
 
   # Add your custom configuration here ↓
