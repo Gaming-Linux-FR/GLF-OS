@@ -133,8 +133,8 @@ else
 		exit $status
 	fi
 
-	current_environment=$(${pkgs.gnugrep}/bin/grep 'glf.environment.type =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g')
-	current_edition=$(${pkgs.gnugrep}/bin/grep 'glf.environment.edition =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g')
+	current_environment=$(if ${pkgs.gnugrep}/bin/grep -q 'glf.environment.type =' /etc/nixos/configuration.nix; then ${pkgs.gnugrep}/bin/grep 'glf.environment.type =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g'; else echo ""; fi)
+	current_edition=$(if ${pkgs.gnugrep}/bin/grep -q 'glf.environment.edition =' /etc/nixos/configuration.nix; then ${pkgs.gnugrep}/bin/grep 'glf.environment.edition =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g'; else echo ""; fi)
 	if [ "''${current_environment}" != "gnome" ] && [ "''${current_environment}" != "plasma" ]; then current_environment="gnome"; fi
 	if [ "''${current_edition}" != "standard" ] && [ "''${current_edition}" != "mini" ] && [ "''${current_edition}" != "studio" ] && [ "''${current_edition}" != "studio-pro" ]; then current_edition="standard"; fi
 	
@@ -142,11 +142,13 @@ else
 		${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${1}\";@g" /etc/nixos/configuration.nix
 		${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${2}\";@g" /etc/nixos/configuration.nix
 	else
+		${pkgs.gnused}/bin/sed -i "/services.xserver.desktopManager./d" /etc/nixos/configuration.nix
+		${pkgs.gnused}/bin/sed -i "/services.xserver.displayManager./d" /etc/nixos/configuration.nix
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.environment.type = \"''${1}\";\n}/g" /etc/nixos/configuration.nix
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.environment.edition = \"''${2}\";\n}/g" /etc/nixos/configuration.nix
 	fi
 
-	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS || { \
+	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace || { \
 		${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${current_environment}\";@g" /etc/nixos/configuration.nix; \
 		${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${current_edition}\";@g" /etc/nixos/configuration.nix; \
 		if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then read -rp "''${error_text_fr}"; else read -rp "''${error_text_en}"; fi; \
