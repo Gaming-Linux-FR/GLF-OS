@@ -88,7 +88,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = "GLF-OS-ALPHA-OMNISLASH_ROLLING";
+                  volumeID = "GLF-OS-BETA-OMNISLASH_ROLLING";
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";
@@ -104,7 +104,6 @@
 
         # Configuration de test utilisateur simulée
         "user-test" = nixpkgs.lib.nixosSystem {
-           # <<<=== AJOUT DE 'inherit specialArgs' (si nécessaire) ===>>>
           inherit system specialArgs; # Passe les arguments spéciaux ici aussi
           modules = baseModules ++ [
             { # Config VM/test
