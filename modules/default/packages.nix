@@ -78,7 +78,6 @@
       btop-rocm
       celluloid
       discord
-      htop
       libreoffice-fresh
       transmission_4-gtk
       vivaldi
