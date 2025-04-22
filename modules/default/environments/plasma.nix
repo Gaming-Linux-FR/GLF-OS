@@ -39,12 +39,18 @@
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     programs.kdeconnect.enable = true;
 
-    environment = {
+   environment = {
       systemPackages = [
         (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
           [General]
           background=/etc/wallpapers/glf/white.jpg
         '')
+        (vivaldi.overrideAttrs
+          (oldAttrs: {
+            dontWrapQtApps = false;
+            dontPatchELF = true;
+            nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.kdePackages.wrapQtAppsHook];
+          }))
       ];
     };
   };
