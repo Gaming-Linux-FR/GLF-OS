@@ -79,7 +79,7 @@
       celluloid
       discord
       htop
-      libreoffice-fresh
+      onlyoffice-desktopeditors
       transmission_4-gtk
       vivaldi
     ]);
