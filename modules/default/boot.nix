@@ -19,6 +19,7 @@ in
 
   config = lib.mkIf config.glf.boot.enable {
 
+    #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
 
     boot = {
