@@ -20,17 +20,27 @@ sudo nano /etc/nixos/customConfig/default.nix
 ```
 
 ```nix
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
+  environment.systemPackages = [
+  # Add your stable apps here (exemple: pkgs.btop)
 
-  environment.systemPackages = with pkgs; [
-  # Add your apps here
+
+
+  # Add your unstable apps here (exemple: pkgs-unstable.btop)
+
 
   ];
 
 
-  # Ajoutez ici vos configurations
+  # Add your custom configuration here ↓
 
 }
 ```
@@ -39,11 +49,27 @@ Si nous rajoutons l'option zsh :
 
 
 ```nix
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
+  environment.systemPackages = [
+  # Add your stable apps here (exemple: pkgs.btop)
 
-  # Ajoutez ici vos configurations
+
+
+  # Add your unstable apps here (exemple: pkgs-unstable.btop)
+
+
+  ];
+
+
+  # Add your custom configuration here ↓
   programs.zsh.enable = true;
 
 }
