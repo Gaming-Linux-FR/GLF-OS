@@ -150,14 +150,13 @@ in
                 "dash-to-dock@micxgx.gmail.com"
               ];
               favorite-apps = [
-                "vivaldi-stable.desktop"
+                "firefox.desktop"
                 "steam.desktop"
                 "net.lutris.Lutris.desktop"
                 "com.heroicgameslauncher.hgl.desktop"
                 "discord.desktop"
                 "org.gnome.Nautilus.desktop"
                 "org.dupot.easyflatpak.desktop"
-                "org.gnome.Calendar.desktop"
               ];
             };
 

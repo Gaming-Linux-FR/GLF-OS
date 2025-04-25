@@ -80,7 +80,7 @@
       discord
       libreoffice-fresh
       transmission_4-gtk
-      vivaldi
+     # vivaldi
     ]);
 
   };
