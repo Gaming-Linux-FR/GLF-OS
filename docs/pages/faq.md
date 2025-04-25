@@ -82,7 +82,65 @@ GLF OS est proposée en deux versions :
 - **GLF OS Stable** : La version optimale de GLF OS, un mix parfait entre paquets frais et stabilité. Nous exploitons toutes les possibilités de NixOS pour vous fournir un système fiable au quotidien. Profitez du meilleur des deux mondes : les paquets gaming reçoivent les toutes dernières nouveautés, tandis que le reste du système évolue par étapes majeures tous les six mois (à l’image de Fedora), garantissant ainsi une base solide et testée.
 - **GLF OS Rolling** : L’expérience à la pointe (bleeding edge) par excellence ! Cette version est constamment mise à jour, idéale pour tester les fonctionnalités les plus récentes et assurer la compatibilité avec le matériel neuf. C’est un choix pour les utilisateurs avertis, conscients que des bugs ou des « rebuilds » problématiques peuvent survenir temporairement.
 
-Si vous avez déjà installé la version stable, vous pouvez passer sur la version unstable en [A compléter].
+Si vous avez déjà installé la version stable, vous pouvez passer sur la version unstable en suivant les étapes suivantes :
+
+1. Aller dans /etc/nixos
+2. Editer le fichier flake.nix pour supprimer le contenu et le remplacer par ce qui suit :
+
+```
+# flake.nix (CORRIGÉ - Pour iso-cfg - Version "via GitHub" - Révisé)
+{
+  description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
+
+  inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        glf.url = "github:Gaming-Linux-FR/GLF-OS/rolling";
+        nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+};
+
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-unstable,
+      glf,
+      self,
+      ...
+    }: 
+
+    let
+      system = "x86_64-linux"; 
+
+      # Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
+      pkgsStable = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      # Configuration pour le nixpkgs unstable (sera passé en argument spécial)
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations."GLF-OS" = nixpkgs.lib.nixosSystem {
+        inherit system; # Maintenant 'system' est défini
+        pkgs = pkgsStable; 
+        modules = [
+          ./configuration.nix 
+          glf.nixosModules.default 
+        ];
+
+        specialArgs = {
+          pkgs-unstable = pkgsUnstable; 
+        };
+      };
+    };
+}
+```
+
+{: .info }
+> Nous ne conseillons cette manipulation uniquement pour les personnes voulant faire des tests ou dans le cas de matériel hyper récent et non pris en charge en version stable.
 
 ## Comment mettre à jour GLF OS ?
 
