@@ -1,7 +1,7 @@
+English below
+[Go to english description](#GLF-OS-English)  [🇫🇷 Passer à la version française](#script-architect-fr)  
 
 # GLF-OS
-
-English below
 
 Gaming Linux Fr est la première communauté francophone dédiée au jeu vidéo sur Linux.
 
@@ -13,7 +13,7 @@ Et c'est en cumulant ces deux exercices que l'idée de créer notre propre distr
 
 Ce projet est avant tout un projet communautaire, pour Gaming Linux Fr. Il est également un défi, relevé par la communauté.
 
-# GLF-OS (English)
+# GLF-OS-English
 
 Gaming Linux Fr is a community of enthusiasts built around a Discord and a website.
 We are the first French-speaking community dedicated to gaming on Linux.
