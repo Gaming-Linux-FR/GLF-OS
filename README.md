@@ -1,5 +1,5 @@
 English below
-[Go to english description](#GLF-OS-English)  [🇫🇷 Passer à la version française](#script-architect-fr)  
+[Go to english description](#GLF-OS-English)
 
 # GLF-OS
 
