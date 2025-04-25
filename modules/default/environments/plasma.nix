@@ -41,6 +41,7 @@
     programs.kdeconnect.enable = true;
 
     environment = {
+      plasma6.excludePackages = [ pkgs.kdePackages.discover ];
       systemPackages = [
         (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
           [General]
