@@ -12,7 +12,7 @@ Ce projet consiste à réaliser un système d’exploitation, autour d’un cahi
 
 GLF OS est basé sur [NixOS](https://nixos.org/), avec une orientation gaming et multimédia.
 
-Pour en savoir plus, je vous invite à visiter [cette page](https://www.gaminglinux.fr/?page_id=8365).
+Pour en savoir plus, visitez [cette page](https://www.gaminglinux.fr/?page_id=8365).
 
 ## Quelle est la configuration requise ?
 
@@ -20,7 +20,7 @@ Celle-ci est indiquée sur la [page suivante](./documentation/minimalConfigurati
 
 ## GLF OS peut-il être installé avec le secureboot actif ? 
 
-Actuellement non. C'est un objectif que nous souhaitons atteindre à l'avenir.
+Non. Pour le moment, il vous faut le désactiver sur votre ordinateur.
 
 ## Une installation sans connexion internet est-elle possible ? 
 
@@ -46,16 +46,15 @@ Cela dit, suite à quelques retours, nous vous conseillons l’utilisation de Ba
 {: .info }
 > La durée d'installation fait référence au moment où vous avez cliqué sur **Installer**. 
 
-La durée d'installation dépend de votre bande passante, avec la fibre et une machine moderne, comptez entre 8 et 12 minutes.
+La durée d'installation dépend de votre bande passante. A titre d'exemple, avec la fibre et une machine récente, comptez entre 8 et 12 minutes.
 
 ## Combien de données sont téléchargées pendant l'installation ? 
 
-Nous fournissons dans l'iso l'ensemble des binaires compilés, de ce fait, la majorité des paquets n'ont pas besoin d'être téléchargés pendant l'installation. 
+Nous fournissons dans l'ISO l'ensemble des binaires compilés. De ce fait, la majorité des paquets n'ont pas besoin d'être téléchargés pendant l'installation. 
 
-Notez cependant que le chargeur de démarrage (*grub*, *systemd-boot*) est téléchargé durant l'installation.
+Notez cependant que le chargeur de démarrage (*grub*) est téléchargé durant l'installation.
 
-Ainsi, pour répondre à la question initiale, nous avons observé un minimum de **500Mo** téléchargés durant l'installation.
-La valeur peut croitre si les paquets fournis dans l'iso sont plus anciens que ceux disponibles en ligne.
+Nous avons observé un minimum de **500Mo** téléchargés durant l'installation.
 
 ## Le téléchargement est lent durant l'installation ! 
 
@@ -78,11 +77,12 @@ L'ajout de KDE est prévu pour la version Beta.
 
 ## Puis-je passer GLF OS en "unstable" ? 
 
-Actuellement, GLF OS suit nixos stable. Un version instable existe et propose des paquets plus récents.
-Nous proposons uniquement des paquets stables et nous vous déconseillons d'utiliser unstable pour le moment. 
+GLF OS est proposée en deux versions :
 
-{: .info }
-> A l'avenir, un de nos objectifs et de permettre l'installation de paquets unstable en conservant une base stable. 
+- **GLF OS Stable** : La version optimale de GLF OS, un mix parfait entre paquets frais et stabilité. Nous exploitons toutes les possibilités de NixOS pour vous fournir un système fiable au quotidien. Profitez du meilleur des deux mondes : les paquets gaming reçoivent les toutes dernières nouveautés, tandis que le reste du système évolue par étapes majeures tous les six mois (à l’image de Fedora), garantissant ainsi une base solide et testée.
+- **GLF OS Rolling** : L’expérience à la pointe (bleeding edge) par excellence ! Cette version est constamment mise à jour, idéale pour tester les fonctionnalités les plus récentes et assurer la compatibilité avec le matériel neuf. C’est un choix pour les utilisateurs avertis, conscients que des bugs ou des « rebuilds » problématiques peuvent survenir temporairement.
+
+Si vous avez déjà installé la version stable, vous pouvez passer sur la version unstable en [A compléter].
 
 ## Comment mettre à jour GLF OS ?
 
