@@ -13,7 +13,7 @@ Pour garantir une expérience optimale avec notre distribution, votre machine do
 | **Matériel**              | **Spécifications Minimales**                                     |
 |---------------------------|------------------------------------------------------------------|
 | **Processeur (CPU)**      | - Architecture : x86_64<br>- Nombre de cœurs : 4                 |
-| **Carte Graphique (GPU)** | - <img src="../../assets/images/amd.svg" style="width: 64px; height: 64px; vertical-align: middle;"> : RX560<br>-  <img src="../../assets/images/intel.svg" style="width: 64px; height: 64px; vertical-align: middle;">: Xe/Arc<br>- <img src="../../assets/images/nvidia.svg" style="width: 64px; height: 64px; vertical-align: middle;"> : GTX 1060 |
+| **Carte Graphique (GPU)** | - <img src="../../assets/images/amd.svg" style="width: 64px; height: 64px; vertical-align: middle;"> : RX560<br>-  <img src="../../assets/images/intel.svg" style="width: 64px; height: 64px; vertical-align: middle;">: Xe/Arc<br>- <img src="../../assets/images/nvidia.svg" style="width: 64px; height: 64px; vertical-align: middle;"> : GTX 1660 |
 | **Mémoire Vive (RAM)**    | 8 Go ou plus                                                     |
 | **Espace de Stockage**    | 60 Go d’espace libre sur disque                                  |
 
