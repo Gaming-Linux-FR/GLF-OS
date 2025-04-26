@@ -23,6 +23,7 @@ in
       mangohud
       wineWowPackages.staging
       winetricks
+      joystickwake
     ];
 
     environment.sessionVariables = {
