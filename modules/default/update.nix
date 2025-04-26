@@ -22,7 +22,7 @@
     environment.etc."glfos/update.sh" = {
       text = ''
         #!${pkgs.bash}/bin/bash
-
+        NH_FLAKE_PATH="/etc/nixos"
         FLAKE_PATH="/etc/nixos"
         FLAKE_NAME="GLF-OS"
 
