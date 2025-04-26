@@ -10,11 +10,6 @@
 
   config = lib.mkIf config.glf.nh.enable {
 
-    environment.sessionVariables = {
-      NH_FLAKE = "/etc/nixos";
-    };
-
-
     environment.shellAliases = {
       rebuild = "nh os switch /etc/nixos";
     };
