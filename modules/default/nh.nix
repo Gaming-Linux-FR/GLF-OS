@@ -14,10 +14,10 @@
       rebuild = "nh os switch /etc/nixos";
     };
 
-    programs.nh = {
-      enable = true;
-      flake = "/etc/nixos";
-      clean = {
+    programs = {
+      nh.enable = true;
+      nh_flake = "/etc/nixos";
+      nh.clean = {
         enable = true;
         dates = "weekly";
         extraArgs = "--keep-since 7d --keep 3";
