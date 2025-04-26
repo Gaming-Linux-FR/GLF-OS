@@ -23,7 +23,7 @@
       text = ''
         #!${pkgs.bash}/bin/bash
         NH_FLAKE_PATH="/etc/nixos"
-        FLAKE_PATH="/etc/nixos"
+        #FLAKE_PATH="/etc/nixos"
         FLAKE_NAME="GLF-OS"
 
         FLAKE_LOCK_PATH="/etc/nixos/flake.lock"
