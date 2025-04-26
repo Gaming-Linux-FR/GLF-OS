@@ -16,7 +16,7 @@
 
     programs.nh = {
       enable = true;
-      flake = "/etc/nixos";
+      nh_flake = "/etc/nixos";
       clean = {
         enable = true;
         dates = "weekly";
