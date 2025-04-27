@@ -60,7 +60,7 @@ stdenvNoCC.mkDerivation rec {
 
     substituteInPlace scripts/icon.sh \
       --replace-warn "/bin/bash" "${bash}/bin/bash" \
-      --replace-warn '"$HOME"/.config/fastfetch/GLFfetch' "$assets/share/${pname}" \
+      --replace-warn '"$HOME"/.config/fastfetch/GLFfetch' "$assets/share/${pname}"
 
     substituteInPlace scripts/install_date.sh \
       --replace-warn "/bin/bash" "${bash}/bin/bash" \
