@@ -78,7 +78,6 @@ stdenvNoCC.mkDerivation rec {
     mkdir -p $out/share/doc/${pname}
 
     ### Copy all files
-    ls -al $src
     cp -r . $assets/share/${pname}/
 
     ### Move some files to doc
