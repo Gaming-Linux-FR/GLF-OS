@@ -75,10 +75,16 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin $assets/share/${pname}
+    mkdir -p $out/share/doc/${pname}
 
     ### Copy all files
     ls -al $src
     cp -r . $assets/share/${pname}/
+
+    ### Move some files to doc
+    mv $assets/share/${pname}/LICENSE $out/share/doc/${pname}/
+    mv $assets/share/${pname}/README.md $out/share/doc/${pname}/
+
     ${lib.optionalString (glfIcon == "GLFos") ''
       ### Link logo from nix store
       ln -s ${./logo.png} $assets/share/${pname}/${glfIcon}.png
