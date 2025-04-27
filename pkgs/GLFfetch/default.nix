@@ -80,8 +80,8 @@ stdenvNoCC.mkDerivation rec {
     ls -al $src
     cp -r . $assets/share/${pname}/
     ${lib.optionalString (glfIcon == "GLFos") ''
-      ### Copy logo from nix store
-      cp ${./logo.png} $assets/share/${pname}/${glfIcon}.png
+      ### Link logo from nix store
+      ln -s ${./logo.png} $assets/share/${pname}/${glfIcon}.png
       rm $assets/share/${pname}/GLF.png
     ''}
 
