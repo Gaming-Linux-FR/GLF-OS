@@ -24,6 +24,8 @@
       desktopManager.plasma6.enable = true;
     };
 
+    hardware.bluetooth.enable = true;
+
     xdg.portal = {
       enable = true;
       extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
