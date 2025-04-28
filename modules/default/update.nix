@@ -19,6 +19,8 @@
       gawk
     ];
 
+    services.systembus-notify.enable = true;
+
     environment.etc."glfos/update.sh" = {
       text = ''
         #!${pkgs.bash}/bin/bash
@@ -59,6 +61,11 @@
             exit 1
           fi
           echo "[INFO] GLFOS update and rebuild completed successfully." >&2
+          if [ -n "$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)" ] && [ "$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)" == "fr" ]; then
+            ${pkgs.dbus}/bin/dbus-send --system / net.nuetzlich.SystemNotifications.Notify 'string:Mise à jour système terminée.' 'string:Le système a été mis à jour. Les changements prendront effet au prochain démarrage.'
+          else
+            ${pkgs.dbus}/bin/dbus-send --system / net.nuetzlich.SystemNotifications.Notify 'string:System update completed.' 'string:The system has been updated. Changes will be applied on next boot.'
+          fi
         else
           echo "[INFO] No changes detected in flake.lock. Skipping rebuild." >&2
         fi
