@@ -4,7 +4,7 @@
   pkgs,
   ...
 }:
-time.hardwareClockInLocalTime = true;
+
 {
 
   options.glf.system.enable = lib.mkOption {
