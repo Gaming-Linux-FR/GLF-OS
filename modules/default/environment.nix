@@ -42,8 +42,4 @@ with lib;
     };
   };
 
-  # Utilise l'horloge au temps local plutôt qu'UTC pour éviter les différences de temps en dual boot Windows/GLFOS
-  time = {
-    hardwareClockInLocalTime = true;
-  };
 }
