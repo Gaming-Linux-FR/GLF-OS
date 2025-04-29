@@ -76,7 +76,6 @@
       texlivePackages.hyphen-french
     ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
       btop-rocm
-      vlc 
       celluloid
       discord
       libreoffice-fresh
