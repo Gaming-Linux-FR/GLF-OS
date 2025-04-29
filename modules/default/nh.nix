@@ -10,8 +10,8 @@
 
   config = lib.mkIf config.glf.nh.enable {
     environment.variables = {
-          NH_FLAKE = "/etc/nixos/flake.nix";
-  };
+        NH_FLAKE = lib.mkForce "/etc/nixos/flake.nix";
+    };
 
     environment.shellAliases = {
       rebuild = "nh os switch /etc/nixos";
