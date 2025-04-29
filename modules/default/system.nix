@@ -6,6 +6,7 @@
 }:
 
 {
+  time.hardwareClockInLocalTime = true;
 
   options.glf.system.enable = lib.mkOption {
     description = "Enable GLF systems configurations";
