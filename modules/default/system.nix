@@ -15,6 +15,8 @@
 
   config = lib.mkIf config.glf.system.enable {
 
+    time.hardwareClockInLocalTime = true;
+
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
