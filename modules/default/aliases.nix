@@ -38,11 +38,7 @@
           	    df -h; \
           	    echo -e "\n--- RAM ---"; \
           	    free -h
-          	'';
-        glf-help = ''
-              echo -e "\n--- glf-update ---"; \
-              echo -e "\n Recherche les mises à jours sur le github GLF"; \
-            '';
+          	'';        
       };
     };
 
