@@ -1,12 +1,12 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ lib, config, pkgs, ... }:
 
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
+  hasKvmAmd = builtins.elem "kvm-amd" config.hardware.cpu.kernelModules or [];
+  finalKernelModules = if hasKvmAmd then
+    [ "amd_pstate" "nosplit_lock_mitigate" ]
+  else
+    [ "nosplit_lock_mitigate" ];
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -16,23 +16,16 @@ in
   };
 
   config = lib.mkIf config.glf.boot.enable {
-
-    #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
 
     boot = {
       tmp.cleanOnBoot = true;
-      supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
-      kernelModules =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then
-          [ "amd_pstate" "nosplit_lock_mitigate" ]
-        else
-          [ "nosplit_lock_mitigate" ];
-      extraModulePackages = [ pkgs.linux.package pkgs.xone ];
+      supportedFilesystems.zfs = lib.mkForce false;
+      kernelModules = finalKernelModules;
+      extraModulePackages = [ pkgs.xone ];
       plymouth = {
         enable = true;
         theme = "glfos";
-        # La variable plymouth-glfos vient du 'let' ci-dessus
         themePackages = [ plymouth-glfos ];
       };
       kernel.sysctl = {
@@ -49,7 +42,5 @@ in
         kernel_kexec_load_disabled = 1;
       };
     };
-
   };
-
-} # Fin du module
+}
