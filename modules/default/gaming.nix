@@ -3,13 +3,6 @@ with lib;
 
 let
   system = "x86_64-linux";
-
-  xone = import ./xone-module.nix {
-    pkgs = pkgs;
-    lib = lib;
-    kernel = config.boot.kernelPackages.linux;
-  };
-
 in
 {
   options.glf.gaming.enable = mkOption {
@@ -62,6 +55,49 @@ in
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
 
-    boot.extraModulePackages = [ xone ]; # Utiliser le xone importé
+    let
+      xone = pkgs.stdenv.mkDerivation (finalAttrs: {
+        pname = "xone";
+        version = "0.3-unstable-2024-12-23";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "dlundqvist";
+          repo = "xone";
+          rev = "6b9d59aed71f6de543c481c33df4705d4a590a31";
+          hash = "sha256-MpxP2cb0KEPKaarjfX/yCbkxIFTwwEwVpTMhFcis+A4=";
+        };
+
+        setSourceRoot = ''
+          export sourceRoot=$(pwd)/${finalAttrs.src.name}
+        '';
+
+        nativeBuildInputs = config.boot.kernelPackages.linux.moduleBuildDependencies;
+
+        makeFlags = [
+          "-C"
+          "${config.boot.kernelPackages.linux.dev}/lib/modules/${config.boot.kernelPackages.linux.modDirVersion}/build"
+          "M=$(sourceRoot)"
+          "VERSION=${finalAttrs.version}"
+        ];
+
+        enableParallelBuilding = true;
+        buildFlags = [ "modules" ];
+        installFlags = [ "INSTALL_MOD_PATH=${placeholder "out"}" ];
+        installTargets = [ "modules_install" ];
+
+        meta = with lib; {
+          description = "Linux kernel driver for Xbox One and Xbox Series X|S accessories";
+          homepage = "https://github.com/dlundqvist/xone";
+          license = licenses.gpl2Plus;
+          maintainers = with lib.maintainers; [
+            rhysmdnz
+            fazzi
+          ];
+          platforms = platforms.linux;
+          broken = config.boot.kernelPackages.linux.kernelOlder "5.11";
+        };
+      });
+    in
+    boot.extraModulePackages = [ xone ];
   };
 }
