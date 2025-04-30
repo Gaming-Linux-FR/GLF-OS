@@ -22,7 +22,7 @@ in
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false;
       kernelModules = finalKernelModules;
-      extraModulePackages = [ pkgs.xone ];
+      #extraModulePackages = [ pkgs.xone ];
       plymouth = {
         enable = true;
         theme = "glfos";
