@@ -28,7 +28,7 @@ in
           [ "amd_pstate" "nosplit_lock_mitigate" ]
         else
           [ "nosplit_lock_mitigate" ];
-      extraModulePackages = [ linux.package pkgs.xone ];
+      extraModulePackages = [ pkgs.linux.package pkgs.xone ];
       plymouth = {
         enable = true;
         theme = "glfos";
