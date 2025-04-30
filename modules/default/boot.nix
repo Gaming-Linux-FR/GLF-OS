@@ -6,7 +6,6 @@
 }:
 
 let
-  # Assurez-vous que ce chemin est correct par rapport à l'emplacement de boot.nix
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 in
 {
@@ -24,10 +23,13 @@ in
     boot = {
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
-      kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
-    extraModulePackages = [ pkgs.xone ];      
-    plymouth = {
+      kernelModules =
+        if builtins.elem "kvm-amd" config.boot.kernelModules then
+          [ "amd_pstate" "nosplit_lock_mitigate" ]
+        else
+          [ "nosplit_lock_mitigate" ];
+      extraModulePackages = [ linux.package pkgs.xone ];
+      plymouth = {
         enable = true;
         theme = "glfos";
         # La variable plymouth-glfos vient du 'let' ci-dessus
@@ -46,8 +48,8 @@ in
         kernel_kptr_restrict = 2;
         kernel_kexec_load_disabled = 1;
       };
-    }; 
+    };
 
-  }; 
+  };
 
 } # Fin du module
