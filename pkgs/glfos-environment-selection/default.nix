@@ -9,50 +9,58 @@ pkgs.stdenv.mkDerivation rec {
 set +o nounset
 set -e
 
+error_display_fr="Erreur: La variable d'environnement DISPLAY n'a pas été trouvée, assurez-vous de lancer cette application depuis un environnement de bureau."
 error_internet_fr="Erreur: Aucune connection internet n'est disponible."
 error_arguments1_fr="Erreur: Les paramètres d'environnement et / ou d'édition GLF-OS ne sont pas valides."
 error_arguments2_fr="Erreur: Veuillez spécifier l'environnement et l'édition GLF-OS."
 environment_title_fr="GLF-OS - Interface de sélection de l'environnement"
 environment_text_fr="Bienvenue dans l'interface de sélection de l'environnement.\n\nQuel environnement de GLF-OS souhaitez-vous utiliser ?\n\nAttention: changer d'environnement remettra à zéro vos paramètres dconf et gtk.\n"
-environment_column1_fr="Sélection"
-environment_column2_fr="Environement"
+environment_column_fr="Environement"
 environment_ok_label_fr="Suivant"
-environment_cancel_label_fr="Quitter"
+exit_label_fr="Quitter"
 edition_title_fr="GLF-OS - Interface de sélection de l'environnement"
 edition_text_fr="Quelle édition de GLF-OS souhaitez-vous utiliser ?"
-edition_column1_fr="Sélection"
-edition_column2_fr="Edition"
+edition_column_fr="Edition"
 edition_ok_label_fr="Appliquer"
-edition_cancel_label_fr="Quitter"
+error_pkexec_fr="Erreur: La commande pkexec n'a pas fonctionné."
 error_text_fr="Erreur: GLF-OS n'a pas pu être mis à jour."
 reboot_text_fr="Le système a été mis à jour. Les changements prendront effet au prochain démarrage."
 
+error_display_en="Error: DISPLAY env variable was not found, please make sure you run this program from a desktop environment."
 error_internet_en="Error: Internet connection is not available."
 error_arguments1_en="Error: GLF-OS environment and / or edition parameters are not valid."
 error_arguments2_en="Error: Please specify both GLF-OS environment and edition."
 environment_title_en="GLF-OS - Environment selection interface"
 environment_text_en="Welcome to the environment selection interface.\n\nWhich environment of GLF-OS would you like to use ?\n\nWarning: changing the environment will reset your dconf and gtk settings.\n"
-environment_column1_en="Selection"
-environment_column2_en="Environment"
+environment_column_en="Environment"
 environment_ok_label_en="Next"
-environment_cancel_label_en="Exit"
+exit_label_en="Exit"
 edition_title_en="GLF-OS - Environment selection interface"
 edition_text_en="Which GLF-OS edition would you like to use ?"
-edition_column1_en="Selection"
-edition_column2_en="Edition"
+edition_column_en="Edition"
 edition_ok_label_en="Apply"
-edition_cancel_label_en="Exit"
+error_pkexec_en="Error: pkexec command failed."
 error_text_en="Error: GLF-OS update failed."
 reboot_text_en="The system has been updated. Changes will be applied on the next boot."
 
 locale="$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)"
 
-if ! ${pkgs.curl}/bin/curl -L https://github.com/Gaming-Linux-FR/GLF-OS > /dev/null 2>&1; then
-	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
-		read -rp "''${error_internet_fr}"
+if [ -z "''${DISPLAY}" ]; then
+		if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
+		echo "''${error_display_fr}"
 		exit 1
 	else
-		read -rp "''${error_internet_en}"
+		echo "''${error_display_en}"
+		exit 1
+	fi
+fi
+
+if ! ${pkgs.curl}/bin/curl -L https://github.com/Gaming-Linux-FR/GLF-OS > /dev/null 2>&1; then
+	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
+		${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_internet_fr}"
+		exit 1
+	else
+		${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_internet_en}"
 		exit 1
 	fi
 fi
@@ -83,15 +91,15 @@ fi
 
 if [ "''${interface}" -eq 1 ]; then
 
-	environment_options=( "FALSE" "Gnome" "FALSE" "Plasma" )
-	edition_options=( "FALSE" "Standard" "FALSE" "Mini" "FALSE" "Studio" "FALSE" "Studio | DaVinci Resolve Pro" )
+	environment_options=( "Gnome" "Plasma" )
+	edition_options=( "Standard" "Mini" "Studio" "Studio | DaVinci Resolve Pro" )
 
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
-		selected_environment=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${environment_title_fr}" --list --radiolist --text "''${environment_text_fr}" --column "''${environment_column1_fr}" --column "''${environment_column2_fr}" "''${environment_options[@]}" --ok-label="''${environment_ok_label_fr}" --cancel-label="''${environment_cancel_label_fr}" 2>/dev/null)
-		selected_edition=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${edition_title_fr}" --list --radiolist --text "''${edition_text_fr}" --column "''${edition_column1_fr}" --column "''${edition_column2_fr}" "''${edition_options[@]}" --ok-label="''${edition_ok_label_fr}" --cancel-label="''${edition_cancel_label_fr}" 2>/dev/null)
+		selected_environment=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${environment_title_fr}" --list --text "''${environment_text_fr}" --column "''${environment_column_fr}" "''${environment_options[@]}" --ok-label="''${environment_ok_label_fr}" --cancel-label="''${exit_label_fr}" 2>/dev/null)
+		selected_edition=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${edition_title_fr}" --list --text "''${edition_text_fr}" --column "''${edition_column_fr}" "''${edition_options[@]}" --ok-label="''${edition_ok_label_fr}" --cancel-label="''${exit_label_fr}" 2>/dev/null)
 	else
-		selected_environment=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${environment_title_en}" --list --radiolist --text "''${environment_text_en}" --column "''${environment_column1_en}" --column "''${environment_column2_en}" "''${environment_options[@]}" --ok-label="''${environment_ok_label_en}" --cancel-label="''${environment_cancel_label_en}" 2>/dev/null)
-		selected_edition=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${edition_title_en}" --list --radiolist --text "''${edition_text_en}" --column "''${edition_column1_en}" --column "''${edition_column2_en}" "''${edition_options[@]}" --ok-label="''${edition_ok_label_en}" --cancel-label="''${edition_cancel_label_en}" 2>/dev/null)
+		selected_environment=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${environment_title_en}" --list --text "''${environment_text_en}" --column "''${environment_column_en}" "''${environment_options[@]}" --ok-label="''${environment_ok_label_en}" --cancel-label="''${exit_label_en}" 2>/dev/null)
+		selected_edition=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${edition_title_en}" --list --text "''${edition_text_en}" --column "''${edition_column_en}" "''${edition_options[@]}" --ok-label="''${edition_ok_label_en}" --cancel-label="''${exit_label_en}" 2>/dev/null)
 	fi
 	if [ -z "$selected_environment" ]; then exit 0; fi
 
@@ -120,17 +128,13 @@ if [ "''${interface}" -eq 1 ]; then
 	esac
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
-		pkexec --disable-internal-agent "''${0}" "''${environment_short_name}" "''${edition_short_name}"
-		status=$?
-		exit $status
+		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${environment_short_name}" "''${edition_short_name}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
 	fi
 
 else
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
-		pkexec --disable-internal-agent "''${0}" "''${1}" "''${2}"
-		status=$?
-		exit $status
+		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${1}" "''${2}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
 	fi
 
 	current_environment=$(if ${pkgs.gnugrep}/bin/grep -q 'glf.environment.type =' /etc/nixos/configuration.nix; then ${pkgs.gnugrep}/bin/grep 'glf.environment.type =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g'; else echo ""; fi)
@@ -148,18 +152,17 @@ else
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.environment.edition = \"''${2}\";\n}/g" /etc/nixos/configuration.nix
 	fi
 
-	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace || { \
-		${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${current_environment}\";@g" /etc/nixos/configuration.nix; \
-		${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${current_edition}\";@g" /etc/nixos/configuration.nix; \
-		if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then read -rp "''${error_text_fr}"; else read -rp "''${error_text_en}"; fi; \
-		exit 1; \
-	}
+	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace || { ${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${current_environment}\";@g" /etc/nixos/configuration.nix; ${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${current_edition}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}"; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}"; fi; exit 1; }
 
 	if [ "''${current_environment}" != "''${1}" ]; then
 		for gtkconfig in /home/*/.gtkrc* /home/*/.config/gtkrc* /home/*/.config/gtk-* /home/*/.config/dconf; do ${pkgs.coreutils}/bin/rm -rf "''${gtkconfig}"; done
 	fi
 
-	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then echo ""; read -rp "''${reboot_text_fr}"; else echo ""; read -rp "''${reboot_text_en}"; fi
+	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
+		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --info --ok-label="''${exit_label_fr}" --text "''${reboot_text_fr}"
+	else
+		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --info --ok-label="''${exit_label_en}" --text "''${reboot_text_en}"
+	fi
 
 fi
       '';
