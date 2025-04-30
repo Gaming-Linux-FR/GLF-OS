@@ -4,7 +4,7 @@ with lib;
 let
   system = "x86_64-linux";
 
-  xone = pkgs.stdenv.mkDerivation (finalAttrs: {
+  xone = kernel: pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "xone";
     version = "0.3-unstable-2024-12-23";
 
@@ -19,11 +19,11 @@ let
       export sourceRoot=$(pwd)/${finalAttrs.src.name}
     '';
 
-    nativeBuildInputs = config.boot.kernelPackages.linux.moduleBuildDependencies;
+    nativeBuildInputs = kernel.moduleBuildDependencies;
 
     makeFlags = [
       "-C"
-      "${config.boot.kernelPackages.linux.dev}/lib/modules/${config.boot.kernelPackages.linux.modDirVersion}/build"
+      "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
       "M=$(sourceRoot)"
       "VERSION=${finalAttrs.version}"
     ];
@@ -42,9 +42,12 @@ let
         fazzi
       ];
       platforms = platforms.linux;
-      broken = config.boot.kernelPackages.linux.kernelOlder "5.11";
+      broken = kernel.kernelOlder "5.11";
     };
   });
+
+  currentKernel = config.boot.kernelPackages.linux;
+
 in
 {
   options.glf.gaming.enable = mkOption {
@@ -97,6 +100,6 @@ in
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
 
-    boot.extraModulePackages = [ xone ]; # Activer l'installation du module
+    boot.extraModulePackages = [ (xone currentKernel) ]; # Passer le kernel comme argument
   };
 }
