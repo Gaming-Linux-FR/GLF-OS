@@ -1,13 +1,5 @@
 { lib, config, pkgs, ... }:
 
-let
-  plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
-  hasKvmAmd = builtins.elem "kvm-amd" config.hardware.cpu.kernelModules or [];
-  finalKernelModules = if hasKvmAmd then
-    [ "amd_pstate" "nosplit_lock_mitigate" ]
-  else
-    [ "nosplit_lock_mitigate" ];
-in
 {
   options.glf.boot.enable = lib.mkOption {
     description = "Enable GLF Boot configurations";
@@ -21,12 +13,15 @@ in
     boot = {
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false;
-      kernelModules = finalKernelModules;
-      #extraModulePackages = [ pkgs.xone ];
+      kernelParams =
+        if builtins.elem "kvm-amd" config.boot.kernelModules then
+          [ "amd_pstate=active" "nosplit_lock_mitigate" ]
+        else
+          [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
-        themePackages = [ plymouth-glfos ];
+        themePackages = [ pkgs.callPackage ../../pkgs/plymouth-glfos {} ];
       };
       kernel.sysctl = {
         vm_swappiness = 100;
@@ -42,5 +37,7 @@ in
         kernel_kexec_load_disabled = 1;
       };
     };
+
+    hardware.xone.enable = true;
   };
 }
