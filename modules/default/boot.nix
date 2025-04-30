@@ -1,5 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
+  plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos { };
+  xone = pkgs.callPackage ../../pkgs/xone { };  # 👈 ajoute ici xone
+in
 {
   options.glf.boot.enable = lib.mkOption {
     description = "Enable GLF Boot configurations";
@@ -8,21 +17,28 @@
   };
 
   config = lib.mkIf config.glf.boot.enable {
+
+    #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
 
     boot = {
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false;
+
       kernelParams =
         if builtins.elem "kvm-amd" config.boot.kernelModules then
           [ "amd_pstate=active" "nosplit_lock_mitigate" ]
         else
           [ "nosplit_lock_mitigate" ];
+
+      extraModulePackages = [ xone ]; # 👈 intègre le module kernel ici
+
       plymouth = {
         enable = true;
         theme = "glfos";
-        themePackages = [ pkgs.callPackage ../../pkgs/plymouth-glfos {} ];
+        themePackages = [ plymouth-glfos ];
       };
+
       kernel.sysctl = {
         vm_swappiness = 100;
         vm_vfs_cache_pressure = 50;
@@ -38,6 +54,5 @@
       };
     };
 
-    hardware.xone.enable = true;
   };
 }
