@@ -7,16 +7,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1744365361,
-        "narHash": "sha256-TL0tMQ7svD2zEdP692vEh4rzwHtxMVIbamqw4/n4kyU=",
+        "lastModified": 1745943664,
+        "narHash": "sha256-QLQTljInsm6oajRqeGGY1MYhe0U6I1nBier1Rvg9pgo=",
         "owner": "Gaming-Linux-FR",
         "repo": "GLF-OS",
-        "rev": "4f95b545ba9caafddf0fee58c6fd9c2f7a1b3a7f",
+        "rev": "c7aa435215784fc2da9f43fdaa0a20dd5ef516ba",
         "type": "github"
       },
       "original": {
         "owner": "Gaming-Linux-FR",
-        "ref": "dev-2-stable",
+        "ref": "beta",
         "repo": "GLF-OS",
         "type": "github"
       }
@@ -55,11 +55,11 @@
     },
     "nixpkgs-unstable_2": {
       "locked": {
-        "lastModified": 1744098102,
-        "narHash": "sha256-tzCdyIJj9AjysC3OuKA+tMD/kDEDAF9mICPDU7ix0JA=",
+        "lastModified": 1745930157,
+        "narHash": "sha256-y3h3NLnzRSiUkYpnfvnS669zWZLoqqI6NprtLQ+5dck=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c8cd81426f45942bb2906d5ed2fe21d2f19d95b7",
+        "rev": "46e634be05ce9dc6d4db8e664515ba10b78151ae",
         "type": "github"
       },
       "original": {
@@ -71,11 +71,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1744098102,
-        "narHash": "sha256-tzCdyIJj9AjysC3OuKA+tMD/kDEDAF9mICPDU7ix0JA=",
+        "lastModified": 1745930157,
+        "narHash": "sha256-y3h3NLnzRSiUkYpnfvnS669zWZLoqqI6NprtLQ+5dck=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c8cd81426f45942bb2906d5ed2fe21d2f19d95b7",
+        "rev": "46e634be05ce9dc6d4db8e664515ba10b78151ae",
         "type": "github"
       },
       "original": {
