@@ -8,14 +8,7 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      utils,
-      ...
-    }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, utils, ... }:
     let
       system = "x86_64-linux";
 
@@ -26,14 +19,13 @@
       # Utilisation de nixpkgsConfig pour la cohérence
       pkgsStable = import nixpkgs {
         inherit system;
-        config = nixpkgsConfig; 
+        config = nixpkgsConfig;
       };
 
       pkgsUnstable = import nixpkgs-unstable {
         inherit system;
-        config = nixpkgsConfig; 
+        config = nixpkgsConfig;
       };
-
 
       nixosModules = {
         default = import ./modules/default;
@@ -44,18 +36,16 @@
         { nixpkgs.config = nixpkgsConfig; } # Passe la config aux modules
       ];
 
-
       specialArgs = {
         # Rend pkgsUnstable disponible pour les modules
         pkgs-unstable = pkgsUnstable;
       };
-
     in
     {
       iso = self.nixosConfigurations."glf-installer".config.system.build.isoImage;
 
-    nixosConfigurations = {
-        # Configuration pour l'ISO d'installation avec Calamares
+      nixosConfigurations = {
+        # Configuration pour l'ISO d’installation avec Calamares
         "glf-installer" = nixpkgs.lib.nixosSystem {
           # <<<=== AJOUT DE 'inherit specialArgs' ===>>>
           inherit system specialArgs; # Passe les arguments spéciaux aux modules
@@ -107,8 +97,15 @@
           inherit system specialArgs; # Passe les arguments spéciaux ici aussi
           modules = baseModules ++ [
             { # Config VM/test
-              boot.loader.grub = { enable = true; device = "/dev/sda"; useOSProber = true; };
-              fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+              boot.loader.grub = {
+                enable = true;
+                device = "/dev/sda";
+                useOSProber = true;
+              };
+              fileSystems."/" = {
+                device = "/dev/sda1";
+                fsType = "ext4";
+              };
             }
           ];
         }; # Fin user-test
@@ -116,8 +113,7 @@
 
       # Exporte les modules définis dans le 'let'
       inherit nixosModules;
-
-    } # Fin des outputs principaux
+    }
     // utils.lib.eachDefaultSystem ( # Début devShell
       system:
       let
