@@ -26,7 +26,8 @@ in
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
-      plymouth = {
+    extraModulePackages = [ pkgs.xone ];      
+    plymouth = {
         enable = true;
         theme = "glfos";
         # La variable plymouth-glfos vient du 'let' ci-dessus
