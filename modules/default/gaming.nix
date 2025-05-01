@@ -10,6 +10,7 @@ in
     wineWowPackages.staging
     winetricks
     joystickwake
+    oversteer
   ];
 
   environment.sessionVariables = {
