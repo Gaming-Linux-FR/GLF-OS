@@ -1,3 +1,4 @@
+
 { config, pkgs, pkgs-unstable, ... }: # Accepter pkgs-unstable
 let
   system = "x86_64-linux";
@@ -9,6 +10,7 @@ in
     mangohud
     wineWowPackages.staging
     winetricks
+    joystickwake
   ];
 
   environment.sessionVariables = {
@@ -29,6 +31,7 @@ in
   hardware.steam-hardware.enable = true;
   hardware.xpadneo.enable = true;
   programs.steam.gamescopeSession.enable = true;
+  hardware.xone.enable = true;
 
   programs.steam = {
     enable = true;
