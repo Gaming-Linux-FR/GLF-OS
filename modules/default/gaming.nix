@@ -27,6 +27,7 @@ in
     ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
 
+  hardware.new-lg4ff.enable = true; 
   hardware.steam-hardware.enable = true;
   hardware.xone.enable = true;
   hardware.xpadneo.enable = true;
