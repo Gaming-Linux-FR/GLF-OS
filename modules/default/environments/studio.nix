@@ -18,6 +18,16 @@
       {
       };
 
+hardware.graphics = if (builtins.elem "amdgpu" config.services.xserver.videoDrivers) then
+      {
+        extraPackages = with pkgs; [
+      mesa.opencl # Assure que l'implémentation OpenCL de Mesa (Rusticl) est installée
+    ];
+      }
+    else
+      {
+      }; 
+
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs; [
