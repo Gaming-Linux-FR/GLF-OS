@@ -31,7 +31,7 @@ hardware.graphics = if (builtins.elem "amdgpu" config.services.xserver.videoDriv
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs; [
-          blender
+          blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive 
