@@ -1,50 +1,67 @@
-{ config, pkgs, pkgs-unstable, ... }: # Accepter pkgs-unstable
+{ config, pkgs, lib, pkgs-unstable, ... }: # Accepter pkgs-unstable
 let
   system = "x86_64-linux";
 in
 {
-  environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
-    heroic
-    lutris
-    mangohud
-    wineWowPackages.staging
-    winetricks
-    joystickwake
-    oversteer
-  ];
+  options.glf.mangohud.configuration = lib.mkOption {
+    type = with lib.types; enum [ "disabled" "horizontal" "vertical" ];
+    default = "horizontal";
+    description = "MangoHud configuration";
+  };
 
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-    MANGOHUD_CONFIG = ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05'';
-};
+  config = {
 
-
-  services.udev.extraRules = ''
-    # USB
-    ATTRS{name}=="Sony Interactive Entertainment Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-    ATTRS{name}=="Sony Interactive Entertainment DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-    # Bluetooth
-    ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-    ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-  '';
-
-  hardware.new-lg4ff.enable = true; 
-  hardware.steam-hardware.enable = true;
-  hardware.xone.enable = true;
-  hardware.xpadneo.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-
-  programs.steam = {
-    enable = true;
-    package = pkgs.steam.override {
-      extraEnv = {
-        MANGOHUD = true;
-        OBS_VKCAPTURE = true;
-      };
+    environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
+      heroic
+      lutris
+      mangohud
+      wineWowPackages.staging
+      winetricks
+      joystickwake
+      oversteer
+    ];
+  
+    environment.sessionVariables = {
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "horizontal" then
+        ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05''
+      else if config.glf.mangohud.configuration == "vertical" then
+        ''control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution, vulkan_driver,wine''
+      else
+        "";
     };
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    extraCompatPackages = with pkgs; [ proton-ge-bin ];
+
+    services.udev.extraRules = ''
+      # USB
+      ATTRS{name}=="Sony Interactive Entertainment Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      ATTRS{name}=="Sony Interactive Entertainment DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      # Bluetooth
+      ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+    '';
+
+    hardware.new-lg4ff.enable = true; 
+    hardware.steam-hardware.enable = true;
+    hardware.xone.enable = true;
+    hardware.xpadneo.enable = true;
+    programs.steam.gamescopeSession.enable = true;
+
+    programs.steam = {
+      enable = true;
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = if config.glf.mangohud.configuration == "horizontal" || config.glf.mangohud.configuration == "vertical" then
+            true
+          else
+            false;
+          OBS_VKCAPTURE = true;
+        };
+      };
+      remotePlay.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+    };
+
   };
 
 }
