@@ -6,11 +6,12 @@
 }:
 
 {
-    environment.variables = lib.mkIf (config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-      RUSTICL_ENABLE = "radeonsi";
-      ROC_ENABLE_PRE_VEGA = "1";
-    };
-    hardware.amdgpu.opencl.enable = true; 
+    config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
+        hardware.amdgpu.opencl.enable = true;
+        environment.variables = {
+          ROC_ENABLE_PRE_VEGA = "1";
+          RUSTICL_ENABLE = "radeonsi"; 
+        };
     
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
