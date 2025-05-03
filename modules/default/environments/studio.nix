@@ -7,7 +7,13 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-        hardware.amdgpu.opencl.enable = true;
+          hardware.graphics = {
+            enable = true; 
+            extraPackages = with pkgs; [
+            mesa.opencl # Assure que l'implémentation OpenCL de Mesa (Rusticl) est installée
+            ];
+          };
+
         environment.variables = {
           ROC_ENABLE_PRE_VEGA = "1";
           RUSTICL_ENABLE = "radeonsi"; 
