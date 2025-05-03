@@ -7,9 +7,7 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-        extraPackages = with pkgs; [
-      mesa.opencl 
-        ];
+
         environment.variables = {
           ROC_ENABLE_PRE_VEGA = "1";
           RUSTICL_ENABLE = "radeonsi"; 
@@ -18,6 +16,7 @@
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs; [
+          mesa.opencl
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
@@ -29,7 +28,8 @@
         ]
       else
         with pkgs; [
-          blender
+          mesa.opencl
+          blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
