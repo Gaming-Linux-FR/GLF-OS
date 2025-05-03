@@ -7,7 +7,7 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-        
+
         environment.variables = {
           ROC_ENABLE_PRE_VEGA = "1";
           RUSTICL_ENABLE = "radeonsi"; 
