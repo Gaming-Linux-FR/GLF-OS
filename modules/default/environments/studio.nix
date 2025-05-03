@@ -8,11 +8,16 @@
 {
 
   config = lib.mkIf (config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-    environment.variables = {
-          ROC_ENABLE_PRE_VEGA = "1";
-          RUSTICL_ENABLE = "radeonsi";
-          };
-    hardware.amdgpu.opencl.enable = true;
+
+    environment.variables = lib.mkIf (builtins.elem "amdgpu" config.services.xserver.videoDrivers) {
+      RUSTICL_ENABLE="radeonsi";
+      ROC_ENABLE_PRE_VEGA = "1";
+    };
+
+    hardware.graphics = lib.mkIf (builtins.elem "amdgpu" config.services.xserver.videoDrivers) {
+      extraPackages = with pkgs; [
+        mesa.opencl
+      ];
     };
 
     environment.systemPackages =
