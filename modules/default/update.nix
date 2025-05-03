@@ -64,7 +64,7 @@
 
           # On lance le clean
           echo "[INFO] Cleaning up old system generations..." >&2
-          ${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 7d --keep 2
+          ${pkgs.nix}/bin/nix-collect-garbage  --keep 2
           if [ $? -ne 0 ]; then
             echo "[WARNING] Failed to cleanup old generations." >&2
           else
