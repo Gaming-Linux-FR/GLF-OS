@@ -62,7 +62,7 @@
           fi
           echo "[INFO] GLFOS update and rebuild completed successfully." >&2
 
-          # Ajouter la commande de nettoyage ici
+          # On lance le clean
           echo "[INFO] Cleaning up old system generations..." >&2
           ${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 7d --keep 5
           if [ $? -ne 0 ]; then
