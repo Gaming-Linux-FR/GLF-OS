@@ -20,11 +20,11 @@
     programs.nh = {
       enable = true;
       flake = "/etc/nixos";
-      clean = {
-        enable = true;
-        dates = "weekly";
-        extraArgs = "--keep-since 7d --keep 3";
-      };
+      #clean = {
+        #enable = true;
+        #dates = "weekly";
+        #extraArgs = "--keep-since 7d --keep 3";
+      #};
     };
 
   };
