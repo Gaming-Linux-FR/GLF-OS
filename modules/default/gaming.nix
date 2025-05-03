@@ -4,8 +4,8 @@ let
 in
 {
   options.glf.mangohud.configuration = lib.mkOption {
-    type = with lib.types; enum [ "disabled" "horizontal" "vertical" ];
-    default = "horizontal";
+    type = with lib.types; enum [ "disabled" "light" "full" ];
+    default = "light";
     description = "MangoHud configuration";
   };
 
@@ -23,10 +23,10 @@ in
   
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-      MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "horizontal" then
+      MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
         ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05''
-      else if config.glf.mangohud.configuration == "vertical" then
-        ''control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution, vulkan_driver,wine''
+      else if config.glf.mangohud.configuration == "full" then
+        ''control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution, vulkan_driver,wine''
       else
         "";
     };
@@ -50,7 +50,7 @@ in
       enable = true;
       package = pkgs.steam.override {
         extraEnv = {
-          MANGOHUD = if config.glf.mangohud.configuration == "horizontal" || config.glf.mangohud.configuration == "vertical" then
+          MANGOHUD = if config.glf.mangohud.configuration == "light" || config.glf.mangohud.configuration == "full" then
             true
           else
             false;

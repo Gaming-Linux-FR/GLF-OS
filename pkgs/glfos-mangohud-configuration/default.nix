@@ -58,7 +58,7 @@ fi
 if [ ''${#} -eq 0 ]; then
 	interface=1
 elif [ ''${#} -eq 1 ]; then
-	if { [ "''${1}" != "disabled" ] && [ "''${1}" != "horizontal" ] && [ "''${1}" != "vertical" ]; }; then
+	if { [ "''${1}" != "disabled" ] && [ "''${1}" != "light" ] && [ "''${1}" != "full" ]; }; then
 		if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
 			read -rp "''${error_arguments1_fr}"
 			exit 1
@@ -73,8 +73,8 @@ fi
 
 if [ "''${interface}" -eq 1 ]; then
 
-	mangohud_options_fr=( "Désactivé" "Horizontal" "Vertical" )
-	mangohud_options_en=( "Disabled" "Horizontal" "Vertical" )
+	mangohud_options_fr=( "Désactivé" "Simple" "Complet" )
+	mangohud_options_en=( "Disabled" "Light" "Full" )
 
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
 		selected_mangohud=$(${pkgs.zenity}/bin/zenity --height=480 --width=640 --title="''${mangohud_title_fr}" --list --text "''${mangohud_text_fr}" --column "''${mangohud_column_fr}" "''${mangohud_options_fr[@]}" --ok-label="''${mangohud_ok_label_fr}" --cancel-label="''${exit_label_fr}" 2>/dev/null)
@@ -83,7 +83,17 @@ if [ "''${interface}" -eq 1 ]; then
 	fi
 	if [ -z "$selected_mangohud" ]; then exit 0; fi
 
-	mangohud_short_name=$(if [ "''${selected_mangohud}" != "Horizontal" ] && [ "''${selected_mangohud}" != "Vertical" ]; then echo "disabled"; else echo "''${selected_mangohud}" | tr '[:upper:]' '[:lower:]'; fi)
+	case $selected_mangohud in
+		'Complet'|'Full')
+			mangohud_short_name="full"
+		;;
+		'Simple'|'Light')
+			mangohud_short_name="light"
+		;;
+		*)
+			mangohud_short_name="disabled"
+		;;
+	esac
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
 		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${mangohud_short_name}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
@@ -96,7 +106,7 @@ else
 	fi
 
 	current_mangohud=$(if ${pkgs.gnugrep}/bin/grep -q 'glf.mangohud.configuration =' /etc/nixos/configuration.nix; then ${pkgs.gnugrep}/bin/grep 'glf.mangohud.configuration =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g'; else echo ""; fi)
-	if [ "''${current_mangohud}" != "disabled" ] && [ "''${current_mangohud}" != "horizontal" ] && [ "''${current_mangohud}" != "vertical" ]; then current_mangohud="horizontal"; fi
+	if [ "''${current_mangohud}" != "disabled" ] && [ "''${current_mangohud}" != "light" ] && [ "''${current_mangohud}" != "full" ]; then current_mangohud="light"; fi
 	
 	if ${pkgs.gnugrep}/bin/grep -q 'glf.mangohud.configuration = ".*";' /etc/nixos/configuration.nix; then
 		${pkgs.gnused}/bin/sed -i "s@glf.mangohud.configuration = \".*\";@glf.mangohud.configuration = \"''${1}\";@g" /etc/nixos/configuration.nix
