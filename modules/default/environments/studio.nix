@@ -29,7 +29,7 @@
         ]
       else
         with pkgs; [
-          blender
+          blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
