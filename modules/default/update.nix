@@ -23,7 +23,7 @@
 
     environment.etc."glfos/update.sh" = {
       text = ''
-        #!${pkgs.bash}/bin/bash
+        #!/${pkgs.bash}/bin/bash
         FLAKE_PATH="/etc/nixos"
         FLAKE_NAME="GLF-OS"
 
@@ -61,6 +61,16 @@
             exit 1
           fi
           echo "[INFO] GLFOS update and rebuild completed successfully." >&2
+
+          # Ajouter la commande de nettoyage ici
+          echo "[INFO] Cleaning up old system generations..." >&2
+          ${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 7d --keep 5
+          if [ $? -ne 0 ]; then
+            echo "[WARNING] Failed to cleanup old generations." >&2
+          else
+            echo "[INFO] Old generations cleanup completed." >&2
+          fi
+
           if [ -n "''${LANG}" ] && [ "$(echo ''${LANG} | cut -d_ -f1)" == "fr" ]; then
             ${pkgs.dbus}/bin/dbus-send --system / net.nuetzlich.SystemNotifications.Notify 'string:Mise à jour système terminée.' 'string:Le système a été mis à jour. Les changements prendront effet au prochain démarrage.'
           else
