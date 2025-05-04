@@ -27,19 +27,20 @@ stdenvNoCC.mkDerivation rec {
       mkdir -p $out/share/backgrounds/glf
       cp $src/wallpaper/leather-glf.png $out/share/backgrounds/glf/leather-glf.png
 
-cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
+cat 
+<<EOF > $out/share/gnome-background-properties/leather-glf.xml
 <?xml version="1.0"?>
-<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
-<wallpapers>
-<wallpaper deleted="false">
-<name>Leather-glf</name>
-<filename>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename>
-<filename-dark>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename-dark>
-<options>zoom</options>
-<shade_type>solid</shade_type>
-<pcolor>#3a4ba0</pcolor>
-<scolor>#2f302f</scolor>
-</wallpaper>
+  <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+    <wallpapers>
+      <wallpaper deleted="false">
+      <name>Leather-glf</name>
+      <filename>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename>
+      <filename-dark>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename-dark>
+      <options>zoom</options>
+      <shade_type>solid</shade_type>
+      <pcolor>#3a4ba0</pcolor>
+      <scolor>#2f302f</scolor>
+    </wallpaper>
 </wallpapers>
 EOF      
   '';
