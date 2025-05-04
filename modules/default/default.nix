@@ -1,6 +1,10 @@
-{
+{ config, pkgs, ... }:
 
-imports =
+let
+  edition = config.glf.environment.edition or "full"; # Fallback 
+in
+{
+  imports =
     [
       ./debug.nix
       ./aliases.nix
@@ -24,5 +28,4 @@ imports =
       ./glfos-mangohud-configuration.nix
     ]
     ++ lib.optional (edition != "mini") ./gaming.nix;
-
 }
