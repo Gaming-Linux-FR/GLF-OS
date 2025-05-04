@@ -20,6 +20,7 @@ stdenvNoCC.mkDerivation rec {
       mkdir -p $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems
       cp $src/logo/logo-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo.png
       cp $src/logo/logo_light-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo-light.png
+      cp $src/wallpaper/leather-glf.png $out/share/backgrounds/gnome/leather-glf.png
     done
   '';
   
