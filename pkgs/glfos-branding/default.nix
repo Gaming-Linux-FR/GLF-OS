@@ -31,15 +31,15 @@ stdenvNoCC.mkDerivation rec {
 <?xml version="1.0"?>
 <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
 <wallpapers>
-  <wallpaper deleted="false">
-    <name>Leather-glf</name>
-    <filename>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename>
-    <filename-dark>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename-dark>
-    <options>zoom</options>
-    <shade_type>solid</shade_type>
-    <pcolor>#3a4ba0</pcolor>
-    <scolor>#2f302f</scolor>
-  </wallpaper>
+<wallpaper deleted="false">
+<name>Leather-glf</name>
+<filename>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename>
+<filename-dark>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename-dark>
+<options>zoom</options>
+<shade_type>solid</shade_type>
+<pcolor>#3a4ba0</pcolor>
+<scolor>#2f302f</scolor>
+</wallpaper>
 </wallpapers>
 EOF      
   '';
