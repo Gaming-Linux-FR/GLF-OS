@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  edition = config.glf.environment.edition or "full"; # Fallback 
+  edition = config.glf.environment.edition or "full";
 in
 {
   imports =
