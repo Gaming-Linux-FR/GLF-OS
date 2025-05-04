@@ -39,9 +39,6 @@ with lib;
          "wallpapers/glf/white.jpg".source = ../../assets/wallpaper/white.jpg;
          "wallpapers/glf/dark.jpg".source = ../../assets/wallpaper/dark.jpg;
       };
-      run = {
-          "current-system/sw/share/backgrounds/gnome/leather-glf.png".source = ../../assets/wallpaper/leather-glf.png;
-      };
     };
   };
 
