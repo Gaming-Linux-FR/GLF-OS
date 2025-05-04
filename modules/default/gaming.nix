@@ -16,21 +16,20 @@ else
     description = "MangoHud configuration";
   };
 
- 
+  config = {
 
   };
 services.udev.extraRules = ''
-      # USB
-      ATTRS{name}=="Sony Interactive Entertainment Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-      ATTRS{name}=="Sony Interactive Entertainment DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-      # Bluetooth
-      ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-      ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-    '';
+    # USB
+    ATTRS{name}=="Sony Interactive Entertainment Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+    ATTRS{name}=="Sony Interactive Entertainment DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+    # Bluetooth
+    ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+    ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+  '';
 
-    hardware.new-lg4ff.enable = true;
-    hardware.steam-hardware.enable = true;
-    hardware.xone.enable = true;
-    hardware.xpadneo.enable = true;
-
+  hardware.new-lg4ff.enable = true;
+  hardware.steam-hardware.enable = true;
+  hardware.xone.enable = true;
+  hardware.xpadneo.enable = true;
 }
