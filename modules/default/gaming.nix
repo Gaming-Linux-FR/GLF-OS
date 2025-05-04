@@ -1,10 +1,14 @@
-{ config, pkgs, lib, pkgs-unstable, ... }: # Accepter pkgs-unstable
+{ config, pkgs, lib, pkgs-unstable, ... }:
+
 let
   system = "x86_64-linux";
-  edition = config.glf.environment.edition;
+  edition = config.glf.environment.edition or "full"; # Ajout de la valeur par défaut
 in
 if edition == "mini" then
 {
+  # Si l'édition est "mini", on passe gaming.nix
+}
+else
 {
   options.glf.mangohud.configuration = lib.mkOption {
     type = with lib.types; enum [ "disabled" "light" "full" ];
@@ -14,7 +18,7 @@ if edition == "mini" then
 
   config = {
 
-    environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
+    environment.systemPackages = with pkgs-unstable; [
       heroic
       lutris
       mangohud
@@ -23,7 +27,7 @@ if edition == "mini" then
       joystickwake
       oversteer
     ];
-  
+
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
@@ -43,7 +47,7 @@ if edition == "mini" then
       ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     '';
 
-    hardware.new-lg4ff.enable = true; 
+    hardware.new-lg4ff.enable = true;
     hardware.steam-hardware.enable = true;
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
@@ -66,5 +70,4 @@ if edition == "mini" then
     };
 
   };
-};
 }
