@@ -5,8 +5,9 @@ pkgs.stdenv.mkDerivation rec {
     script = pkgs.writeShellApplication {
       name = name;
       runtimeInputs = with pkgs; [ coreutils gnused zenity ];
+      bashOptions = [ "errexit" "pipefail" ];
+      excludeShellChecks = [ "SC2028" ];
       text = ''
-set +o nounset
 set -e
 
 error_display_fr="Erreur: La variable d'environnement DISPLAY n'a pas été trouvée, assurez-vous de lancer cette application depuis un environnement de bureau."
@@ -17,9 +18,9 @@ mangohud_text_fr="Bienvenue dans l'interface de configuration de MangoHud.\n\nQu
 mangohud_column_fr="Configuration"
 mangohud_ok_label_fr="Appliquer"
 exit_label_fr="Quitter"
-progress_text_fr="Reconstruction du système, veuillez patienter..."
-error_text_fr="Erreur: GLF-OS n'a pas pu être mis à jour."
-reboot_text_fr="Le système a été mis à jour. Les changements prendront effet au prochain démarrage."
+progress_text_fr="Reconstruction du système, veuillez patienter...\n\n"
+error_text_fr="Erreur: GLF-OS n'a pas pu être mis à jour.\n\nLe log a été sauvegardé dans le fichier \"/tmp/${name}.log\"."
+reboot_text_fr="Le système a été mis à jour.\n\nLes changements prendront effet au prochain démarrage."
 
 error_display_en="Error: DISPLAY env variable was not found, please make sure you run this program from a desktop environment."
 error_internet_en="Error: Internet connection is not available."
@@ -29,9 +30,9 @@ mangohud_text_en="Welcome to the MangoHud configuration interface.\n\nWhich conf
 mangohud_column_en="Configuration"
 mangohud_ok_label_en="Apply"
 exit_label_en="Exit"
-progress_text_en="Rebuilding system, please wait..."
-error_text_en="Error: GLF-OS update failed."
-reboot_text_en="The system has been updated. Changes will be applied on the next boot."
+progress_text_en="Rebuilding system, please wait...\n\n"
+error_text_en="Error: GLF-OS update failed.\n\nThe log has been saved in the file \"/tmp/${name}.log\"."
+reboot_text_en="The system has been updated.\n\nChanges will be applied on the next boot."
 
 locale="$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)"
 
@@ -114,7 +115,7 @@ else
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.mangohud.configuration = \"''${1}\";\n}/g" /etc/nixos/configuration.nix
 	fi
 
-	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace > >(if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then zenity --width=640 --title="''${mangohud_title_fr}" --text="''${progress_text_fr}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; else zenity --width=640 --title="''${mangohud_title_en}" --text="''${progress_text_en}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; fi) || { ${pkgs.gnused}/bin/sed -i "s@glf.mangohud.configuration = \".*\";@glf.mangohud.configuration = \"''${current_mangohud}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}" 2>/dev/null; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}" 2>/dev/null; fi; exit 1; }
+	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace 2>&1 | tee /tmp/${name}.log >(if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then while read -r line; do echo "''${line}"; echo "# ''${line}\n\n"; done | zenity --height=240 --width=640 --title="''${mangohud_title_fr}" --text="''${progress_text_fr}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; else while read -r line; do echo "''${line}"; echo "# ''${line}\n\n"; done | zenity --height=240 --width=640 --title="''${mangohud_title_en}" --text="''${progress_text_en}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; fi) || { ${pkgs.gnused}/bin/sed -i "s@glf.mangohud.configuration = \".*\";@glf.mangohud.configuration = \"''${current_mangohud}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}" 2>/dev/null; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}" 2>/dev/null; fi; exit 1; }
 
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
 		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --info --ok-label="''${exit_label_fr}" --text "''${reboot_text_fr}" 2>/dev/null
