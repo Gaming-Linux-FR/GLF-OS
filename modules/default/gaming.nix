@@ -16,46 +16,7 @@ else
     description = "MangoHud configuration";
   };
 
-  # config = {
-
-    environment.systemPackages = with pkgs-unstable; [
-      heroic
-      lutris
-      mangohud
-      wineWowPackages.staging
-      winetricks
-      joystickwake
-      oversteer
-    ];
-
-    environment.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-      MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
-        ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05''
-      else if config.glf.mangohud.configuration == "full" then
-        ''control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution, vulkan_driver,wine''
-      else
-        "";
-    };
-
-    
-    programs.steam.gamescopeSession.enable = true;
-
-    programs.steam = {
-      enable = true;
-      package = pkgs.steam.override {
-        extraEnv = {
-          MANGOHUD = if config.glf.mangohud.configuration == "light" || config.glf.mangohud.configuration == "full" then
-            true
-          else
-            false;
-          OBS_VKCAPTURE = true;
-        };
-      };
-      remotePlay.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
-      extraCompatPackages = with pkgs; [ proton-ge-bin ];
-    };
+ 
 
   };
 services.udev.extraRules = ''
