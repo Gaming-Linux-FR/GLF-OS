@@ -17,7 +17,7 @@ mangohud_text_fr="Bienvenue dans l'interface de configuration de MangoHud.\n\nQu
 mangohud_column_fr="Configuration"
 mangohud_ok_label_fr="Appliquer"
 exit_label_fr="Quitter"
-error_pkexec_fr="Erreur: La commande pkexec n'a pas fonctionné."
+progress_text_fr="Reconstruction du système, veuillez patienter..."
 error_text_fr="Erreur: GLF-OS n'a pas pu être mis à jour."
 reboot_text_fr="Le système a été mis à jour. Les changements prendront effet au prochain démarrage."
 
@@ -29,7 +29,7 @@ mangohud_text_en="Welcome to the MangoHud configuration interface.\n\nWhich conf
 mangohud_column_en="Configuration"
 mangohud_ok_label_en="Apply"
 exit_label_en="Exit"
-error_pkexec_en="Error: pkexec command failed."
+progress_text_en="Rebuilding system, please wait..."
 error_text_en="Error: GLF-OS update failed."
 reboot_text_en="The system has been updated. Changes will be applied on the next boot."
 
@@ -47,10 +47,10 @@ fi
 
 if ! ${pkgs.curl}/bin/curl -L https://github.com/Gaming-Linux-FR/GLF-OS > /dev/null 2>&1; then
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
-		${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_internet_fr}"
+		${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_internet_fr}" 2>/dev/null
 		exit 1
 	else
-		${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_internet_en}"
+		${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_internet_en}" 2>/dev/null
 		exit 1
 	fi
 fi
@@ -96,13 +96,13 @@ if [ "''${interface}" -eq 1 ]; then
 	esac
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
-		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${mangohud_short_name}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
+		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${mangohud_short_name}"
 	fi
 
 else
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
-		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${1}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
+		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${1}"
 	fi
 
 	current_mangohud=$(if ${pkgs.gnugrep}/bin/grep -q 'glf.mangohud.configuration =' /etc/nixos/configuration.nix; then ${pkgs.gnugrep}/bin/grep 'glf.mangohud.configuration =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g'; else echo ""; fi)
@@ -114,12 +114,12 @@ else
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.mangohud.configuration = \"''${1}\";\n}/g" /etc/nixos/configuration.nix
 	fi
 
-	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace || { ${pkgs.gnused}/bin/sed -i "s@glf.mangohud.configuration = \".*\";@glf.mangohud.configuration = \"''${current_mangohud}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}"; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}"; fi; exit 1; }
+	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace > >(if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then zenity --width=640 --title="''${mangohud_title_fr}" --text="''${progress_text_fr}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; else zenity --width=640 --title="''${mangohud_title_en}" --text="''${progress_text_en}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; fi) || { ${pkgs.gnused}/bin/sed -i "s@glf.mangohud.configuration = \".*\";@glf.mangohud.configuration = \"''${current_mangohud}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}" 2>/dev/null; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}" 2>/dev/null; fi; exit 1; }
 
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
-		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --info --ok-label="''${exit_label_fr}" --text "''${reboot_text_fr}"
+		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_fr}" --info --ok-label="''${exit_label_fr}" --text "''${reboot_text_fr}" 2>/dev/null
 	else
-		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --info --ok-label="''${exit_label_en}" --text "''${reboot_text_en}"
+		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${mangohud_title_en}" --info --ok-label="''${exit_label_en}" --text "''${reboot_text_en}" 2>/dev/null
 	fi
 
 fi
@@ -130,7 +130,7 @@ fi
       desktopName = "GLF-OS MangoHud Configuration";
       icon = "glfos-logo";
       exec = "${script}/bin/${name}";
-      terminal = true;
+      terminal = false;
       categories = ["System"];
     };
   in ''
