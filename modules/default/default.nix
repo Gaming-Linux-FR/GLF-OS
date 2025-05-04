@@ -24,6 +24,6 @@
       ./nix-disk-manager.nix
       ./glfos-environment-selection.nix
       ./glfos-mangohud-configuration.nix
-    ]
+    ];
  
 }
