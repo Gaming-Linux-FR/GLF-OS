@@ -1,7 +1,10 @@
 { config, pkgs, lib, pkgs-unstable, ... }: # Accepter pkgs-unstable
 let
   system = "x86_64-linux";
+  edition = config.glf.environment.edition;
 in
+if edition == "mini" then
+{
 {
   options.glf.mangohud.configuration = lib.mkOption {
     type = with lib.types; enum [ "disabled" "light" "full" ];
@@ -63,5 +66,5 @@ in
     };
 
   };
-
+};
 }
