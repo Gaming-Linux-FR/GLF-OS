@@ -1,8 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-  edition = config.glf.environment.edition or "full";
-in
 {
   imports =
     [
@@ -13,6 +10,7 @@ in
       ./environment.nix
       ./firefox.nix
       ./fstrim.nix
+      ./gaming.nix
       ./nh.nix
       ./nvidia.nix
       ./packages.nix
@@ -27,5 +25,5 @@ in
       ./glfos-environment-selection.nix
       ./glfos-mangohud-configuration.nix
     ]
-    ++ lib.optional (edition != "mini") ./gaming.nix;
+ 
 }
