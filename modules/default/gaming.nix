@@ -16,7 +16,7 @@ else
     description = "MangoHud configuration";
   };
 
-  config = {
+  # config = {
 
     environment.systemPackages = with pkgs-unstable; [
       heroic
