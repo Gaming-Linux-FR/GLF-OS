@@ -27,7 +27,7 @@ stdenvNoCC.mkDerivation rec {
       mkdir -p $out/share/backgrounds/glf
       cp $src/wallpaper/leather-glf.png $out/share/backgrounds/glf/leather-glf.png
 
-      cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
+cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
 <?xml version="1.0"?>
 <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
 <wallpapers>
