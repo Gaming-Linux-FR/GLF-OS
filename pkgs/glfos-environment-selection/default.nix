@@ -22,7 +22,7 @@ edition_title_fr="GLF-OS - Interface de sélection de l'environnement"
 edition_text_fr="Quelle édition de GLF-OS souhaitez-vous utiliser ?"
 edition_column_fr="Edition"
 edition_ok_label_fr="Appliquer"
-error_pkexec_fr="Erreur: La commande pkexec n'a pas fonctionné."
+progress_text_fr="Reconstruction du système, veuillez patienter..."
 error_text_fr="Erreur: GLF-OS n'a pas pu être mis à jour."
 reboot_text_fr="Le système a été mis à jour. Les changements prendront effet au prochain démarrage."
 
@@ -39,7 +39,7 @@ edition_title_en="GLF-OS - Environment selection interface"
 edition_text_en="Which GLF-OS edition would you like to use ?"
 edition_column_en="Edition"
 edition_ok_label_en="Apply"
-error_pkexec_en="Error: pkexec command failed."
+progress_text_en="Rebuilding system, please wait..."
 error_text_en="Error: GLF-OS update failed."
 reboot_text_en="The system has been updated. Changes will be applied on the next boot."
 
@@ -57,10 +57,10 @@ fi
 
 if ! ${pkgs.curl}/bin/curl -L https://github.com/Gaming-Linux-FR/GLF-OS > /dev/null 2>&1; then
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
-		${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_internet_fr}"
+		${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_internet_fr}" 2>/dev/null
 		exit 1
 	else
-		${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_internet_en}"
+		${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_internet_en}" 2>/dev/null
 		exit 1
 	fi
 fi
@@ -128,13 +128,13 @@ if [ "''${interface}" -eq 1 ]; then
 	esac
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
-		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${environment_short_name}" "''${edition_short_name}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
+		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${environment_short_name}" "''${edition_short_name}"
 	fi
 
 else
 
 	if ${pkgs.coreutils}/bin/test "x$(id -u)" != "x0"; then
-		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${1}" "''${2}" || { if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_pkexec_fr}"; else ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_pkexec_en}"; fi; exit 1; }
+		pkexec --disable-internal-agent env DISPLAY="''${DISPLAY}" WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}" XAUTHORITY="''${XAUTHORITY}" XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}" "''${0}" "''${1}" "''${2}"
 	fi
 
 	current_environment=$(if ${pkgs.gnugrep}/bin/grep -q 'glf.environment.type =' /etc/nixos/configuration.nix; then ${pkgs.gnugrep}/bin/grep 'glf.environment.type =' /etc/nixos/configuration.nix | ${pkgs.gnugrep}/bin/grep -o '"[^"]\+"' | sed 's/"//g'; else echo ""; fi)
@@ -152,16 +152,16 @@ else
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.environment.edition = \"''${2}\";\n}/g" /etc/nixos/configuration.nix
 	fi
 
-	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace || { ${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${current_environment}\";@g" /etc/nixos/configuration.nix; ${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${current_edition}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}"; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}"; fi; exit 1; }
+	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace > >(if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then zenity --width=640 --title="''${environment_title_fr}" --text="''${progress_text_fr}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; else zenity --width=640 --title="''${environment_title_en}" --text="''${progress_text_en}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; fi) || { ${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${current_environment}\";@g" /etc/nixos/configuration.nix; ${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${current_edition}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}" 2>/dev/null; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}" 2>/dev/null; fi; exit 1; }
 
 	if [ "''${current_environment}" != "''${1}" ]; then
 		for gtkconfig in /home/*/.gtkrc* /home/*/.config/gtkrc* /home/*/.config/gtk-* /home/*/.config/dconf; do ${pkgs.coreutils}/bin/rm -rf "''${gtkconfig}"; done
 	fi
 
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
-		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --info --ok-label="''${exit_label_fr}" --text "''${reboot_text_fr}"
+		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --info --ok-label="''${exit_label_fr}" --text "''${reboot_text_fr}" 2>/dev/null
 	else
-		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --info --ok-label="''${exit_label_en}" --text "''${reboot_text_en}"
+		${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --info --ok-label="''${exit_label_en}" --text "''${reboot_text_en}" 2>/dev/null
 	fi
 
 fi
@@ -172,7 +172,7 @@ fi
       desktopName = "GLF-OS Environment Selection";
       icon = "glfos-logo";
       exec = "${script}/bin/${name}";
-      terminal = true;
+      terminal = false;
       categories = ["System"];
     };
   in ''
