@@ -1,9 +1,8 @@
-{ config, pkgs, lib, pkgs-unstable, ... }:
-
+{ config, pkgs, lib, pkgs-unstable, ... }: # Accepter pkgs-unstable
 let
   system = "x86_64-linux";
 in
-
+{
   options.glf.mangohud.configuration = lib.mkOption {
     type = with lib.types; enum [ "disabled" "light" "full" ];
     default = "light";
@@ -12,7 +11,7 @@ in
 
   config = {
 
-    environment.systemPackages = with pkgs-unstable; [
+    environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
       heroic
       lutris
       mangohud
@@ -21,7 +20,7 @@ in
       joystickwake
       oversteer
     ];
-
+  
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
@@ -41,7 +40,7 @@ in
       ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     '';
 
-    hardware.new-lg4ff.enable = true;
+    hardware.new-lg4ff.enable = true; 
     hardware.steam-hardware.enable = true;
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
@@ -64,4 +63,5 @@ in
     };
 
   };
+
 }
