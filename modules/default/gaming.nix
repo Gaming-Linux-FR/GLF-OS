@@ -3,13 +3,23 @@ let
   system = "x86_64-linux";
 in
 {
+
+options.glf.gaming.enable = mkOption {
+    description = "Enable GLF Gaming configurations";
+    type = types.bool;
+    default = if (config.glf.environment.edition != "mini") then
+    true
+    else
+     false;
+};
+
   options.glf.mangohud.configuration = lib.mkOption {
     type = with lib.types; enum [ "disabled" "light" "full" ];
     default = "light";
     description = "MangoHud configuration";
   };
 
-  config = {
+  config = mkIf config.glf.gaming.enable {
 
     environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
       heroic
