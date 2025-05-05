@@ -3,8 +3,6 @@
   stdenvNoCC, 
   coreutils,
   bash, 
-  utils,
-  ...
 }:
 
 stdenvNoCC.mkDerivation rec {
@@ -22,19 +20,17 @@ stdenvNoCC.mkDerivation rec {
       mkdir -p $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems
       cp $src/logo/logo-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo.png
       cp $src/logo/logo_light-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo-light.png
-      
     done
-  
+
     #wallpaper
       mkdir -p $out/share/backgrounds/glf
       cp $src/wallpaper/leather-glf.png $out/share/backgrounds/glf/leather-glf.png
-
+  '';
+  
   meta = {
     description = "GLF-OS branding";
     homepage = "https://github.com/Gaming-Linux-FR/GLF-OS";
     license = lib.licenses.agpl3Plus;
   };
+
 }
-
-
-
