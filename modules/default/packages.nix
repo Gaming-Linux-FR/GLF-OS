@@ -81,7 +81,6 @@
      # vivaldi
     ]);
 
-  };
 options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
     description = "Enable GLF Gaming configurations";
     type = lib.types.bool; # Use 'lib.types.bool' here
@@ -91,5 +90,5 @@ options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
       false;
   };
     services.hardware.openrgb.enable = true;
-
+  };
 }
