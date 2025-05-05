@@ -36,7 +36,6 @@
 
     environment.systemPackages = with pkgs; [
       # APP
-      openrgb-with-all-plugins
       pciutils
       usbutils
       git
@@ -75,6 +74,7 @@
       hyphen
       texlivePackages.hyphen-french
     ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
+      openrgb-with-all-plugins
       btop-rocm
       celluloid
       discord
