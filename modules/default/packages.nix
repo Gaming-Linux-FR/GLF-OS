@@ -32,8 +32,6 @@
       binfmt = true;
     };
 
-    services.hardware.openrgb.enable = true;
-
     environment.systemPackages = with pkgs; [
       # APP
       pciutils
@@ -84,5 +82,14 @@
     ]);
 
   };
+options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
+    description = "Enable GLF Gaming configurations";
+    type = lib.types.bool; # Use 'lib.types.bool' here
+    default = if (config.glf.environment.edition != "mini") then
+      true
+    else
+      false;
+  };
+    services.hardware.openrgb.enable = true;
 
 }
