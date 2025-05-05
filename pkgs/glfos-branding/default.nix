@@ -6,6 +6,14 @@
   utils,
   ...
 }:
+let
+  inherit (lib)
+    mkOption
+    types
+    mkDefault
+    mkEnableOption
+    literalExpression
+    ;
 
 stdenvNoCC.mkDerivation rec {
   pname = "glfos-branding";
@@ -48,7 +56,7 @@ nixos-background-info = pkgs.writeTextFile rec {
       '';
 destination = "/share/gnome-background-properties/leather-glf.xml";
   };
-
+in
   meta = {
     description = "GLF-OS branding";
     homepage = "https://github.com/Gaming-Linux-FR/GLF-OS";
