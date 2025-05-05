@@ -27,7 +27,9 @@ stdenvNoCC.mkDerivation rec {
       mkdir -p $out/share/backgrounds/glf
       cp $src/wallpaper/leather-glf.png $out/share/backgrounds/glf/leather-glf.png
 
-cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
+nixos-background-info = pkgs.writeTextFile rec {
+    name = "nixos-background-info";
+    text = ''
 <?xml version="1.0"?>
   <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
     <wallpapers>
@@ -40,9 +42,10 @@ cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
       <pcolor>#3a4ba0</pcolor>
       <scolor>#2f302f</scolor>
     </wallpaper>
-</wallpapers>
-EOF      
+</wallpapers>  
   '';
+destination = "/share/gnome-background-properties/leather-glf.xml";
+  };
 
   meta = {
     description = "GLF-OS branding";
