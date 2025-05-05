@@ -1,25 +1,25 @@
-{ config, pkgs, lib, pkgs-unstable, ... }: # Accepter pkgs-unstable
+{ config, pkgs, lib, pkgs-unstable, ... }: # Make sure 'lib' is included here
 let
   system = "x86_64-linux";
 in
 {
 
-options.glf.gaming.enable = mkOption {
+  options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
     description = "Enable GLF Gaming configurations";
-    type = types.bool;
+    type = lib.types.bool; # Use 'lib.types.bool' here
     default = if (config.glf.environment.edition != "mini") then
-    true
+      true
     else
-     false;
-};
+      false;
+  };
 
-  options.glf.mangohud.configuration = lib.mkOption {
-    type = with lib.types; enum [ "disabled" "light" "full" ];
+  options.glf.mangohud.configuration = lib.mkOption { # Use 'lib.mkOption' here
+    type = with lib.types; enum [ "disabled" "light" "full" ]; # Use 'lib.types' here
     default = "light";
     description = "MangoHud configuration";
   };
 
-  config = mkIf config.glf.gaming.enable {
+  config = lib.mkIf config.glf.gaming.enable { # Use 'lib.mkIf' here
 
     environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
       heroic
@@ -30,7 +30,7 @@ options.glf.gaming.enable = mkOption {
       joystickwake
       oversteer
     ];
-  
+
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
@@ -50,7 +50,7 @@ options.glf.gaming.enable = mkOption {
       ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     '';
 
-    hardware.new-lg4ff.enable = true; 
+    hardware.new-lg4ff.enable = true;
     hardware.steam-hardware.enable = true;
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
