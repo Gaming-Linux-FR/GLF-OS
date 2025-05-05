@@ -6,6 +6,7 @@
   utils,
   ...
 }:
+
 let
   inherit (lib)
     mkOption
@@ -14,6 +15,7 @@ let
     mkEnableOption
     literalExpression
     ;
+
 nixos-background-info = pkgs.writeTextFile rec {
     name = "nixos-background-info";
     text = ''
@@ -34,7 +36,7 @@ nixos-background-info = pkgs.writeTextFile rec {
 destination = "/share/gnome-background-properties/leather-glf.xml";
   };
 in
-
+{
 stdenvNoCC.mkDerivation rec {
   pname = "glfos-branding";
   version = "1.0.0"; ### To update version number
@@ -64,4 +66,5 @@ stdenvNoCC.mkDerivation rec {
     license = lib.licenses.agpl3Plus;
   };
 
+};
 }
