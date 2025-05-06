@@ -45,6 +45,8 @@ stdenvNoCC.mkDerivation rec {
      </wallpaper>
     </wallpapers>
 
+EOF
+
                   cat <<EOF > $out/share/gnome-background-properties/vintage-glf.xml
 <?xml version="1.0" encoding="UTF-8"?>
    <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
@@ -58,6 +60,8 @@ stdenvNoCC.mkDerivation rec {
       <scolor>#000000</scolor>
      </wallpaper>
     </wallpapers>
+
+EOF
   '';
   
   meta = {
