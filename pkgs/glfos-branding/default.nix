@@ -62,6 +62,25 @@ EOF
     </wallpapers>
 
 EOF
+
+                  cat <<EOF > $out/share/gnome-background-properties/GLF.xml
+<?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+   <wallpapers>
+   <wallpaper deleted="false">
+      <name>GLF</name>
+      <filename>/run/current-system/sw/share/backgrounds/gnome/white.jpg</filename>
+      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/dark.jpg</filename-dark>
+      <options>zoom</options>
+      <shade_type>solid</shade_type>
+      <pcolor>#ffffff</pcolor>
+      <scolor>#000000</scolor>
+     </wallpaper>
+    </wallpapers>
+
+EOF
+
+                  
   '';
   
   meta = {
