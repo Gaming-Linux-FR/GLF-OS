@@ -23,8 +23,8 @@ stdenvNoCC.mkDerivation rec {
     done
 
     #wallpaper
-      mkdir -p $out/share/backgrounds/glf
-      cp $src/wallpaper/leather-glf.png $out/share/backgrounds/glf/leather-glf.png
+      mkdir -p $out/share/backgrounds/gnome
+      cp $src/wallpaper/leather-glf.png $out/share/backgrounds/gnome/leather-glf.png
 
       mkdir -p $out/share/gnome-background-properties/
                   cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
@@ -33,7 +33,7 @@ stdenvNoCC.mkDerivation rec {
           <wallpapers>
             <wallpaper deleted="false">
               <name>leather-glf</name>
-              <filename>/run/current-system/sw/share/backgrounds/glf/leather-glf.png</filename>
+              <filename>/run/current-system/sw/share/backgrounds/gnome/leather-glf.png</filename>
               <options>zoom</options>
               <shade_type>solid</shade_type>
               <pcolor>#ffffff</pcolor>
