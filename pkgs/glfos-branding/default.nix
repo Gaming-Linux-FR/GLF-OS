@@ -25,6 +25,10 @@ stdenvNoCC.mkDerivation rec {
     #wallpaper
       mkdir -p $out/share/backgrounds/gnome
       cp $src/wallpaper/leather-glf.png $out/share/backgrounds/gnome/leather-glf.png
+      cp $src/wallpaper/dalle-glf.png $out/share/backgrounds/gnome/dalle-glf.png
+      cp $src/wallpaper/vintage-glf/png $out/share/backgrounds/gnome/vintage-glf.png
+      cp $src/wallpaper/dark.jpg $out/share/backgrounds/gnome/dark.jpg
+      cp $src/wallpaper/white.jpg $out/share/backgrounds/gnome/white.jpg
 
       mkdir -p $out/share/gnome-background-properties/
                   cat <<EOF > $out/share/gnome-background-properties/leather-glf.xml
@@ -40,7 +44,20 @@ stdenvNoCC.mkDerivation rec {
       <scolor>#000000</scolor>
      </wallpaper>
     </wallpapers>
-          
+
+                  cat <<EOF > $out/share/gnome-background-properties/vintage-glf.xml
+<?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+   <wallpapers>
+   <wallpaper deleted="false">
+      <name>vintage-glf</name>
+      <filename>/run/current-system/sw/share/backgrounds/gnome/vintage-glf.png</filename>
+      <options>zoom</options>
+      <shade_type>solid</shade_type>
+      <pcolor>#ffffff</pcolor>
+      <scolor>#000000</scolor>
+     </wallpaper>
+    </wallpapers>
   '';
   
   meta = {
