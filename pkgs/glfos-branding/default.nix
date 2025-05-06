@@ -63,6 +63,22 @@ EOF
 
 EOF
 
+                  cat <<EOF > $out/share/gnome-background-properties/dalle-glf.xml
+<?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+   <wallpapers>
+   <wallpaper deleted="false">
+      <name>dalle-glf</name>
+      <filename>/run/current-system/sw/share/backgrounds/gnome/dalle-glf.png</filename>
+      <options>zoom</options>
+      <shade_type>solid</shade_type>
+      <pcolor>#ffffff</pcolor>
+      <scolor>#000000</scolor>
+     </wallpaper>
+    </wallpapers>
+
+EOF
+
                   cat <<EOF > $out/share/gnome-background-properties/GLF.xml
 <?xml version="1.0" encoding="UTF-8"?>
    <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
