@@ -26,7 +26,7 @@ stdenvNoCC.mkDerivation rec {
       mkdir -p $out/share/backgrounds/gnome
       cp $src/wallpaper/leather-glf.png $out/share/backgrounds/gnome/leather-glf.png
       cp $src/wallpaper/dalle-glf.png $out/share/backgrounds/gnome/dalle-glf.png
-      cp $src/wallpaper/vintage-glf/png $out/share/backgrounds/gnome/vintage-glf.png
+      cp $src/wallpaper/vintage-glf.png $out/share/backgrounds/gnome/vintage-glf.png
       cp $src/wallpaper/dark.jpg $out/share/backgrounds/gnome/dark.jpg
       cp $src/wallpaper/white.jpg $out/share/backgrounds/gnome/white.jpg
 
