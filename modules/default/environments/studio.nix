@@ -18,7 +18,7 @@ systemd.tmpfiles.rules =
       ];
     };
   in [
-    "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+    "L+    /opt/rocm/hip  -    -    -     -    ${rocmEnv}"
   ];  
 
         hardware.graphics = {
