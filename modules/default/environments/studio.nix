@@ -51,7 +51,6 @@
           pkgs.rocmPackages_6.clr
           # Expanded ROCm packages for Blender-HIP (using _6 suffix)
           pkgs.rocmPackages_6.hipcc
-          pkgs.rocmPackages_6.opencl-roc # This might still be incorrect, see below
           pkgs.rocmPackages_6.rocfft
           pkgs.rocmPackages_6.rocprim
           pkgs.rocmPackages_6.rocrand
@@ -79,9 +78,7 @@
           audacity
           freetube
           pkgs.rocmPackages_6.clr
-          # Expanded ROCm packages for Blender-HIP (using _6 suffix)
           pkgs.rocmPackages_6.hipcc
-          pkgs.rocmPackages_6.opencl-roc 
           pkgs.rocmPackages_6.rocfft
           pkgs.rocmPackages_6.rocprim
           pkgs.rocmPackages_6.rocrand
