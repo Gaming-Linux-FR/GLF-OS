@@ -49,8 +49,8 @@
           audacity
           freetube
           rocmPackages.clr
-          # Expanded ROCm packages for Blender-HIP
-          rocmPackages.hip
+          # Expanded ROCm packages for Blender-HIP (Attempt 1: rocm-hip)
+          rocmPackages.rocm-hip
           rocmPackages.opencl-roc
           rocmPackages.rocfft
           rocmPackages.rocprim
@@ -80,8 +80,8 @@
           audacity
           freetube
           rocmPackages.clr
-          # Expanded ROCm packages for Blender-HIP
-          rocmPackages.hip
+          # Expanded ROCm packages for Blender-HIP (Attempt 1: rocm-hip)
+          rocmPackages.rocm-hip
           rocmPackages.opencl-roc
           rocmPackages.rocfft
           rocmPackages.rocprim
