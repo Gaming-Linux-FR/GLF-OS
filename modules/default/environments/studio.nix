@@ -36,8 +36,7 @@
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs; [
-          rocmPackages.clr
-          blender-hip
+          blender
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
@@ -48,8 +47,7 @@
         ]
       else
         with pkgs; [
-          rocmPackages.clr
-          blender-hip
+          blender
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
