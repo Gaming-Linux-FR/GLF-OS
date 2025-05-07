@@ -11,7 +11,7 @@
       let
         rocmEnv = pkgs.symlinkJoin {
           name = "rocm-combined";
-          paths = with pkgs.rocmPackages; [
+          paths = with pkgs.rocmPackages_6; [
             rocblas
             hipblas
             clr
@@ -19,7 +19,7 @@
         };
       in [
         "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-        "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+        "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages_6.clr}"
       ];
 
     hardware.graphics = {
@@ -27,8 +27,8 @@
       enable32Bit = true;
     };
 
-    hardware.graphics.extraPackages = with pkgs; [
-      rocmPackages.clr.icd
+    hardware.opengl.extraPackages = with pkgs.rocmPackages_6; [
+      clr.icd # Assuming clr provides the ICD
     ];
 
     environment.variables = {
@@ -48,25 +48,26 @@
           gimp
           audacity
           freetube
-          rocmPackages.clr
-          # Expanded ROCm packages for Blender-HIP (Attempt 1: rocm-hip)
-          rocmPackages.hipcc
-          rocmPackages.opencl-roc
-          rocmPackages.rocfft
-          rocmPackages.rocprim
-          rocmPackages.rocrand
-          rocmPackages.rocwmma
-          rocmPackages.amdsmi
-          rocmPackages.hipcub
-          rocmPackages.hipify
-          rocmPackages.hsakmt
-          rocmPackages.miopen
-          rocmPackages.rocgdb
-          rocmPackages.triton
-          rocmPackages.half
-          rocmPackages.rccl
-          rocmPackages.rdc
-          rocmPackages.tensile
+          pkgs.rocmPackages_6.clr
+          # Expanded ROCm packages for Blender-HIP (using _6 suffix)
+          pkgs.rocmPackages_6.hip
+          pkgs.rocmPackages_6.opencl-roc # This might still be incorrect, see below
+          pkgs.rocmPackages_6.rocfft
+          pkgs.rocmPackages_6.rocprim
+          pkgs.rocmPackages_6.rocrand
+          pkgs.rocmPackages_6.rocwmma
+          pkgs.rocmPackages_6.amdsmi
+          pkgs.rocmPackages_6.hipcub
+          pkgs.rocmPackages_6.hipify
+          pkgs.rocmPackages_6.hsakmt
+          pkgs.rocmPackages_6.miopen
+          pkgs.rocmPackages_6.rocgdb
+          pkgs.rocmPackages_6.triton
+          pkgs.rocmPackages_6.hipcc
+          pkgs.rocmPackages_6.half
+          pkgs.rocmPackages_6.rccl
+          pkgs.rocmPackages_6.rdc
+          pkgs.rocmPackages_6.tensile
         ]
       else
         with pkgs; [
@@ -78,25 +79,26 @@
           gimp
           audacity
           freetube
-          rocmPackages.clr
-          # Expanded ROCm packages for Blender-HIP (Attempt 1: rocm-hip)
-          rocmPackages.hipcc
-          rocmPackages.opencl-roc
-          rocmPackages.rocfft
-          rocmPackages.rocprim
-          rocmPackages.rocrand
-          rocmPackages.rocwmma
-          rocmPackages.amdsmi
-          rocmPackages.hipcub
-          rocmPackages.hipify
-          rocmPackages.hsakmt
-          rocmPackages.miopen
-          rocmPackages.rocgdb
-          rocmPackages.triton
-          rocmPackages.half
-          rocmPackages.rccl
-          rocmPackages.rdc
-          rocmPackages.tensile
+          pkgs.rocmPackages_6.clr
+          # Expanded ROCm packages for Blender-HIP (using _6 suffix)
+          pkgs.rocmPackages_6.hip
+          pkgs.rocmPackages_6.opencl-roc # This might still be incorrect, see below
+          pkgs.rocmPackages_6.rocfft
+          pkgs.rocmPackages_6.rocprim
+          pkgs.rocmPackages_6.rocrand
+          pkgs.rocmPackages_6.rocwmma
+          pkgs.rocmPackages_6.amdsmi
+          pkgs.rocmPackages_6.hipcub
+          pkgs.rocmPackages_6.hipify
+          pkgs.rocmPackages_6.hsakmt
+          pkgs.rocmPackages_6.miopen
+          pkgs.rocmPackages_6.rocgdb
+          pkgs.rocmPackages_6.triton
+          pkgs.rocmPackages_6.hipcc
+          pkgs.rocmPackages_6.half
+          pkgs.rocmPackages_6.rccl
+          pkgs.rocmPackages_6.rdc
+          pkgs.rocmPackages_6.tensile
         ];
   };
 
