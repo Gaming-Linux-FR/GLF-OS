@@ -50,7 +50,7 @@
           freetube
           rocmPackages.clr
           # Expanded ROCm packages for Blender-HIP (Attempt 1: rocm-hip)
-          rocmPackages.hip-runtime
+          rocmPackages.hipcc
           rocmPackages.opencl-roc
           rocmPackages.rocfft
           rocmPackages.rocprim
@@ -63,7 +63,6 @@
           rocmPackages.miopen
           rocmPackages.rocgdb
           rocmPackages.triton
-          rocmPackages.hipcc
           rocmPackages.half
           rocmPackages.rccl
           rocmPackages.rdc
@@ -81,7 +80,7 @@
           freetube
           rocmPackages.clr
           # Expanded ROCm packages for Blender-HIP (Attempt 1: rocm-hip)
-          rocmPackages.hip-runtime
+          rocmPackages.hipcc
           rocmPackages.opencl-roc
           rocmPackages.rocfft
           rocmPackages.rocprim
@@ -94,7 +93,6 @@
           rocmPackages.miopen
           rocmPackages.rocgdb
           rocmPackages.triton
-          rocmPackages.hipcc
           rocmPackages.half
           rocmPackages.rccl
           rocmPackages.rdc
