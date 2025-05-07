@@ -27,7 +27,7 @@
       enable32Bit = true;
     };
 
-    hardware.opengl.extraPackages = with pkgs.rocmPackages_6; [
+    hardware.graphics.extraPackages = with pkgs.rocmPackages_6; [
       clr.icd # Assuming clr provides the ICD
     ];
 
