@@ -12,7 +12,6 @@
     rocmEnv = pkgs.symlinkJoin {
       name = "rocm-combined";
       paths = with pkgs.rocmPackages; [
-        rocmPackages.clr
         rocblas
         hipblas
         clr
@@ -37,6 +36,7 @@
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs; [
+          rocmPackages.clr
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
@@ -48,6 +48,7 @@
         ]
       else
         with pkgs; [
+          rocmPackages.clr
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
