@@ -50,7 +50,7 @@
           freetube
           pkgs.rocmPackages_6.clr
           # Expanded ROCm packages for Blender-HIP (using _6 suffix)
-          pkgs.rocmPackages_6.hip
+          pkgs.rocmPackages_6.hipcc
           pkgs.rocmPackages_6.opencl-roc # This might still be incorrect, see below
           pkgs.rocmPackages_6.rocfft
           pkgs.rocmPackages_6.rocprim
@@ -63,7 +63,6 @@
           pkgs.rocmPackages_6.miopen
           pkgs.rocmPackages_6.rocgdb
           pkgs.rocmPackages_6.triton
-          pkgs.rocmPackages_6.hipcc
           pkgs.rocmPackages_6.half
           pkgs.rocmPackages_6.rccl
           pkgs.rocmPackages_6.rdc
