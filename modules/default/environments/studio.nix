@@ -21,6 +21,10 @@ systemd.tmpfiles.rules =
     "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
   ];  
 
+systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+
         hardware.graphics = {
             enable = true; 
             extraPackages = with pkgs; [
@@ -44,6 +48,7 @@ systemd.tmpfiles.rules =
           gimp
           audacity
           freetube
+          rocmPackages.clr
         ]
       else
         with pkgs; [
@@ -55,6 +60,7 @@ systemd.tmpfiles.rules =
           gimp
           audacity
           freetube
+          rocmPackages.clr
         ];
   };
 
