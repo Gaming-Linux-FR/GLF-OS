@@ -62,6 +62,7 @@ in
         gnomeExtensions.dash-to-dock
         gnomeExtensions.bing-wallpaper-changer
         gnomeExtensions.quick-settings-audio-panel
+        gnomeExtensions.blur-my-shell
 
       ];
 
