@@ -41,7 +41,7 @@ stdenvNoCC.mkDerivation rec {
    <wallpaper deleted="false">
       <name>leather-glf</name>
       <filename>/run/current-system/sw/share/backgrounds/gnome/leather-glf.png</filename>
-      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/leather-dark-glf.jpg</filename-dark>
+      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/leather-dark-glf.png</filename-dark>
       <options>zoom</options>
       <shade_type>solid</shade_type>
       <pcolor>#ffffff</pcolor>
@@ -58,7 +58,7 @@ EOF
    <wallpaper deleted="false">
       <name>vintage-glf</name>
       <filename>/run/current-system/sw/share/backgrounds/gnome/vintage-glf.png</filename>
-      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/vintage-dark-glf.jpg</filename-dark>
+      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/vintage-dark-glf.png</filename-dark>
       <options>zoom</options>
       <shade_type>solid</shade_type>
       <pcolor>#ffffff</pcolor>
@@ -75,7 +75,7 @@ EOF
    <wallpaper deleted="false">
       <name>dalle-glf</name>
       <filename>/run/current-system/sw/share/backgrounds/gnome/dalle-glf.png</filename>
-      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/dalle-dark-glf.jpg</filename-dark>
+      <filename-dark>/run/current-system/sw/share/backgrounds/gnome/dalle-dark-glf.png</filename-dark>
       <options>zoom</options>
       <shade_type>solid</shade_type>
       <pcolor>#ffffff</pcolor>
