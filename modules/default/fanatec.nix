@@ -1,31 +1,47 @@
-{ config, pkgs, lib, ... }:
+{ stdenv, pkgs, lib, fetchFromGitHub, kmod, kernelPackages, breakpointHook}:
 
 let
-    fanatecff = config.boot.kernelPackages.callPackage ../../pkgs/hid-fanatecff {};
-    all-users = builtins.attrNames config.users.users;
-    normal-users = builtins.filter (user: config.users.users.${user}.isNormalUser == true) all-users;
-in
-{
-    options.hardware.fanatec = {
-        enable = lib.mkOption {
-            type = with lib.types; bool;
-            default = false;
-            description = "Enable Fanatec Wheel support";
-        };
-    };
+  kernel = kernelPackages.kernel;
+in stdenv.mkDerivation rec {
+  name = "hid-fanatecff-${version}-${kernel.version}";
+  version = "0.2.0";
 
-    config = lib.mkIf config.hardware.fanatec.enable {
-        boot.extraModulePackages = [ fanatecff ];
-        services.udev.packages = [ fanatecff ];
-        boot.kernelModules = [ "hid-fanatec" ];
+  src = fetchFromGitHub {
+    owner = "gotzl";
+    repo = "hid-fanatecff";
+    rev = "f4b80a3436c6adad7afbbe1739e5189a9a86dddb";
+    sha256 = "12zp7y2filghvyjmq47krvqazdb5f63jd3jilbxhgf2919iy3zn1";
+  };
 
-        environment.systemPackages = with pkgs; [
-            linuxConsoleTools                       # needed by udev rules
-        ];
+  sourceRoot = "source";
+  hardeningDisable = [ "pic" "format" ];
+  nativeBuildInputs = kernel.moduleBuildDependencies ++ [
+    pkgs.linuxConsoleTools
+  ];
 
-        # add all user to games group (to grant r/w on sysfs)
-        users.groups.games = {
-            members = normal-users;
-        };
-    };
+  makeFlags = [
+    "KVERSION=${kernel.modDirVersion}"
+    "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "MODULEDIR=$(out)/lib/modules/${kernel.modDirVersion}"
+  ];
+
+  preInstallPhase = ''
+    sed -i '/fanatec.rules/d' Makefile
+    sed -i '/depmod/d' Makefile
+    mkdir -p $out/lib/modules/${kernel.modDirVersion}
+  '';
+  postPhase = ''
+    substituteInPlace fanatec.rules  --replace /usr/bin/evdev-joystick ${pkgs.linuxConsoleTools}/bin/evdev-joystick
+    mkdir -p $out/lib/udev/rules.d
+    cp fanatec.rules $out/lib/udev/rules.d/99-fanatec.rules
+  '';
+  preInstallPhases = ["preInstallPhase"];
+  postPhases = ["postPhase"];
+
+  meta = with lib; {
+    description = "A kernel module that provides support for fanatec wheels and pedals";
+    homepage = "https://github.com/gotzl/hid-fanatecff";
+    license = licenses.gpl2;
+    platforms = platforms.linux;
+  };
 }
