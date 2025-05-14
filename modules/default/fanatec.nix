@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-    fanatecff = config.boot.kernelPackages.callPackage ../../pkgs/hid-fanatecff {};
+    fanatecff = config.boot.kernelPackages.callPackage ../pkgs/hid-fanatecff {};
     all-users = builtins.attrNames config.users.users;
     normal-users = builtins.filter (user: config.users.users.${user}.isNormalUser == true) all-users;
 in
