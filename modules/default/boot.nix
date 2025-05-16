@@ -35,7 +35,7 @@ in
         vm_swappiness = 100;
         vm_vfs_cache_pressure = 50;
         vm_dirty_bytes = 268435456;
-        vm.page-cluster = 0;
+        "vm.page-cluster" = 0;
         vm_dirty_background_bytes = 67108864;
         vm_dirty_writeback_centisecs = 1500;
         kernel_nmi_watchdog = 0;
