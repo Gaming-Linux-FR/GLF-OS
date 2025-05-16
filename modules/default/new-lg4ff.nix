@@ -7,7 +7,7 @@
 let
   cfg = config.hardware.new-lg4ff;
   kernelPackages = config.boot.kernelPackages;
-  new-lg4ff = config.boot.kernelPackages.callPackage ./new-lg4ff {};
+  new-lg4ff_vff = config.boot.kernelPackages.callPackage ./new-lg4ff {};
     all-users = builtins.attrNames config.users.users;
     normal-users = builtins.filter (user: config.users.users.${user}.isNormalUser == true) all-users;
 in
@@ -24,9 +24,9 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.hardware.new-lg4ff_vff.enable {
     boot = {
-      extraModulePackages = [ kernelPackages.new-lg4ff ];
+      extraModulePackages = [ new-lg4ff_vff ];
       kernelModules = [ "hid-logitech-new" ];
     };
   };
