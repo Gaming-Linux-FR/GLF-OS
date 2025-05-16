@@ -7,6 +7,9 @@
 let
   cfg = config.hardware.new-lg4ff;
   kernelPackages = config.boot.kernelPackages;
+  new-lg4ff = config.boot.kernelPackages.callPackage ./new-lg4ff {};
+    all-users = builtins.attrNames config.users.users;
+    normal-users = builtins.filter (user: config.users.users.${user}.isNormalUser == true) all-users;
 in
 {
   options.hardware.new-lg4ff = {
@@ -27,6 +30,4 @@ in
       kernelModules = [ "hid-logitech-new" ];
     };
   };
-
-  meta.maintainers = with lib.maintainers; [ matthiasbenaets ];
 }
