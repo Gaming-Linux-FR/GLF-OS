@@ -25,4 +25,7 @@ in
       kernelModules = [ "hid-logitech-new" ];
     };
   };
+services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c261", RUN+="${pkgs.usb-modeswitch}/bin/usbmodeswitch -v 046d -p c261 -m 01 -r 01 -C 03 -M '0f00010142'"
+  '';
 }
