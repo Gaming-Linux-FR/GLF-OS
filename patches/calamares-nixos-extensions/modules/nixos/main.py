@@ -545,8 +545,8 @@ def run():
         catenate(variables, "groups", (" ").join(['"' + s + '"' for s in groups]))
         if (
             gs.value("autoLoginUser") is not None
-            and gs.value("packagechooser_packagechooser") is not None
-            and gs.value("packagechooser_packagechooser") != ""
+            and gs.value("packagechooser_environment") is not None
+            and gs.value("packagechooser_environment") != ""
         ):
             cfg += cfgautologin
         elif gs.value("autoLoginUser") is not None:
