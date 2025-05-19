@@ -19,6 +19,7 @@ in
 
     #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
+    boot.loader.grub.default = "saved";
 
     boot = {
       tmp.cleanOnBoot = true;
