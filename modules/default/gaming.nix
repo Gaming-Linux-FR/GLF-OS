@@ -29,6 +29,7 @@ in
       winetricks
       joystickwake
       oversteer
+      linuxKernel.packages.linux_libre.hid-tmff2
     ];
 
     environment.sessionVariables = {
