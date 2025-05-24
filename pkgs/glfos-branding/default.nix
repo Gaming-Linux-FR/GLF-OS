@@ -17,7 +17,8 @@ stdenvNoCC.mkDerivation rec {
     # Logo
       mkdir -p $out/share/icons/hicolor/scalable/apps
       cp $src/logo/mango.svg $out/share/icons/hicolor/scalable/apps/mango.svg
-
+      cp $src/logo/selector.svg $out/share/icons/hicolor/scalable/apps/selector.svg
+    
     for SIZE in 16 32 48 64 128 256; do
       mkdir -p $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems
       cp $src/logo/logo-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo.png
