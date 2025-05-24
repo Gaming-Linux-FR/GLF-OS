@@ -15,12 +15,14 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     # Logo
+      mkdir -p $out/share/icons/hicolor/scalable/apps
+      cp $src/logo/mango.svg $out/share/icons/hicolor/scalable/apps/mango.svg
 
     for SIZE in 16 32 48 64 128 256; do
       mkdir -p $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems
       cp $src/logo/logo-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo.png
       cp $src/logo/logo_light-$SIZE.png $out/share/icons/hicolor/''${SIZE}x''${SIZE}/emblems/glfos-logo-light.png
-      cp $src/logo/mango.svg $out/share/icons/hicolor/scalable/apps/mango.svg
+     
     done
 
     #wallpaper
