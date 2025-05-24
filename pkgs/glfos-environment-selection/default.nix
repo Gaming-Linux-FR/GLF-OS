@@ -171,7 +171,7 @@ fi
     desktopEntry = pkgs.makeDesktopItem {
       name = name;
       desktopName = "GLF-OS Environment Selection";
-      icon = "glfos-logo";
+      icon = "selector";
       exec = "${script}/bin/${name}";
       terminal = false;
       categories = ["System"];
