@@ -1,7 +1,9 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   name = "glfos-mangohud-configuration";
-  buildCommand = let
+  src = ../../assets;
+
+buildCommand = let
     script = pkgs.writeShellApplication {
       name = name;
       runtimeInputs = with pkgs; [ coreutils gnused zenity ];
