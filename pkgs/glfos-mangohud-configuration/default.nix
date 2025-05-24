@@ -1,8 +1,7 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   name = "glfos-mangohud-configuration";
-  src = ../../assets;
-
+  
 buildCommand = let
     script = pkgs.writeShellApplication {
       name = name;
