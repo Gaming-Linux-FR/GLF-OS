@@ -130,7 +130,7 @@ fi
     desktopEntry = pkgs.makeDesktopItem {
       name = name;
       desktopName = "GLF-OS MangoHud Configuration";
-      icon = "glfos-logo";
+      icon = "mango";
       exec = "${script}/bin/${name}";
       terminal = false;
       categories = ["System"];
