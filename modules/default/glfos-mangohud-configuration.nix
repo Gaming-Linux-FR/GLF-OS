@@ -11,16 +11,16 @@ let
 in
 {
 
-  options.glf.packages.glfos-mangohud-configuration.enable = mkOption {
-    description = "Enable glfos-mangohud-configuration program";
-    type = types.bool;
-    default = if (config.glf.environment.enable) then
+ options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
+    description = "Enable GLF Gaming configurations";
+    type = lib.types.bool; 
+    default = if (config.glf.environment.edition != "mini") then
       true
     else
       false;
   };
 
-  config = mkIf config.glf.packages.glfos-mangohud-configuration.enable {
+  config = mkIf config.glf.gaming.enable {
     environment.systemPackages = with pkgs; [ glfos-mangohud-configuration zenity ];
   };
 
