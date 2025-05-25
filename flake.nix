@@ -79,6 +79,10 @@
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/gaming.png}        $out/share/calamares/branding/nixos/gaming.png
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/logo-glf-os.svg}   $out/share/calamares/branding/nixos/logo-glf-os.svg
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}     $out/share/calamares/branding/nixos/branding.desc
+                      cp -r ${./patches/calamares-nixos-extensions/config/images/mini.png}           $out/share/calamares/images/mini.png
+                      cp -r ${./patches/calamares-nixos-extensions/config/images/standard.png}       $out/share/calamares/images/standard.png
+                      cp -r ${./patches/calamares-nixos-extensions/config/images/studio.png}         $out/share/calamares/images/studio.png
+                      cp -r ${./patches/calamares-nixos-extensions/config/images/studio-pro.png}     $out/share/calamares/images/studio-pro.png
                     '';
                   });
                 })
