@@ -41,7 +41,7 @@ systemd.tmpfiles.rules =
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
           davinci-resolve-studio
-          gimp
+          gimp3-with-plugins
           audacity
           freetube
         ]
@@ -52,7 +52,7 @@ systemd.tmpfiles.rules =
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
           davinci-resolve
-          gimp
+          gimp3-with-plugins
           audacity
           freetube
         ];
