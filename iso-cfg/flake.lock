@@ -7,43 +7,62 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1746267335,
-        "narHash": "sha256-K8/WXCmf6eF+Vde+NGOVhcnrFDCH4mRAa0jvv9vIA5k=",
+        "lastModified": 1747898746,
+        "narHash": "sha256-/Bma6DOgINTcBVD2fDXgJnl4cG4v3Kj50s8sSYFPosM=",
         "owner": "Gaming-Linux-FR",
         "repo": "GLF-OS",
-        "rev": "c7a683e90a545da146b6b58d0c1d62657581b6d5",
+        "rev": "b916e80a1067cef1a7141e553d99f223fbd25cdd",
         "type": "github"
       },
       "original": {
         "owner": "Gaming-Linux-FR",
-        "ref": "beta",
+        "ref": "stable",
         "repo": "GLF-OS",
+        "type": "github"
+      }
+    },
+    "glf-channels": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "nixpkgs-unstable": "nixpkgs-unstable_2"
+      },
+      "locked": {
+        "lastModified": 1743753356,
+        "narHash": "sha256-DC9/0bAauxMZNr3bQFx1x7SGr1vTbaKulzwLXWifBgU=",
+        "owner": "Gaming-Linux-FR",
+        "repo": "GLF-OS-channels",
+        "rev": "87b3a2bf2bc93c874af418d427cb75804806db61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gaming-Linux-FR",
+        "repo": "GLF-OS-channels",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1745930157,
-        "narHash": "sha256-y3h3NLnzRSiUkYpnfvnS669zWZLoqqI6NprtLQ+5dck=",
+        "lastModified": 1745487689,
+        "narHash": "sha256-FQoi3R0NjQeBAsEOo49b5tbDPcJSMWc3QhhaIi9eddw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "46e634be05ce9dc6d4db8e664515ba10b78151ae",
+        "rev": "5630cf13cceac06cefe9fc607e8dfa8fb342dde3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1745930157,
-        "narHash": "sha256-y3h3NLnzRSiUkYpnfvnS669zWZLoqqI6NprtLQ+5dck=",
+        "lastModified": 1745526057,
+        "narHash": "sha256-ITSpPDwvLBZBnPRS2bUcHY3gZSwis/uTe255QgMtTLA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "46e634be05ce9dc6d4db8e664515ba10b78151ae",
+        "rev": "f771eb401a46846c1aebd20552521b233dd7e18b",
         "type": "github"
       },
       "original": {
@@ -55,15 +74,31 @@
     },
     "nixpkgs-unstable_2": {
       "locked": {
-        "lastModified": 1746141548,
-        "narHash": "sha256-IgBWhX7A2oJmZFIrpRuMnw5RAufVnfvOgHWgIdds+hc=",
-        "owner": "nixos",
+        "lastModified": 1748026106,
+        "narHash": "sha256-6m1Y3/4pVw1RWTsrkAK2VMYSzG4MMIj7sqUy7o8th1o=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f02fddb8acef29a8b32f10a335d44828d7825b78",
+        "rev": "063f43f2dbdef86376cc29ad646c45c46e93234c",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable_3": {
+      "locked": {
+        "lastModified": 1748026106,
+        "narHash": "sha256-6m1Y3/4pVw1RWTsrkAK2VMYSzG4MMIj7sqUy7o8th1o=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "063f43f2dbdef86376cc29ad646c45c46e93234c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -71,16 +106,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1746141548,
-        "narHash": "sha256-IgBWhX7A2oJmZFIrpRuMnw5RAufVnfvOgHWgIdds+hc=",
-        "owner": "nixos",
+        "lastModified": 1748037224,
+        "narHash": "sha256-92vihpZr6dwEMV6g98M5kHZIttrWahb9iRPBm1atcPk=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f02fddb8acef29a8b32f10a335d44828d7825b78",
+        "rev": "f09dede81861f3a83f7f06641ead34f02f37597f",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "NixOS",
+        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -88,8 +123,12 @@
     "root": {
       "inputs": {
         "glf": "glf",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable_2"
+        "glf-channels": "glf-channels",
+        "nixpkgs": [
+          "glf-channels",
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": "nixpkgs-unstable_3"
       }
     },
     "systems": {
