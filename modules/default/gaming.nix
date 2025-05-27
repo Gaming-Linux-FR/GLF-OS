@@ -57,6 +57,11 @@ in
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
     programs.steam.gamescopeSession.enable = true;
+    
+programs.gamescope = {
+  enable = true;
+  capSysNice = true;
+};
 
     programs.steam = {
       enable = true;
