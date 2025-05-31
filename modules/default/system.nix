@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -20,7 +21,7 @@
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
+      extraPackages = with pkgs-unstable; [
         intel-gpu-tools
         intel-media-driver
         vaapiIntel
@@ -30,7 +31,7 @@
         vulkan-loader
         vulkan-validation-layers
       ];
-      extraPackages32 = with pkgs; [
+      extraPackages32 = with pkgs-unstable; [
         intel-gpu-tools
         intel-media-driver
         vaapiIntel
