@@ -47,7 +47,13 @@ in
         kernel_kexec_load_disabled = 1;
       };
     }; 
-
+ hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    package = unstable.mesa.drivers;
+    package32 = unstable.pkgsi686Linux.mesa.drivers;
+  };
   }; 
 
 } # Fin du module
