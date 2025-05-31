@@ -47,8 +47,8 @@ in
     # Utiliser Mesa unstable directement depuis pkgs-unstable
     hardware.graphics = {
       enable = true;
-      package = pkgs-unstable.mesa.drivers;
-      package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
+      package = pkgs-unstable.mesa;
+      package32 = pkgs-unstable.pkgsi686Linux.mesa;
     };
   }; 
 }
