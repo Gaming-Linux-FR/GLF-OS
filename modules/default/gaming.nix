@@ -31,7 +31,7 @@ in
       oversteer
       linuxKernel.packages.linux_libre.hid-tmff2
       mesa
-      
+      glxinfo
     ];
 
     environment.sessionVariables = {
