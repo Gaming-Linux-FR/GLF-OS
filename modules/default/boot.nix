@@ -44,13 +44,14 @@ in
       };
     }; 
     
-    nixpkgs.overlays = [
-      (final: prev: {
-        mesa = prev.mesa.overrideAttrs (oldAttrs: rec {
-          version = "25.1.1"; 
-        });
-      })
-    ];
+nixpkgs.overlays = [
+  (final: prev: {
+    # Remplacer complètement mesa par la version unstable
+    mesa = (import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+    }) { system = prev.system; }).mesa;
+  })
+];
     
     hardware.opengl = {
       enable = true;
