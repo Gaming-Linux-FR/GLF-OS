@@ -15,7 +15,7 @@ in
 
   options.glf.mangohud.configuration = lib.mkOption { # Use 'lib.mkOption' here
     type = with lib.types; enum [ "disabled" "light" "full" ]; # Use 'lib.types' here
-    default = "light";
+    default = "disabled";
     description = "MangoHud configuration";
   };
 
