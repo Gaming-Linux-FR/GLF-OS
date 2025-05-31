@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -11,7 +12,7 @@ systemd.tmpfiles.rules =
   let
     rocmEnv = pkgs.symlinkJoin {
       name = "rocm-combined";
-      paths = with pkgs.rocmPackages; [
+      paths = with pkgs-unstable.rocmPackages; [
         rocblas
         hipblas
         clr
@@ -23,7 +24,7 @@ systemd.tmpfiles.rules =
 
         hardware.graphics = {
             enable = true; 
-            extraPackages = with pkgs; [
+            extraPackages = with pkgs-unstable; [
             mesa.opencl # Assure que l'implémentation OpenCL de Mesa (Rusticl) est installée
             ];
           };
@@ -35,7 +36,7 @@ systemd.tmpfiles.rules =
     
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
-        with pkgs; [
+        with pkgs-unstable; [
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
@@ -46,7 +47,7 @@ systemd.tmpfiles.rules =
           freetube
         ]
       else
-        with pkgs; [
+        with pkgs-unstable; [
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
