@@ -47,6 +47,15 @@ in
         kernel_kexec_load_disabled = 1;
       };
     }; 
+
+nixpkgs.overlays = [
+    (final: prev: {
+      mesa = prev.mesa.overrideAttrs (oldAttrs: rec {
+        version = "25.1.1"; 
+      });
+    })
+  ];
+
  hardware.opengl = {
     enable = true;
     driSupport = true;
