@@ -15,7 +15,7 @@ in
 
   options.glf.mangohud.configuration = lib.mkOption { # Use 'lib.mkOption' here
     type = with lib.types; enum [ "disabled" "light" "full" ]; # Use 'lib.types' here
-    default = "light";
+    default = "disabled";
     description = "MangoHud configuration";
   };
 
@@ -30,6 +30,8 @@ in
       joystickwake
       oversteer
       linuxKernel.packages.linux_libre.hid-tmff2
+      mesa
+      glxinfo
     ];
 
     environment.sessionVariables = {
@@ -57,6 +59,11 @@ in
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
     programs.steam.gamescopeSession.enable = true;
+    
+programs.gamescope = {
+  enable = true;
+  capSysNice = true;
+};
 
     programs.steam = {
       enable = true;
