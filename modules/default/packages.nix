@@ -67,7 +67,6 @@
 
       # Fetch en attendant GLF-FETCH
       fastfetch
-      glxinfo
 
       # Language
       poppler_data
