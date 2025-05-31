@@ -12,7 +12,7 @@ systemd.tmpfiles.rules =
   let
     rocmEnv = pkgs.symlinkJoin {
       name = "rocm-combined";
-      paths = with pkgs.rocmPackages; [
+      paths = with pkgs-unstable.rocmPackages; [
         rocblas
         hipblas
         clr
@@ -36,7 +36,7 @@ systemd.tmpfiles.rules =
     
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
-        with pkgs; [
+        with pkgs-unstable; [
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
@@ -47,7 +47,7 @@ systemd.tmpfiles.rules =
           freetube
         ]
       else
-        with pkgs; [
+        with pkgs-unstable; [
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
