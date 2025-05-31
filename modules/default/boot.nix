@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 in
@@ -14,13 +13,10 @@ in
     type = lib.types.bool;
     default = true;
   };
-
   config = lib.mkIf config.glf.boot.enable {
-
     #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
-
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
@@ -47,21 +43,19 @@ in
         kernel_kexec_load_disabled = 1;
       };
     }; 
-
-nixpkgs.overlays = [
-    (final: prev: {
-      mesa = prev.mesa.overrideAttrs (oldAttrs: rec {
-        version = "25.1.1"; 
-      });
-    })
-  ];
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
+    
+    nixpkgs.overlays = [
+      (final: prev: {
+        mesa = prev.mesa.overrideAttrs (oldAttrs: rec {
+          version = "25.1.1"; 
+        });
+      })
+    ];
+    
+    hardware.opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
   }; 
-
-} # Fin du module
+}
