@@ -3,7 +3,7 @@
   description = "GLF-OS";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # Base stable
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # Base stable
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
@@ -46,7 +46,7 @@
 
 
       specialArgs = {
-        # Rend pkgsUnstable disponible pour les modules
+        # Rend pkgsUnstable disponible pour les modules (gaming & customConfig)
         pkgs-unstable = pkgsUnstable;
       };
 
@@ -57,8 +57,7 @@
     nixosConfigurations = {
         # Configuration pour l'ISO d'installation avec Calamares
         "glf-installer" = nixpkgs.lib.nixosSystem {
-          # <<<=== AJOUT DE 'inherit specialArgs' ===>>>
-          inherit system specialArgs; # Passe les arguments spéciaux aux modules
+          inherit system specialArgs;
           modules = baseModules ++ [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
             "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
@@ -92,7 +91,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = "GLF-OS-BETA-OMNISLASH_ROLLING";
+                  volumeID = "GLF-OS-BETA-OMNISLASH";
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";
@@ -108,7 +107,7 @@
 
         # Configuration de test utilisateur simulée
         "user-test" = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs; # Passe les arguments spéciaux ici aussi
+          inherit system specialArgs;
           modules = baseModules ++ [
             { # Config VM/test
               boot.loader.grub = { enable = true; device = "/dev/sda"; useOSProber = true; };
@@ -138,7 +137,7 @@
             if [ -d "docs" ]; then
               cd docs || exit 1
               echo "Running bundle install and starting Jekyll server..."
-              bundle config set path 'vendor/bundle' --local # Utiliser --local
+              bundle config set path 'vendor/bundle' --local
               bundle install
               bundle exec jekyll serve
             else

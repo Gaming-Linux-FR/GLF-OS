@@ -2,9 +2,9 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
-
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 in
@@ -14,13 +14,10 @@ in
     type = lib.types.bool;
     default = true;
   };
-
   config = lib.mkIf config.glf.boot.enable {
-
     #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
-
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
@@ -30,7 +27,6 @@ in
       plymouth = {
         enable = true;
         theme = "glfos";
-        # La variable plymouth-glfos vient du 'let' ci-dessus
         themePackages = [ plymouth-glfos ];
       };
       kernel.sysctl = {
@@ -47,7 +43,12 @@ in
         kernel_kexec_load_disabled = 1;
       };
     }; 
-
+    
+    # Utiliser Mesa unstable directement depuis pkgs-unstable
+    hardware.graphics = {
+      enable = true;
+      package = pkgs-unstable.mesa;
+      package32 = pkgs-unstable.pkgsi686Linux.mesa;
+    };
   }; 
-
-} # Fin du module
+}

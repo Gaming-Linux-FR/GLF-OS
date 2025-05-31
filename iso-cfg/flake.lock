@@ -21,6 +21,25 @@
         "type": "github"
       }
     },
+    "glf-channels": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "nixpkgs-unstable": "nixpkgs-unstable_2"
+      },
+      "locked": {
+        "lastModified": 1743753356,
+        "narHash": "sha256-DC9/0bAauxMZNr3bQFx1x7SGr1vTbaKulzwLXWifBgU=",
+        "owner": "Gaming-Linux-FR",
+        "repo": "GLF-OS-channels",
+        "rev": "87b3a2bf2bc93c874af418d427cb75804806db61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gaming-Linux-FR",
+        "repo": "GLF-OS-channels",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1744098102,
@@ -32,7 +51,7 @@
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -63,13 +82,13 @@
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs-unstable_3": {
       "locked": {
         "lastModified": 1748026106,
         "narHash": "sha256-6m1Y3/4pVw1RWTsrkAK2VMYSzG4MMIj7sqUy7o8th1o=",
@@ -79,8 +98,24 @@
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1748037224,
+        "narHash": "sha256-92vihpZr6dwEMV6g98M5kHZIttrWahb9iRPBm1atcPk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f09dede81861f3a83f7f06641ead34f02f37597f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -88,8 +123,12 @@
     "root": {
       "inputs": {
         "glf": "glf",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable_2"
+        "glf-channels": "glf-channels",
+        "nixpkgs": [
+          "glf-channels",
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": "nixpkgs-unstable_3"
       }
     },
     "systems": {

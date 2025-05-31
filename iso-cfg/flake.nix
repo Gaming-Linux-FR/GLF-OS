@@ -1,4 +1,3 @@
-# flake.nix (CORRIGÉ - Pour iso-cfg - Version "via GitHub" - Révisé)
 {
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
 
