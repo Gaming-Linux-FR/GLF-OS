@@ -3,7 +3,7 @@
   description = "GLF-OS";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # Base stable
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # Base stable
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
