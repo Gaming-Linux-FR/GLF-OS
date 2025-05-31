@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 let
@@ -26,7 +27,6 @@ in
       plymouth = {
         enable = true;
         theme = "glfos";
-        # La variable plymouth-glfos vient du 'let' ci-dessus
         themePackages = [ plymouth-glfos ];
       };
       kernel.sysctl = {
@@ -44,17 +44,11 @@ in
       };
     }; 
     
-nixpkgs.overlays = [
-  (final: prev: {
-    # Remplacer complètement mesa par la version unstable
-    mesa = (import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-    }) { system = prev.system; }).mesa;
-  })
-];
-    
-    hardware.opengl = {
+    # Utiliser Mesa unstable directement depuis pkgs-unstable
+    hardware.graphics = {
       enable = true;
+      package = pkgs-unstable.mesa.drivers;
+      package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
     };
   }; 
 }
