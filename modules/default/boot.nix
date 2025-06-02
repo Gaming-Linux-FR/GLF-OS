@@ -8,16 +8,13 @@
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 
-  nixpkgs_old_kernel = builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/39f51ddad7a5.tar.gz";
-    sha256 = "1g2j8043v7vm6ngxjlhsk0qwgzb1khjlwqigpdy9jdnr1lry4mgh";
-  };
-  pkgs_old_kernel = import nixpkgs_old_kernel {
-    system = pkgs.system;
-    config = config.nixpkgs.config;
-  };
+  pinnedKernelDerivation = "/nix/store/nrd1sf5aqgyhnbjqi30ip99w8xpcx1hw-linux-6.14.8";
 
-  pinnedKernelPackages = pkgs_old_kernel.linuxPackages;
+  pinnedKernelPackages = {
+    kernel = pinnedKernelDerivation;
+    kernelHeaders = "${pinnedKernelDerivation}/dev";
+    version = "6.14.8";
+  };
 
 in
 {
