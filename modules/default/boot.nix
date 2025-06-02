@@ -11,7 +11,7 @@ let
   # Import d'un commit nixpkgs contenant kernel 6.14.8
   nixpkgs-kernel = builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/39f51ddad7a5.tar.gz";
-    sha256 = "0000000000000000000000000000000000000000000000000000"; # Sera calculé automatiquement
+    sha256 = "1g2j8043v7vm6ngxjlhsk0qwgzb1khjlwqigpdy9jdnr1lry4mgh"; # Sera calculé automatiquement
   };
   
   pkgs-kernel = import nixpkgs-kernel {
