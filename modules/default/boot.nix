@@ -9,15 +9,6 @@ let
   # Utiliser les paquets pour cette version du noyau
   GLFkernelPackages = pkgs.linuxPackages_latest_6_14;
   
-  # Vérifier si la version spécifique existe
-  GLFkernelPackages_6_14_8 = builtins.getAttr "linuxPackages_6_14" pkgs;
-  
-  # Utiliser le noyau 6.14.8 si disponible, sinon utiliser la version par défaut
-  selectedKernelPackages = if builtins.hasAttr "linux_6_14_8" GLFkernelPackages_6_14_8 then
-                              GLFkernelPackages_6_14_8.linuxPackages_6_14_8
-                          else
-                              GLFkernelPackages;
-  
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -30,7 +21,7 @@ in
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = selectedKernelPackages;
+      kernelPackages = GLFkernelPackages;
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false;
       kernelParams =
@@ -61,7 +52,4 @@ in
     hardware.graphics = {
       enable = true;
       package = pkgs-unstable.mesa;
-      package32 = pkgs-unstable.pkgsi686Linux.mesa;
-    };
-  };
-}
+      package32 = pkgs-un
