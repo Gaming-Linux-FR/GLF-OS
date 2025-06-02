@@ -8,14 +8,18 @@
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 
-  pinnedKernelDerivation = "/nix/store/nrd1sf5aqgyhnbjqi30ip99w8xpcx1hw-linux-6.14.8";
-
-  pinnedKernelPackages = {
-    kernel = pinnedKernelDerivation;
-    kernelHeaders = "${pinnedKernelDerivation}/dev";
-    version = "6.14.8";
+  nixpkgs-kernel = builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/39f51ddad7a5.tar.gz";
+    sha256 = "1g2j8043v7vm6ngxjlhsk0qwgzb1khjlwqigpdy9jdnr1lry4mgh";
   };
 
+  pkgs-kernel = import nixpkgs-kernel {
+    system = pkgs.system;
+    config = config.nixpkgs.config;
+  };
+
+  GLFkernel = pkgs.callPackage /nix/store/nrd1sf5aqgyhnbjqi30ip99w8xpcx1hw-linux-6.14.8 {};
+  GLFkernelPackages = pkgs-kernel.linuxPackagesFor GLFkernel;
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -23,15 +27,19 @@ in
     type = lib.types.bool;
     default = true;
   };
+
   config = lib.mkIf config.glf.boot.enable {
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = pinnedKernelPackages;
+      kernelPackages = GLFkernelPackages;
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false;
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then
+          [ "amd_pstate=active" "nosplit_lock_mitigate" ]
+        else
+          [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
