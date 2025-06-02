@@ -1,12 +1,23 @@
-{
-  lib,
-  config,
-  pkgs,
-  pkgs-unstable,
-  ...
-}:
+{ lib, config, pkgs, pkgs-unstable, ... }:
+
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
+
+  # Utiliser une version spécifique du noyau
+  GLFkernel = pkgs.linuxPackages_latest_6_14.kernel;
+  
+  # Utiliser les paquets pour cette version du noyau
+  GLFkernelPackages = pkgs.linuxPackages_latest_6_14;
+  
+  # Vérifier si la version spécifique existe
+  GLFkernelPackages_6_14_8 = builtins.getAttr "linuxPackages_6_14" pkgs;
+  
+  # Utiliser le noyau 6.14.8 si disponible, sinon utiliser la version par défaut
+  selectedKernelPackages = if builtins.hasAttr "linux_6_14_8" GLFkernelPackages_6_14_8 then
+                              GLFkernelPackages_6_14_8.linuxPackages_6_14_8
+                          else
+                              GLFkernelPackages;
+  
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -14,16 +25,19 @@ in
     type = lib.types.bool;
     default = true;
   };
+
   config = lib.mkIf config.glf.boot.enable {
-    #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = pkgs.linuxPackages_6_14_8;
+      kernelPackages = selectedKernelPackages;
       tmp.cleanOnBoot = true;
-      supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
+      supportedFilesystems.zfs = lib.mkForce false;
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then
+          [ "amd_pstate=active" "nosplit_lock_mitigate" ]
+        else
+          [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
@@ -42,13 +56,12 @@ in
         kernel_kptr_restrict = 2;
         kernel_kexec_load_disabled = 1;
       };
-    }; 
-    
-    # Utiliser Mesa unstable directement depuis pkgs-unstable
+    };
+
     hardware.graphics = {
       enable = true;
       package = pkgs-unstable.mesa;
       package32 = pkgs-unstable.pkgsi686Linux.mesa;
     };
-  }; 
+  };
 }
