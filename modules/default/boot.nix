@@ -7,6 +7,17 @@
 }:
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
+  
+  # Import d'un commit nixpkgs contenant kernel 6.14.8
+  nixpkgs-kernel = builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/39f51ddad7a5.tar.gz";
+    sha256 = "0000000000000000000000000000000000000000000000000000"; # Sera calculé automatiquement
+  };
+  
+  pkgs-kernel = import nixpkgs-kernel {
+    system = pkgs.system;
+    config = config.nixpkgs.config;
+  };
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -19,7 +30,8 @@ in
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = pkgs.linuxPackages_6_14;
+      # Utilisation du kernel 6.14.8 depuis le commit épinglé
+      kernelPackages = pkgs-kernel.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
