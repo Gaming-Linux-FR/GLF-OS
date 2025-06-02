@@ -8,24 +8,16 @@
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 
-  kernel6_14_8_store_path = "/nix/store/nrd1sf5aqgyhnbjqi30ip99w8xpcx1hw-linux-6.14.8";
-
-  pinnedKernelPackages = pkgs.linuxPackages.override {
-    kernel = pkgs.runCommandNoAttrs "linux-6.14.8-binaire" {} ''
-      mkdir -p $out
-      ln -s ${kernel6_14_8_store_path}/bzImage $out/bzImage
-      ln -s ${kernel6_14_8_store_path}/lib $out/lib
-    '';
-
-    kernelHeaders = pkgs.runCommandNoAttrs "linux-6.14.8-headers" {} ''
-      mkdir -p $out
-      ln -s ${kernel6_14_8_store_path}/dev $out/dev
-      ln -s ${kernel6_14_8_store_path}/lib/modules/6.14.8/build $out/build
-      ln -s ${kernel6_14_8_store_path}/lib/modules/6.14.8/source $out/source
-    '';
-
-    version = "6.14.8";
+  nixpkgs_old_kernel = builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/39f51ddad7a5.tar.gz";
+    sha256 = "1g2j8043v7vm6ngxjlhsk0qwgzb1khjlwqigpdy9jdnr1lry4mgh";
   };
+  pkgs_old_kernel = import nixpkgs_old_kernel {
+    system = pkgs.system;
+    config = config.nixpkgs.config;
+  };
+
+  pinnedKernelPackages = pkgs_old_kernel.linuxPackages;
 
 in
 {
