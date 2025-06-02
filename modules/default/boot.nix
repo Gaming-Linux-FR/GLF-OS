@@ -7,19 +7,6 @@
 }:
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
-
-  nixpkgs-kernel = builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/39f51ddad7a5.tar.gz";
-    sha256 = "1g2j8043v7vm6ngxjlhsk0qwgzb1khjlwqigpdy9jdnr1lry4mgh";
-  };
-
-  pkgs-kernel = import nixpkgs-kernel {
-    system = pkgs.system;
-    config = config.nixpkgs.config;
-  };
-
-  GLFkernel = pkgs.callPackage /nix/store/nrd1sf5aqgyhnbjqi30ip99w8xpcx1hw-linux-6.14.8 {};
-  GLFkernelPackages = pkgs-kernel.linuxPackagesFor GLFkernel;
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -27,19 +14,16 @@ in
     type = lib.types.bool;
     default = true;
   };
-
   config = lib.mkIf config.glf.boot.enable {
+    #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = GLFkernelPackages;
+      kernelPackages = pkgs.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
-      supportedFilesystems.zfs = lib.mkForce false;
+      supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then
-          [ "amd_pstate=active" "nosplit_lock_mitigate" ]
-        else
-          [ "nosplit_lock_mitigate" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
@@ -58,12 +42,13 @@ in
         kernel_kptr_restrict = 2;
         kernel_kexec_load_disabled = 1;
       };
-    };
-
+    }; 
+    
+    # Utiliser Mesa unstable directement depuis pkgs-unstable
     hardware.graphics = {
       enable = true;
       package = pkgs-unstable.mesa;
       package32 = pkgs-unstable.pkgsi686Linux.mesa;
     };
-  };
+  }; 
 }
