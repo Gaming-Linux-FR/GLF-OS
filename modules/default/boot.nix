@@ -10,23 +10,19 @@ let
 
   kernel6_14_8_store_path = "/nix/store/nrd1sf5aqgyhnbjqi30ip99w8xpcx1hw-linux-6.14.8";
 
-  pinnedKernelPackages = pkgs.recurseIntoAttrs {
-    inherit (pkgs) stdenv lib;
+  pinnedKernelPackages = pkgs.linuxPackages.override {
+    kernel = pkgs.runCommandNoAttrs "linux-6.14.8-binaire" {} ''
+      mkdir -p $out
+      ln -s ${kernel6_14_8_store_path}/bzImage $out/bzImage
+      ln -s ${kernel6_14_8_store_path}/lib $out/lib
+    '';
 
-    kernel = pkgs.symlinkJoin {
-      name = "linux-6.14.8";
-      paths = [ "${kernel6_14_8_store_path}/bzImage" ];
-    };
-
-    out = pkgs.symlinkJoin {
-      name = "linux-6.14.8-out";
-      paths = [ kernel6_14_8_store_path ];
-    };
-
-    dev = pkgs.symlinkJoin {
-      name = "linux-6.14.8-dev";
-      paths = [ "${kernel6_14_8_store_path}/dev" ];
-    };
+    kernelHeaders = pkgs.runCommandNoAttrs "linux-6.14.8-headers" {} ''
+      mkdir -p $out
+      ln -s ${kernel6_14_8_store_path}/dev $out/dev
+      ln -s ${kernel6_14_8_store_path}/lib/modules/6.14.8/build $out/build
+      ln -s ${kernel6_14_8_store_path}/lib/modules/6.14.8/source $out/source
+    '';
 
     version = "6.14.8";
   };
