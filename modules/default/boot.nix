@@ -1,14 +1,12 @@
-{ lib, config, pkgs, pkgs-unstable, ... }:
-
+{
+  lib,
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
-
-  # Utiliser une version spécifique du noyau
-  GLFkernel = pkgs.linuxPackages_latest_6_14.kernel;
-  
-  # Utiliser les paquets pour cette version du noyau
-  GLFkernelPackages = pkgs.linuxPackages_latest_6_14;
-  
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -16,19 +14,16 @@ in
     type = lib.types.bool;
     default = true;
   };
-
   config = lib.mkIf config.glf.boot.enable {
+    #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = GLFkernelPackages;
+      kernelPackages = pkgs.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
-      supportedFilesystems.zfs = lib.mkForce false;
+      supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then
-          [ "amd_pstate=active" "nosplit_lock_mitigate" ]
-        else
-          [ "nosplit_lock_mitigate" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
@@ -47,9 +42,13 @@ in
         kernel_kptr_restrict = 2;
         kernel_kexec_load_disabled = 1;
       };
-    };
-
+    }; 
+    
+    # Utiliser Mesa unstable directement depuis pkgs-unstable
     hardware.graphics = {
       enable = true;
       package = pkgs-unstable.mesa;
-      package32 = pkgs-un
+      package32 = pkgs-unstable.pkgsi686Linux.mesa;
+    };
+  }; 
+}
