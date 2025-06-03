@@ -45,7 +45,6 @@
       btop-rocm
       htop
       transmission_4-gtk
-      vivaldi
       libva-utils
       ffmpeg
 
