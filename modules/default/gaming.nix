@@ -1,8 +1,24 @@
+
 { config, pkgs, lib, pkgs-unstable, ... }: # Make sure 'lib' is included here
+
 let
   system = "x86_64-linux";
 in
 {
+  environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
+    heroic
+    lutris
+    mangohud
+    wineWowPackages.staging
+    winetricks
+    joystickwake
+  ];
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+    MANGOHUD_CONFIG = ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05'';
+};
+
 
   options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
     description = "Enable GLF Gaming configurations";
@@ -33,6 +49,7 @@ in
       mesa
       glxinfo
     ];
+
 
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";

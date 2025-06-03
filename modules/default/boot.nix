@@ -15,9 +15,11 @@ in
     default = true;
   };
   config = lib.mkIf config.glf.boot.enable {
+
     #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
+
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
@@ -52,3 +54,4 @@ in
     };
   }; 
 }
+
