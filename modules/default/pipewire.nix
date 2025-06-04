@@ -15,7 +15,7 @@
       enable = true;
 
       jack.enable = true;
-      pulse.enable = true;
+      pulse.enable = false;
 
       alsa = {
         enable = true;
