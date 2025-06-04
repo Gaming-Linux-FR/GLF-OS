@@ -23,7 +23,12 @@ in
 
     environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
       heroic
-      lutris
+
+      # Lutris Config with additional libraries
+      (lutris.override {
+        extraLibraries = p: [ p.libadwaita p.gtk4 ];
+      })
+      
       mangohud
       wineWowPackages.staging
       winetricks
