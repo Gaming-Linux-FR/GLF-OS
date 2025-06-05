@@ -30,11 +30,19 @@ in
   };
   
   config = mkIf cfg.enable {
+    # Configuration nixpkgs pour CUDA
+    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.cudaSupport = true;
     
     services.xserver.videoDrivers = [ "nvidia" ];
     
     # Configuration essentielle pour que les logiciels voient CUDA
     hardware.graphics.enable = true;
+    hardware.graphics.extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
     
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
@@ -57,6 +65,9 @@ in
       cudaPackages.cuda_nvcc
       cudaPackages.cuda_nvvp
       cudaPackages.cuda_nvtx
+      # Packages spécifiques pour NVENC/NVDEC
+      ffmpeg-full  # Contient le support NVENC
+      nvidia-vaapi-driver  # Pour l'accélération vidéo
     ];
   };
 }
