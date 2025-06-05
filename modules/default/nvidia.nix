@@ -45,10 +45,8 @@ in
     };
     environment.systemPackages = with pkgs; [
       nv-codec-headers
-      # Packages CUDA corrigés pour les versions récentes de NixOS
+      # Version simplifiée avec seulement cudatoolkit
       cudaPackages.cudatoolkit
-      cudaPackages.cuda_runtime
-      cudaPackages.cuda_nvcc
     ];
   };
 }
