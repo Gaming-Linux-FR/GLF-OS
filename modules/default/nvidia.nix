@@ -35,7 +35,7 @@ in
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
       open = true;
-      cudaPackages = with config.cudaPackages; [ cuda_toolkit ];
+      cudaPackages = with pkgs.cudaPackages; [ cuda_toolkit ];
       nvidiaSettings = true;
       modesetting.enable = true;
 
