@@ -50,7 +50,8 @@ in
 
     environment.systemPackages = with pkgs; [
       nv-codec-headers
-      cuda_toolkit
+      # Utilise cuda_toolkit du kernelPackages.
+      config.boot.kernelPackages.cudaPackages.cuda_toolkit
     ];
   };
 }
