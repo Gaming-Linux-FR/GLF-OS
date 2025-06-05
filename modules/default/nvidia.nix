@@ -52,8 +52,11 @@ in
     
     environment.systemPackages = with pkgs; [
       nv-codec-headers
-      # Packages CUDA selon le wiki NixOS
-      cudatoolkit
+      cudaPackages.cudatoolkit
+      cudaPackages.cuda_opencl
+      cudaPackages.cuda_nvcc
+      cudaPackages.cuda_nvvp
+      cudaPackages.cuda_nvtx
     ];
   };
 }
