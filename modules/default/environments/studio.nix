@@ -37,7 +37,7 @@ systemd.tmpfiles.rules =
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs-unstable; [
-          blender-hip
+          blender-bin
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
@@ -48,7 +48,7 @@ systemd.tmpfiles.rules =
         ]
       else
         with pkgs-unstable; [
-          blender-hip
+          blender-bin
           obs-studio
           obs-studio-plugins.obs-vkcapture
           kdePackages.kdenlive
