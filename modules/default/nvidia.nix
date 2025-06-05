@@ -50,6 +50,12 @@ in
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
 
+# Ajouter les headers NVENC pour obs
+  environment.systemPackages = with pkgs; [
+    nv-codec-headers
+  ];
+
+
     };
   };
 }
