@@ -30,6 +30,10 @@ in
   };
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
+    
+    # Configuration essentielle pour que les logiciels voient CUDA
+    hardware.graphics.enable = true;
+    
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
       open = true;
@@ -43,10 +47,11 @@ in
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
     };
+    
     environment.systemPackages = with pkgs; [
       nv-codec-headers
-      # Version simplifiée avec seulement cudatoolkit
-      cudaPackages.cudatoolkit
+      # Packages CUDA selon le wiki NixOS
+      cudatoolkit
     ];
   };
 }
