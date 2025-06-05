@@ -1,10 +1,9 @@
-{ config, lib, pkgs, ... }: 
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.glf.nvidia_config;
 in
 {
-  # declare option
   options.glf.nvidia_config = {
     enable = mkOption {
       type = with types; bool;
@@ -30,14 +29,13 @@ in
     };
   };
 
-  # nvidia configuration
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
       open = true;
-      cudaPackages = with pkgs; [ cuda_toolkit ];
+      cudaPackages = with config.cudaPackages; [ cuda_toolkit ];
       nvidiaSettings = true;
       modesetting.enable = true;
 
