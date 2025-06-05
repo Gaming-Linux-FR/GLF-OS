@@ -28,30 +28,24 @@ in
       default = null;
     };
   };
-
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
-
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
       open = true;
       nvidiaSettings = true;
       modesetting.enable = true;
-
       prime = {
         intelBusId = optionalAttrs (cfg.intelBusId != null) cfg.intelBusId;
         nvidiaBusId = optionalAttrs (cfg.nvidiaBusId != null) cfg.nvidiaBusId;
         amdgpuBusId = optionalAttrs (cfg.amdgpuBusId != null) cfg.amdgpuBusId;
       };
-
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
     };
-
     environment.systemPackages = with pkgs; [
       nv-codec-headers
-      # Utilise cuda_toolkit du kernelPackages.
-      config.boot.kernelPackages.cudaPackages.cuda_toolkit
+      cudaPackages.cudatoolkit
     ];
   };
 }
