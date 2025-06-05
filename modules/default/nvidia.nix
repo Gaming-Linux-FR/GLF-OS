@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }: 
 with lib;
 let
   cfg = config.glf.nvidia_config;
@@ -49,13 +49,10 @@ in
 
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
-
-# Ajouter les headers NVENC pour obs
-  environment.systemPackages = with pkgs; [
-    nv-codec-headers
-  ];
-
-
     };
+
+    environment.systemPackages = with pkgs; [
+      nv-codec-headers
+    ];
   };
 }
