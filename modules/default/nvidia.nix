@@ -30,9 +30,6 @@ in
   };
   
   config = mkIf cfg.enable {
-    # Configuration nixpkgs pour CUDA
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.config.cudaSupport = true;
     
     services.xserver.videoDrivers = [ "nvidia" ];
     
