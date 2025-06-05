@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -32,18 +33,15 @@
       binfmt = true;
     };
 
+    services.hardware.openrgb.enable = true;
+
     environment.systemPackages = with pkgs; [
       # APP
-      discord
-      celluloid
       pciutils
       usbutils
       git
-      btop-rocm
-      htop
-      transmission_4-gtk
-      vivaldi
       libva-utils
+      ffmpeg
 
       # Compression
       arj
@@ -70,16 +68,21 @@
       # Fetch en attendant GLF-FETCH
       fastfetch
 
-      # Bureautique
-      libreoffice-fresh
-
       # Language
       poppler_data
       hunspell
       hunspellDicts.fr-any
       hyphen
       texlivePackages.hyphen-french
-    ];
+    ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
+      openrgb-with-all-plugins
+      btop-rocm
+      celluloid
+      discord
+      libreoffice-fresh
+      transmission_4-gtk
+     # vivaldi
+    ]);
 
   };
 

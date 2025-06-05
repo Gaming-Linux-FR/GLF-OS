@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=glfos
+Description=GLF-OS distro Plymouth theme
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/glfos/animation
+ScriptFile=/usr/share/plymouth/themes/glfos/animated-boot.script

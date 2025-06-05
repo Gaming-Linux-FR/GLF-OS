@@ -26,7 +26,7 @@ let
     VERSION_ID = cfg.release;
     BUILD_ID = cfg.version;
     PRETTY_NAME = "${DISTRO_NAME} ${cfg.release} (${cfg.codeName})";
-    # LOGO = "glfos-logo"; [FIXME]
+    LOGO = "glfos-logo";
     # HOME_URL = "https://glfos.org"; [FIXME]
     DOCUMENTATION_URL = "";
     SUPPORT_URL = "";

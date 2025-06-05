@@ -3,16 +3,15 @@
 {
 
   glf.autoUpgrade = lib.mkForce false;
+  glf.packages.glfos-environment-selection.enable = lib.mkForce false;
   glf.nvidia_config.enable = true;
 
   i18n.defaultLocale = "fr_FR.UTF-8";
 
   console.keyMap = "fr";
   services.xserver = {
-    enable = true;
     xkb.layout = "fr";
     xkb.variant = "";
-    excludePackages = [ pkgs.xterm ];
   };
 
   users.users.nixos = {

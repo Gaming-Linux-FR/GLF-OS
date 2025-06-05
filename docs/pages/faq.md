@@ -10,19 +10,13 @@ layout: default
 GLF OS est le nom d’un des projets réalisés par la communauté Gaming Linux Fr.
 Ce projet consiste à réaliser un système d’exploitation, autour d’un cahier des charges stricte et 100% réalisé par la communauté pour la communauté.
 
-GLF OS est basé sur [NixOS](https://nixos.org/), avec une orientation gaming et multimédia.
 
-Pour en savoir plus, visitez [cette page](https://www.gaminglinux.fr/?page_id=8365).
+{: .info }
+> Notez que secureboot doit être désactivé pour que GLF-OS fonctionne. 
 
-## Quelle est la configuration requise ?
 
-Celle-ci est indiquée sur la [page suivante](./documentation/minimalConfiguration.html).
+## Comptez-vous proposer une installation entièrement hors-ligne ? 
 
-## GLF OS peut-il être installé avec le secureboot actif ? 
-
-Non. Pour le moment, il vous faut le désactiver sur votre ordinateur.
-
-## Une installation sans connexion internet est-elle possible ? 
 
 Non, nous utilisons une fonctionnalité de NixOS appelé *Flocon* qui a besoin d'internet pour fonctionner. 
 
@@ -42,6 +36,21 @@ Une fois les pré-requis validés, il suffit alors de créer une clé USB bootab
 Cela dit, suite à quelques retours, nous vous conseillons l’utilisation de Balena Etcher pour éviter tout désagrément. Pour cela, vous pouvez consulter le tuto que nous avons réalisé et qui est disponible [ici](https://codeberg.org/Gaming-Linux-FR/usb-bootable).
 
 ## Quelle est la durée moyenne de l'installation ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {: .info }
 > La durée d'installation fait référence au moment où vous avez cliqué sur **Installer**. 
@@ -142,15 +151,17 @@ Si vous avez déjà installé la version stable, vous pouvez passer sur la versi
 {: .info }
 > Nous ne conseillons cette manipulation uniquement pour les personnes voulant faire des tests ou dans le cas de matériel hyper récent et non pris en charge en version stable.
 
-## Comment mettre à jour GLF OS ?
+## Faut-il redémarrer après une mise à jour ? 
 
-Les mises à jour sont automatiques et vous n’avez pas besoin de vous en occuper, GLF OS le fait pour vous ! Il vous faudra juste redémarrer votre système de temps en temps pour que l'ensemble des mises à jour s'appliquent.
+Les mises à jour sont automatiques et vous n’avez pas besoin de vous en occuper, GLF OS le fait pour vous ! Il vous faudra redémarrer votre système de temps en temps pour que l'ensemble des mises à jour s'appliquent.
 
 Il est également possible de vérifier et d'appliquer les mises à jour via les commandes suivantes :
 
 - `glf-update` : Permet de mettre à jour les dépôts
 - `glf-build` : Teste la mise à jour
-- `glf-switch` : Applique la mise à jour
+- `glf-boot` : Applique la mise à jour
+
+
 
 {: .info }
 > Un redémarrage est conseillé pour l'application de l'ensemble des mises à jour et vérifier que tout fonctionne.
@@ -172,4 +183,3 @@ Pour cela, vous pouvez nous en faire part sur Discord ou sur le Github dont les 
 
 Toutes nos notes de version sont disponibles [ici](https://www.gaminglinux.fr/tag/glfos-version/) et c’est dans celles-ci que seront annoncées les nouveautés.
 
-A noter que vous retrouverez également les release notes, directement sur le Github du projet [ici](https://github.com/Gaming-Linux-FR/GLF-OS/releases).

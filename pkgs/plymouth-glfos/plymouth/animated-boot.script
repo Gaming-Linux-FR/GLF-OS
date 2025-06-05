@@ -1,0 +1,24 @@
+ # Nice colour on top of the screen fading to
+Window.SetBackgroundTopColor (0.0, 0.00, 0.0);
+
+# an equally nice colour on the bottom
+Window.SetBackgroundBottomColor (0.0, 0.00, 0.0);
+
+# Image animation loop
+for (i = 1; i < 24; i++)
+  flyingman_image[i] = Image("progress-" + (i % 8) + ".png");
+flyingman_sprite = Sprite();
+
+progress = 1;
+
+fun refresh_callback ()
+  {
+    flyingman_sprite.SetX(Window.GetWidth() / 2 - flyingman_image[1].GetWidth() / 2); # Place in the centre
+    flyingman_sprite.SetY(Window.GetHeight() / 2 - flyingman_image[1].GetHeight() / 2);
+    flyingman_sprite.SetImage(flyingman_image[Math.Int(progress / 6) % 24]);
+    progress++;
+  }
+  
+Plymouth.SetRefreshFunction (refresh_callback);
+
+

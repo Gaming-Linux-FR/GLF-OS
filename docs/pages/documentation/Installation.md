@@ -5,12 +5,6 @@ parent: Documentation
 nav_order: 1
 ---
 
-{: .todo }
-> - Mettre les éléments liés à l'installation dans un sous-groupe "Installation".
-> - Instruction pour tester le checksum.
-> - Spécifier comment ouvrir le "boot order" (voir tableau : https://www.malekal.com/liste-touches-acces-bios-boot-menu-constructeur/).
-> - Fournir des instructions à propos du dualboot.
-> - Fournir des explications sur comment utiliser un client torrent.
 
 {: .in-progress }
 > Cette page est en travaux et peut être incomplète.

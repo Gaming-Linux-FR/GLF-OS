@@ -1,81 +1,27 @@
-# Construction de l'ISO
+English below
+[Go to english description](#GLF-OS-English)
 
-Pour construire l'ISO, suivez les étapes ci-dessous :
+# GLF-OS
 
-1. **Accédez au répertoire** :
-   ```sh
-   cd chemin/vers/Nixos-by-GLF
-   ```
+Gaming Linux Fr est la première communauté francophone dédiée au jeu vidéo sur Linux.
 
-2. **Exécutez la commande de construction** :
-   ```sh
-   nix build .#iso 
-   ```
+Nous lançons régulièrement des projets pour améliorer l'accessibilité de Linux. Par exemple, nous avons déjà travaillé sur des scripts pour Arch Linux (Architect) ainsi que sur des applications pour faciliter l'installation des logiciels telles que Easy Flatpak.
 
-# Alternative (via utilisation de just)
+Notre communauté réalise également des exercices d'audit, afin de mettre en avant les distributions Linux qui s'approchent le plus de notre vision idéale. Celle-ci étant axée pour les nouveaux venus (installation Out of the box), le multimédia et le gaming et ce dès l'installation.
 
-> [!NOTE]  
-> Pré-requis: `just` doit être installé  
-> Peut être installé temporairement avec `nix-shell -p just`
+Et c'est en cumulant ces deux exercices que l'idée de créer notre propre distribution est née : Obtenir un système d'exploitation stable, accessible et orienté gaming. Il répond à tous les aspects au cahier des charges GLF.
 
-1. **Contruction de l'iso** :
+Ce projet est avant tout un projet communautaire, pour Gaming Linux Fr. Il est également un défi, relevé par la communauté.
 
-La construction de l'iso peut être lancée via la commande:  
-   ```bash
-   just all
-   ```
+# GLF-OS-English
 
-Cette commande exécutera 2 opérations consécutives: `just iso` et `just install`.  
+Gaming Linux Fr is a community of enthusiasts built around a Discord and a website.
+We are the first French-speaking community dedicated to gaming on Linux.
 
-La première aura le même effet que la commande `nix build .#iso` hormis qu'elle ajoutera automatiquement les extra-features `nix-command flakes`.  
-La deuxième copiera l'ISO généré (suffixé du nom de la branche courante) dans le répertoire `iso` à la racine du projet et créera son fichier hash associé.  
+We regularly launch projects to improve Linux accessibility. For example, we have already worked on scripts for Arch Linux (Architect), as well as applications to facilitate software installation, such as Easy Flatpak.
 
-Exemple de résultat:  
-   ```bash
-   $ ls iso
-   glfos-24.11.20241202.f9f0d5c_dev.iso  glfos-24.11.20241202.f9f0d5c_dev.iso.sha256sum
-   ```
+Our community also performs audit exercises, to highlight the Linux distributions that come closest to our ideal vision. This vision is focused on newcomers (out-of-the-box installation), multimedia and gaming, straight from the installation stage.
 
-2. **Nettoyage après la construction** : 
+And it was by combining these two exercises that the idea of creating our own distribution was born: to deliver a stable, accessible, gaming-oriented operating system. It meets all the GLF specifications.
 
-Cette commande effacera tout ce qui a été généré localement, ISOs inclus.  
-
-   ```bash
-   just clean
-   ```
-
-3. **Test de la configuration nix** : 
-
-Deux méthodes ici, la première permet de tester la configuration sans "build" et de repérer les erreurs de syntaxes.
-
-```bash
-just check
-```
-
-> [!NOTE]
-> Les fichiers vérifiés sont ceux qui sont appelés par le flocon (ex: le répertoire glf).
-> Tant que votre fichier est appelé par le flocon, configuration.nix ou un default.nix, le fichier sera vérifié.
-
-La seconde méthode évalue le code et construit la configuration sans générer d'iso (la configuration est mise en cache).
-
-```bash 
-just build
-```
-
-Pour formatter la configuration et vérifier / nettoyer le code, on peut aussi utiliser la commande suivante.
-
-```bash
-# Il faut un nix-shell avec les outils
-nix-shell -p nixfmt-rfc-style deadnix statix
-
-# Vérification et nettoyage du code
-just fix
-```
-
-4. **Test de la configuration dans une machine virtuelle** :
-
-La configuration peut-être construite et lancée dans une machine virtuelle (depuis nixos uniquement)
-
-```bash
-just build-vm
-```
+This project is first and foremost a community project, for Gaming Linux Fr. It's also a challenge, taken up by our community.

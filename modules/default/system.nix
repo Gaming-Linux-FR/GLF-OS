@@ -2,11 +2,12 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
 {
-
+  
   options.glf.system.enable = lib.mkOption {
     description = "Enable GLF systems configurations";
     type = lib.types.bool;
@@ -15,18 +16,22 @@
 
   config = lib.mkIf config.glf.system.enable {
 
+    time.hardwareClockInLocalTime = true;
+
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
+      extraPackages = with pkgs-unstable; [
         intel-gpu-tools
         intel-media-driver
         vaapiIntel
         vaapiVdpau
         libvdpau-va-gl
         libva
+        vulkan-loader
+        vulkan-validation-layers
       ];
-      extraPackages32 = with pkgs; [
+      extraPackages32 = with pkgs-unstable; [
         intel-gpu-tools
         intel-media-driver
         vaapiIntel

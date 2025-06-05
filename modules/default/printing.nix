@@ -9,7 +9,10 @@
   options.glf.printing.enable = lib.mkOption {
     description = "Enable GLF printing configurations.";
     type = lib.types.bool;
-    default = true;
+    default = if (config.glf.environment.edition != "mini") then
+      true
+    else
+      false;
   };
 
   config = lib.mkIf config.glf.printing.enable (
@@ -33,7 +36,7 @@
             gutenprint
             gutenprintBin
             hplip
-            hplipWithPlugin
+            
             samsung-unified-linux-driver
             splix
           ];
@@ -56,7 +59,6 @@
       hardware.sane = {
         enable = true;
         extraBackends = with pkgs; [
-          hplipWithPlugin
           sane-airscan
           epkowa
           utsushi
