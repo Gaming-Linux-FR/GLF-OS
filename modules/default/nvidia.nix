@@ -43,9 +43,34 @@ in
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
     };
+    # Configuration hardware acceleration
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+
+    # Variables d'environnement CUDA pour les applications
+    environment.variables = {
+      CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
+      CUDA_HOME = "${pkgs.cudaPackages.cudatoolkit}";
+      EXTRA_LDFLAGS = "-L/run/opengl-driver/lib";
+      EXTRA_CCFLAGS = "-I/run/opengl-driver/include";
+    };
+
     environment.systemPackages = with pkgs; [
+      # Codecs NVIDIA pour l'encodage/décodage matériel
       nv-codec-headers
+      
+      # CUDA complet
       cudaPackages.cudatoolkit
+      cudaPackages.cuda_runtime
+      cudaPackages.cuda_nvcc
+      
+      # Support accélération matérielle
+      libva
+      libva-utils
+      vaapiVdpau
+      libvdpau-va-gl
     ];
   };
 }
