@@ -62,9 +62,8 @@ in
       cudaPackages.cuda_nvcc
       cudaPackages.cuda_nvvp
       cudaPackages.cuda_nvtx
-      # Packages spécifiques pour NVENC/NVDEC
-      ffmpeg-full  # Contient le support NVENC
-      nvidia-vaapi-driver  # Pour l'accélération vidéo
+      ffmpeg-full  
+      nvidia-vaapi-driver  
     ];
   };
 }
