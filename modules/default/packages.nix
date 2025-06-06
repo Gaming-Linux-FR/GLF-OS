@@ -77,7 +77,7 @@
     ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
       openrgb-with-all-plugins
       btop-rocm
-      celluloid
+      showtime
       discord
       libreoffice-fresh
       transmission_4-gtk
