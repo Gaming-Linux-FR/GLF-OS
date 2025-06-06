@@ -54,7 +54,7 @@ in
     '';
 
     hardware.fanatec.enable = true;
-    #hardware.new-lg4ff_vff.enable = true;
+    hardware.new-lg4ff_vff.enable = true;
     hardware.steam-hardware.enable = true;
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
