@@ -22,14 +22,14 @@ in
   config = lib.mkIf config.glf.gaming.enable { # Use 'lib.mkIf' here
 
     environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
-      glxinfo      
+      glxinfo # Show hardware information     
       heroic # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
       joystickwake # Joystick-aware screen waker
       linuxKernel.packages.linux_libre.hid-tmff2
       ludusavi # Backup tool for PC game saves
       lutris # Open Source gaming platform for GNU/Linux
       mangohud # Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more
-      mesa
+      mesa #Ensure last mesa stable on GLF OS
       oversteer # Steering Wheel Manager for Linux
       protonup-ng # CLI program and API to automate the installation and update of GloriousEggroll's Proton-GE
       protonup-qt # Install and manage Proton-GE and Luxtorpeda for Steam and Wine-GE for Lutris with this graphical user interface
