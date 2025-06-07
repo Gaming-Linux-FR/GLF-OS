@@ -23,7 +23,7 @@ in
       kernelPatches = {
             name = "freeze";
             patch = ./patch/6.14.patch;
-            extraStructuredConfig.freeze = lib.kernel.yes;
+            
             features.freeze = true;
           };
       tmp.cleanOnBoot = true;
