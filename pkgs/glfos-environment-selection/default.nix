@@ -147,8 +147,8 @@ else
 		${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${1}\";@g" /etc/nixos/configuration.nix
 		${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${2}\";@g" /etc/nixos/configuration.nix
 	else
-		${pkgs.gnused}/bin/sed -i "/services.xserver.desktopManager./d" /etc/nixos/configuration.nix
-		${pkgs.gnused}/bin/sed -i "/services.xserver.displayManager./d" /etc/nixos/configuration.nix
+		${pkgs.gnused}/bin/sed -i "/services.xserver.desktopManager.gnome/d" /etc/nixos/configuration.nix
+		${pkgs.gnused}/bin/sed -i "/services.xserver.displayManager.gdm/d" /etc/nixos/configuration.nix
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.environment.type = \"''${1}\";\n}/g" /etc/nixos/configuration.nix
 		${pkgs.gnused}/bin/sed -i "s/^}$/  glf.environment.edition = \"''${2}\";\n}/g" /etc/nixos/configuration.nix
 	fi
@@ -156,6 +156,7 @@ else
 	${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake /etc/nixos#GLF-OS --show-trace 2>&1 | tee /tmp/${name}.log >(if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then while read -r line; do echo "''${line}"; echo "# ''${line}\n\n"; done | zenity --height=240 --width=640 --title="''${environment_title_fr}" --text="''${progress_text_fr}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; else while read -r line; do echo "''${line}"; echo "# ''${line}\n\n"; done | zenity --height=240 --width=640 --title="''${environment_title_en}" --text="''${progress_text_en}" --progress --pulsate --no-cancel --auto-close 2>/dev/null; fi) || { ${pkgs.gnused}/bin/sed -i "s@glf.environment.type = \".*\";@glf.environment.type = \"''${current_environment}\";@g" /etc/nixos/configuration.nix; ${pkgs.gnused}/bin/sed -i "s@glf.environment.edition = \".*\";@glf.environment.edition = \"''${current_edition}\";@g" /etc/nixos/configuration.nix; if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_fr}" --error --ok-label="''${exit_label_fr}" --text "''${error_text_fr}" 2>/dev/null; else ${pkgs.sudo}/bin/sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XAUTHORITY,XDG_RUNTIME_DIR -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.zenity}/bin/zenity --width=640 --title="''${environment_title_en}" --error --ok-label="''${exit_label_en}" --text "''${error_text_en}" 2>/dev/null; fi; exit 1; }
 
 	if [ "''${current_environment}" != "''${1}" ]; then
+		${pkgs.sudo}/bin/sudo -u "$(${pkgs.coreutils}/bin/id -nu "''${PKEXEC_UID}")" ${pkgs.dconf}/bin/dconf reset -f /
 		for gtkconfig in /home/*/.gtkrc* /home/*/.config/gtkrc* /home/*/.config/gtk-* /home/*/.config/dconf; do ${pkgs.coreutils}/bin/rm -rf "''${gtkconfig}"; done
 	fi
 
