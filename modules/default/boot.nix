@@ -20,13 +20,7 @@ in
     boot.loader.grub.default = "saved";
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
-      kernelPatches = {
-            name = "freeze";
-            patch = ./patch/6.14.patch;
-            
-            features.freeze = true;
-          };
-      tmp.cleanOnBoot = true;
+         tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
