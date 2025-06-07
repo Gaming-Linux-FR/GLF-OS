@@ -23,6 +23,8 @@ in
       kernelPatches = {
             name = "6.14";
             patch = ./patch/6.14.patch;
+            extraStructuredConfig.6.14 = lib.kernel.yes;
+            features.6.14 = true;
           };
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
