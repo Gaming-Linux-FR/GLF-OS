@@ -21,7 +21,7 @@
       ./version.nix
       ./standBy.nix
       ./GLFfetch.nix
-      #./nix-disk-manager.nix
+      ./nix-disk-manager.nix
       ./glfos-environment-selection.nix
       ./glfos-mangohud-configuration.nix
       ./fanatec.nix
