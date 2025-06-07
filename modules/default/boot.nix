@@ -20,6 +20,11 @@ in
     boot.loader.grub.default = "saved";
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
+      kernelPatches =
+          {
+            name = "freeze";
+            patch = ./patch/6.14.patch;
+          }
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
