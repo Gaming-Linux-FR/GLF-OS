@@ -4,6 +4,7 @@
   imports =
     [
       ./debug.nix
+      ./kernel.nix
       ./aliases.nix
       ./boot.nix
       ./branding.nix
