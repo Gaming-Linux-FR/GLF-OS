@@ -24,7 +24,7 @@ in
           {
             name = "freeze";
             patch = ./patch/6.14.patch;
-          }
+          };
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
