@@ -21,7 +21,7 @@ in
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
       kernelPatches = {
-            name = "freeze";
+            name = "6.14";
             patch = ./patch/6.14.patch;
           };
       tmp.cleanOnBoot = true;
