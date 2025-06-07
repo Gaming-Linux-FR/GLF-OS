@@ -25,13 +25,13 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "nix-disk-manager";
-  version = "1.2.2";
+  version = "1.2.3";
 
   src = fetchFromGitHub {
     owner = "Gaming-Linux-FR";
     repo = "nix-disk-manager";
     rev = "1.2.2";
-    sha256 = "sha256-NLi1dnTrwixSO07DVucdrEZJZBRpNCT8TxlOGjxSKY0=";
+    sha256 = "k40ppm7jg9imi0Kd0lX4uzA/VTm4fy9hKeD/57keREI=";
   };
 
   format = "other";
