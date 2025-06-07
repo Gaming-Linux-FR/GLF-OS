@@ -5,7 +5,7 @@
 }:
 
 {
-6.14 = {
-    name = "6.14";
-    patch = ./patch/6.14.patch;
+freeze = {
+    name = "freeze";
+    patch = ./patch/freeze.patch;
   };
