@@ -21,10 +21,10 @@ in
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
       kernelPatches = {
-            name = "6.14";
+            name = "freeze";
             patch = ./patch/6.14.patch;
-            extraStructuredConfig.6.14 = lib.kernel.yes;
-            features.6.14 = true;
+            extraStructuredConfig.freeze = lib.kernel.yes;
+            features.freeze = true;
           };
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
