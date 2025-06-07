@@ -1,19 +1,3 @@
- Makefile                                          |  2 +-
- arch/x86/tools/insn_decoder_test.c                |  3 +-
- drivers/block/loop.c                              |  3 -
- drivers/firmware/sysfb.c                          | 18 ++++-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 16 ++---
- include/net/bluetooth/hci_core.h                  |  1 +
- kernel/fork.c                                     | 16 +++++
- kernel/sysctl.c                                   | 13 ++++
- kernel/user_namespace.c                           |  3 +
- lib/Kconfig.debug                                 |  9 +++
- lib/Makefile                                      |  2 +
- lib/longest_symbol_kunit.c                        | 82 +++++++++++++++++++++++
- net/bluetooth/hci_conn.c                          | 24 +++++++
- net/bluetooth/hci_event.c                         | 73 +++++++++++---------
- 14 files changed, 217 insertions(+), 48 deletions(-)
-
 diff --git a/Makefile b/Makefile
 index 70bd8847c8677aef46d10fb5bbd8c259220c549a..4ba54e618c871d10d44767f449e9a491ee65cc6f 100644
 --- a/Makefile
