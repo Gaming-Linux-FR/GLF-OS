@@ -30,7 +30,6 @@ in
       heroic # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
       joystickwake # Joystick-aware screen waker
       linuxKernel.packages.linux_libre.hid-tmff2
-      ludusavi # Backup tool for PC game saves
       mangohud # Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more
       mesa #Ensure last mesa stable on GLF OS
       oversteer # Steering Wheel Manager for Linux
@@ -59,7 +58,7 @@ in
     '';
 
     hardware.fanatec.enable = true;
-    hardware.new-lg4ff_vff.enable = true;
+    #hardware.new-lg4ff_vff.enable = true;
     hardware.steam-hardware.enable = true;
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
