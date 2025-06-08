@@ -7,9 +7,9 @@
 }:
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
-  #amdgpu-kernel-module = pkgs.callPackage ./amdgpupatch/amdgpu-kernel-module.nix {
-    #kernel = config.boot.kernelPackages.kernel;
-  #};
+  amdgpu-kernel-module = pkgs.callPackage ./amdgpupatch/amdgpu-kernel-module.nix {
+    kernel = config.boot.kernelPackages.kernel;
+  };
 in
 {
   options.glf.boot.enable = lib.mkOption {
