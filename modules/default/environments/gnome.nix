@@ -52,7 +52,9 @@ in
         vimix-cursors
 
         # gnome
+        gnome-remote-desktop
         gnome-tweaks
+        ptyxis
 
         # Extension
         gnomeExtensions.caffeine
@@ -87,6 +89,7 @@ in
         gnome-contacts
         gnome-user-docs
         gnome-packagekit
+        gnome-console
         gnome-font-viewer
       ];
     };
