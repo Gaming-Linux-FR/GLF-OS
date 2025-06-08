@@ -33,11 +33,11 @@ in
       kernelParams =
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
       kernelParams = [
-      “mem_sleep_default=s2idle”
-      “amdgpu.noretry=0”
-      “amdgpu.vm_update_mode=3”
-      “amdgpu.sg_display=0”
-      “amdgpu.preempt_mm=0”
+      "mem_sleep_default=s2idle"
+      "amdgpu.noretry=0"
+      "amdgpu.vm_update_mode=3"
+      "amdgpu.sg_display=0"
+      "amdgpu.preempt_mm=0"
       ];
       plymouth = {
         enable = true;
