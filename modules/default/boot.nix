@@ -31,7 +31,7 @@ in
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" "mem_sleep_default=s2idle" "amdgpu.noretry=0" "amdgpu.vm_update_mode=3" "amdgpu.sg_display=0" "amdgpu.preempt_mm=0" ] else [ "nosplit_lock_mitigate" "mem_sleep_default=s2idle" "amdgpu.noretry=0" "amdgpu.vm_update_mode=3" "amdgpu.sg_display=0" "amdgpu.preempt_mm=0" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" "clearcpuid=514" ] else [ "nosplit_lock_mitigate" "clearcpuid=514" ];
       plymouth = {
         enable = true;
         theme = "glfos";
