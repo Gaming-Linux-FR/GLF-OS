@@ -58,6 +58,8 @@
         auto-optimise-store = true;
       };
     };
+    
+    programs.nix-ld.enable = true;
 
   };
 
