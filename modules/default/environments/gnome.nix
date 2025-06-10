@@ -30,9 +30,9 @@ in
       };
 
     documentation.nixos.enable = false;
-
-    #gnome-remote-desktop
-    systemd.services."getty@tty1".enable = false;
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    xdg.portal.config.common.default = "gtk";
+    
     systemd.services."autovt@tty1".enable = false;
     services.xrdp.enable = true;
     services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
