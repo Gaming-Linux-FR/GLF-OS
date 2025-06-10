@@ -27,7 +27,7 @@ in
     }))
   ];
     boot = {
-      kernelPackages = pkgs.linuxPackages_6_14;
+      kernelPackages = pkgs.linuxPackages_6_12;
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
