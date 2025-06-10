@@ -54,6 +54,7 @@ in
         vimix-cursors
 
         # gnome
+        ptyxis
         gnome-tweaks
 
         # Extension
@@ -84,6 +85,7 @@ in
         epiphany
         packagekit
 
+        gnome-console
         gnome-tour
         gnome-software
         gnome-contacts
