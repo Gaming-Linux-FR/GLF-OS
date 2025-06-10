@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  kernel ? pkgs.linuxPackages_6_14,
+  kernel ? pkgs.linuxPackages_6_12,
 }:
 pkgs.stdenv.mkDerivation {
   pname = "amdgpu-kernel-module";
