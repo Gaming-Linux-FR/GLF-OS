@@ -55,6 +55,8 @@ in
       # Bluetooth
       ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
       ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      # 8bitdo
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="6012", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
     '';
 
     hardware.fanatec.enable = true;
