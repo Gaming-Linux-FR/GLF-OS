@@ -23,10 +23,10 @@
         gawk
       ];
       shellAliases = {
-        glf-update = "sudo nix flake update --flake /etc/nixos";
+        glf-update = "sudo nix flake update --flake /etc/nixos && nh os boot /etc/nixos -H GLF-OS";
         glf-build = "nh os build /etc/nixos -H GLF-OS";
         glf-switch = "nh os switch /etc/nixos -H GLF-OS";
-        glf-boot = "nh os boot /etc/nixos -H GLF-OS";
+        
         glf-systeminfo = ''
           	    echo -e "\n--- Infos ---"; \
           	    inxi -M; \
