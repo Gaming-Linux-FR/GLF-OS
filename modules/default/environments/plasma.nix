@@ -48,9 +48,7 @@
           [General]
           background=/etc/wallpapers/glf/white.jpg
         '')
-        pkgs.kdePackages.partitionmanager
-        pkgs.kdePackages.kpmcore
-      ];
+        ];
     };
   };
 
