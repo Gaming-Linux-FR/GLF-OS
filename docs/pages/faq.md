@@ -7,50 +7,21 @@ layout: default
 
 ## Qu’est-ce que GLF OS ?
 
-GLF OS est le nom d’un des projets réalisés par la communauté Gaming Linux Fr.
+GLF OS est le nom d’un des projets les plus fous réalisés par la communauté Gaming Linux Fr.
 Ce projet consiste à réaliser un système d’exploitation, autour d’un cahier des charges stricte et 100% réalisé par la communauté pour la communauté.
-
 
 {: .info }
 > Notez que secureboot doit être désactivé pour que GLF-OS fonctionne. 
 
-
 ## Comptez-vous proposer une installation entièrement hors-ligne ? 
-
 
 Non, nous utilisons une fonctionnalité de NixOS appelé *Flocon* qui a besoin d'internet pour fonctionner. 
 
 ## Je souhaite installer GLF OS sur mon PC, comment dois-je procéder ?
 
-{: .info }
-> Pré-requis : Avoir désactivé le secure boot et avoir une connexion internet active
-
-Une fois les pré-requis validés, il suffit alors de créer une clé USB bootable. Plusieurs logiciels permettent la réalisation d’une clé USB Bootable. Dans les plus connus, on peut citer :
-
-- Ventoy
-- Rufus
-- Balena Etcher
-- Mint Stick (l’outil de Linux Mint)
-- etc…
-
-Cela dit, suite à quelques retours, nous vous conseillons l’utilisation de Balena Etcher pour éviter tout désagrément. Pour cela, vous pouvez consulter le tuto que nous avons réalisé et qui est disponible [ici](https://codeberg.org/Gaming-Linux-FR/usb-bootable).
+Toutes les étapes pour installer GLF OS sont décrites [ici](https://gaming-linux-fr.github.io/GLF-OS/pages/documentation/Installation.html).
 
 ## Quelle est la durée moyenne de l'installation ?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {: .info }
 > La durée d'installation fait référence au moment où vous avez cliqué sur **Installer**. 
@@ -79,10 +50,13 @@ Vous pouvez cliquer sur la petite loupe en bas à droite de l'installateur pour 
 > Ce problème d'affichage n'est pas directement de notre ressors, il est aussi présent avec NixOS. 
 > Nous n'avons pas l'intention de le corriger, la faible valeur ajoutée par rapport à l'énorme charge de travail impliquée ne vaut pas l'investissement.
 
-## Je ne vois que GNOME comme choix d'environnement de bureau, avez-vous l'intention de supporter d'autres environnements ? 
+## Je ne vois que GNOME et KDE comme choix d'environnement de bureau, avez-vous l'intention de supporter d'autres environnements ? 
 
-Actuellement, nous prenons uniquement en charge GNOME. 
-L'ajout de KDE est prévu pour la version Beta.
+A ce stable, il n'est pas prévu l'ajout d'autres environnements de bureau.
+
+## Je viens d'installer GLF OS et la logithèque n'est pas présente. Que faire ?
+
+La logithèque que nous proposons est Easy Flatpak et elle est fournie en flatpak. Son installation a lieu après l'installation du système et elle peut mettre plusieurs dizaines de minutes à remonter en fonction de votre connexion.
 
 ## Puis-je passer GLF OS en "unstable" ? 
 
@@ -151,25 +125,22 @@ Si vous avez déjà installé la version stable, vous pouvez passer sur la versi
 {: .info }
 > Nous ne conseillons cette manipulation uniquement pour les personnes voulant faire des tests ou dans le cas de matériel hyper récent et non pris en charge en version stable.
 
-## Faut-il redémarrer après une mise à jour ? 
+## Comment mon système se met à jour ? 
 
-Les mises à jour sont automatiques et vous n’avez pas besoin de vous en occuper, GLF OS le fait pour vous ! Il vous faudra redémarrer votre système de temps en temps pour que l'ensemble des mises à jour s'appliquent.
+Les mises à jour sont automatiques, un petit programme se lance dans les 5 minutes suivant le démarrage de votre ordinateur. Si une mise à jour est à appliquer, une notification apparaitra. Il vous faudra redémarrer votre système pour l'appliquer.
 
-Il est également possible de vérifier et d'appliquer les mises à jour via les commandes suivantes :
+Il est également possible de vérifier et d'appliquer manuellement les mises à jour via les commandes suivantes :
 
 - `glf-update` : Permet de mettre à jour les dépôts
 - `glf-build` : Teste la mise à jour
 - `glf-boot` : Applique la mise à jour
 
-
-
 {: .info }
-> Un redémarrage est conseillé pour l'application de l'ensemble des mises à jour et vérifier que tout fonctionne.
+> Un redémarrage régulier est conseillé pour l'application de l'ensemble des mises à jour.
 
-## Comment retirer les informations affichées en haut de l'écran lorsqu'on lance un jeu ?
+## Comment afficher / retirer les informations affichées en haut de l'écran lorsqu'on lance un jeu ?
 
-Il suffit d'utiliser le raccourci clavier `MAJ droite + F12`.
-Ces informations proviennent de Mangohud et un outil devrait arriver avec la version Beta pour pouvoir gérer cela.
+Un outil graphique nommé Mangohud Presets est mis à votre disposition pour cela.
 
 ## J’ai un problème avec GLF OS, que faire ?
 
