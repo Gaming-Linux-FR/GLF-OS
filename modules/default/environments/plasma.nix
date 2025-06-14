@@ -42,6 +42,11 @@
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     programs.kdeconnect.enable = true;
 
+    #systemPackages = with pkgs; [
+    #  kdePackages.partitionmanager
+    #  kdePackages.kpmcore
+    #  ];
+
     environment = {
       plasma6.excludePackages = [ pkgs.kdePackages.discover ];
       systemPackages = [
@@ -49,8 +54,7 @@
           [General]
           background=/etc/wallpapers/glf/white.jpg
         '')
-      ];
+        ];
     };
   };
-
 }

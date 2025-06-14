@@ -105,6 +105,8 @@
           OnUnitActiveSec = "12h";
           Persistent = true;
         };
+        after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
       };
     };
 
