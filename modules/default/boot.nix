@@ -7,9 +7,6 @@
 }:
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
-  amdgpu-kernel-module = pkgs.callPackage ./amdgpupatch/amdgpu-kernel-module.nix {
-    kernel = config.boot.kernelPackages.kernel;
-  };
 in
 {
   options.glf.boot.enable = lib.mkOption {
@@ -21,17 +18,12 @@ in
     #GLF wallpaper as grub splashscreen
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
-    boot.extraModulePackages = [
-    (amdgpu-kernel-module.overrideAttrs (_: {
-      patches = [./amdgpupatch/amdgpu-revert.patch];
-    }))
-  ];
     boot = {
       kernelPackages = pkgs.linuxPackages_6_14;
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" "clearcpuid=514" ] else [ "nosplit_lock_mitigate" "clearcpuid=514" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
