@@ -29,7 +29,7 @@ in
       glxinfo # Show hardware information     
       heroic # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
       joystickwake # Joystick-aware screen waker
-      #linuxKernel.packages.linux_libre.hid-tmff2
+      linuxKernel.packages.linux_6_14.hid-tmff2
       mangohud # Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more
       mesa #Ensure last mesa stable on GLF OS
       oversteer # Steering Wheel Manager for Linux
