@@ -25,9 +25,6 @@ in
         extraLibraries = p: [ p.libadwaita p.gtk4 ];
       })
       
-      # Proton-GE patches
-      proton-ge-bin    # Proton-GE binaire pour compatibilité Lutris
-      
       # Gaming tools
       glxinfo          # Show hardware information
       lug-helper       # help to install Star Citizen
@@ -44,8 +41,6 @@ in
     
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-      # Aider Lutris à trouver les runners Wine-GE et Proton-GE
-      LUTRIS_RUNTIME_PATH = "${pkgs-unstable.proton-ge-bin}/bin";
       
       MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
         ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05''
