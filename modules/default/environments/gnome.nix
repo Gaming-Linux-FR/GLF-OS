@@ -16,6 +16,7 @@ in
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     services = {
       udev.packages = [ pkgs.gnome-settings-daemon ];
+        xserver = {
         displayManager.gdm.enable = lib.mkDefault true;
         desktopManager.gnome = {
           enable = lib.mkDefault true;
@@ -24,10 +25,11 @@ in
           extraGSettingsOverridePackages = [ pkgs.mutter ];
           extraGSettingsOverrides = ''
               [org.gnome.mutter]
-            experimental-features=['scale-monitor-framebuffer', 'variable-refresh-rate']
+            experimental-features=['scale-monitor-framebuffer']
           '';
         };
       };
+    };
     
 
     documentation.nixos.enable = false;
