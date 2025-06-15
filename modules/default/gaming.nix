@@ -1,46 +1,52 @@
-{ config, pkgs, lib, pkgs-unstable, ... }: # Make sure 'lib' is included here
+{ config, pkgs, lib, pkgs-unstable, ... }:
 let
   system = "x86_64-linux";
 in
 {
-
-  options.glf.gaming.enable = lib.mkOption { # Use 'lib.mkOption' here
+  options.glf.gaming.enable = lib.mkOption {
     description = "Enable GLF Gaming configurations";
-    type = lib.types.bool; # Use 'lib.types.bool' here
+    type = lib.types.bool;
     default = if (config.glf.environment.edition != "mini") then
       true
     else
       false;
   };
-
-  options.glf.mangohud.configuration = lib.mkOption { # Use 'lib.mkOption' here
-    type = with lib.types; enum [ "disabled" "light" "full" ]; # Use 'lib.types' here
+  
+  options.glf.mangohud.configuration = lib.mkOption {
+    type = with lib.types; enum [ "disabled" "light" "full" ];
     default = "disabled";
     description = "MangoHud configuration";
   };
-
-  config = lib.mkIf config.glf.gaming.enable { # Use 'lib.mkIf' here
-
-    environment.systemPackages = with pkgs-unstable; [ # Utiliser pkgs-unstable
+  
+  config = lib.mkIf config.glf.gaming.enable {
+    environment.systemPackages = with pkgs-unstable; [
       # Lutris Config with additional libraries
       (lutris.override {
         extraLibraries = p: [ p.libadwaita p.gtk4 ];
       })
-      glxinfo # Show hardware information
-      lug-helper # help to install Star Citizen
-      heroic # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
-      joystickwake # Joystick-aware screen waker
+      
+      # Proton-GE patches
+      proton-ge-bin    # Proton-GE binaire pour compatibilité Lutris
+      
+      # Gaming tools
+      glxinfo          # Show hardware information
+      lug-helper       # help to install Star Citizen
+      heroic           # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
+      joystickwake     # Joystick-aware screen waker
       linuxKernel.packages.linux_6_14.hid-tmff2
-      mangohud # Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more
-      mesa #Ensure last mesa stable on GLF OS
-      oversteer # Steering Wheel Manager for Linux
-      umu-launcher # Unified launcher for Windows games on Linux using the Steam Linux Runtime and Tools
+      mangohud         # Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more
+      mesa             # Ensure last mesa stable on GLF OS
+      oversteer        # Steering Wheel Manager for Linux
+      umu-launcher     # Unified launcher for Windows games on Linux using the Steam Linux Runtime and Tools
       wineWowPackages.staging # Open Source implementation of the Windows API on top of X, OpenGL, and Unix (with staging patches)
-      winetricks # Script to install DLLs needed to work around problems in Wine
+      winetricks       # Script to install DLLs needed to work around problems in Wine
     ];
-
+    
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      # Aider Lutris à trouver les runners Wine-GE et Proton-GE
+      LUTRIS_RUNTIME_PATH = "${pkgs-unstable.wine-ge}/bin:${pkgs-unstable.proton-ge-bin}/bin";
+      
       MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
         ''control=mangohud,legacy_layout=0,horizontal,background_alpha=0,gpu_stats,gpu_power,cpu_stats,ram,vram,fps,fps_metrics=AVG,0.001,font_scale=1.05''
       else if config.glf.mangohud.configuration == "full" then
@@ -48,7 +54,7 @@ in
       else
         "";
     };
-
+    
     services.udev.extraRules = ''
       # USB
       ATTRS{name}=="Sony Interactive Entertainment Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
@@ -57,22 +63,25 @@ in
       ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
       ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     '';
-
+    
+    # Hardware support
     hardware.fanatec.enable = true;
     hardware.new-lg4ff_vff.enable = true;
     hardware.steam-hardware.enable = true;
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
     hardware.opentabletdriver.enable = true;
-    programs.steam.gamescopeSession.enable = true;
     
-programs.gamescope = {
-  enable = true;
-  capSysNice = true;
-};
-
+    # Gamescope configuration
+    programs.gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+    
+    # Steam configuration
     programs.steam = {
       enable = true;
+      gamescopeSession.enable = true;
       package = pkgs.steam.override {
         extraEnv = {
           MANGOHUD = if config.glf.mangohud.configuration == "light" || config.glf.mangohud.configuration == "full" then
@@ -86,7 +95,5 @@ programs.gamescope = {
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
-
   };
-
 }
