@@ -26,7 +26,8 @@ in
       (lutris.override {
         extraLibraries = p: [ p.libadwaita p.gtk4 ];
       })
-      glxinfo # Show hardware information     
+      glxinfo # Show hardware information
+      lug-helper # help to install Star Citizen
       heroic # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
       joystickwake # Joystick-aware screen waker
       linuxKernel.packages.linux_6_14.hid-tmff2
