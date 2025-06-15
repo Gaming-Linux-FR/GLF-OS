@@ -28,7 +28,7 @@ in
           '';
         };
       };
-    };
+    
 
     documentation.nixos.enable = false;
 
