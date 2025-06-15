@@ -66,7 +66,7 @@ in
         gnomeExtensions.quick-settings-audio-panel
         gnomeExtensions.blur-my-shell
         gnomeExtensions.burn-my-windows
-
+        gnomeExtensions.tiling-shell
       ];
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
