@@ -11,6 +11,7 @@
 services.flatpak.packages = [
       "org.flatpak.Blender"
       "org.audacityteam.Audacity"
+      "com.obsproject.Studio"
     ];
 
 systemd.tmpfiles.rules = 
