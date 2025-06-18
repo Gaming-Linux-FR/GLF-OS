@@ -29,7 +29,7 @@ systemd.services.flatpak-repo = {
       wants = [ "network-online.target" ];
       path = [ pkgs.flatpak ];
       script = ''
-        	flatpak install -y com.obsproject.Studio org.inkscape.Inkscape
+        	flatpak install -y com.obsproject.Studio org.inkscape.Inkscape org.blender.Blender org.kde.kdenlive org.gimp.GIMP org.audacityteam.Audacity fr.handbrake.ghb io.freetubeapp.FreeTube
       '';
     };
 systemd.tmpfiles.rules = 
