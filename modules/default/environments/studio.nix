@@ -8,6 +8,11 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
+services.flatpak.packages = [
+      "org.flatpak.Blender"
+      "org.audacityteam.Audacity"
+    ];
+
 systemd.tmpfiles.rules = 
   let
     rocmEnv = pkgs.symlinkJoin {
