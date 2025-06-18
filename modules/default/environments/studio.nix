@@ -8,11 +8,7 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-systemd.services.flatpak-repo = {
-      script = ''
-        	flatpak install -y com.obsproject.Studio org.kde.kdenlive org.audacityteam.Audacity fr.handbrake.ghb org.kde.krita org.gimp.GIMP org.inkscape.Inkscape org.blender.Blender
-      '';
-};
+
 systemd.tmpfiles.rules = 
   let
     rocmEnv = pkgs.symlinkJoin {
@@ -51,3 +47,8 @@ systemd.tmpfiles.rules =
   };
 
 }
+systemd.services.flatpak-repo = {
+      script = ''
+        	flatpak install -y com.obsproject.Studio org.kde.kdenlive org.audacityteam.Audacity fr.handbrake.ghb org.kde.krita org.gimp.GIMP org.inkscape.Inkscape org.blender.Blender
+      '';
+};
