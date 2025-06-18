@@ -45,9 +45,9 @@ systemd.tmpfiles.rules =
           ];
   };
 
-}
 systemd.services.flatpak-repo = {
       script = ''
         	flatpak install -y com.obsproject.Studio org.kde.kdenlive org.audacityteam.Audacity fr.handbrake.ghb org.kde.krita org.gimp.GIMP org.inkscape.Inkscape org.blender.Blender
       '';
 };
+}
