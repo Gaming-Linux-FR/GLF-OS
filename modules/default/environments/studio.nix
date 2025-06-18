@@ -8,7 +8,6 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-
 systemd.tmpfiles.rules = 
   let
     rocmEnv = pkgs.symlinkJoin {
