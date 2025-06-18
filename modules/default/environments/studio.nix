@@ -8,11 +8,6 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-services.flatpak.packages = [
-      "org.flatpak.Blender"
-      "org.audacityteam.Audacity"
-      "com.obsproject.Studio"
-    ];
 
 systemd.tmpfiles.rules = 
   let
