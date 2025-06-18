@@ -8,6 +8,11 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
+systemd.services.flatpak-repo = {
+      script = ''
+        	flatpak install -y com.obsproject.Studio org.kde.kdenlive org.audacityteam.Audacity fr.handbrake.ghb org.kde.krita org.gimp.GIMP org.inkscape.Inkscape org.blender.Blender
+      '';
+
 systemd.tmpfiles.rules = 
   let
     rocmEnv = pkgs.symlinkJoin {
@@ -37,26 +42,12 @@ systemd.tmpfiles.rules =
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs-unstable; [
-          blender-hip
-          obs-studio
-          obs-studio-plugins.obs-vkcapture
-          kdePackages.kdenlive
           davinci-resolve-studio
-          gimp3-with-plugins
-          audacity
-          freetube
-        ]
+          ]
       else
         with pkgs-unstable; [
-          blender-hip
-          obs-studio
-          obs-studio-plugins.obs-vkcapture
-          kdePackages.kdenlive
           davinci-resolve
-          gimp3-with-plugins
-          audacity
-          freetube
-        ];
+          ];
   };
 
 }
