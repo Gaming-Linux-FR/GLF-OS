@@ -15,7 +15,7 @@ systemd.services.flatpak-repo = {
       wants = [ "network-online.target" ];
       path = [ pkgs.flatpak ];
       script = ''
-        	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && flatpak install -y flathub org.dupot.easyflatpak
+        	flatpak install -y com.obsproject.Studio org.inkscape.Inkscape
       '';
     };
 systemd.tmpfiles.rules = 
