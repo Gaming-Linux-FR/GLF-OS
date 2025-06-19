@@ -140,7 +140,7 @@ Presentation
             anchors.horizontalCenter: parent.horizontalCenter
         }
         Text {
-            anchors.horizontalCenter: background3.horizontalCenter
+            anchors.horizontalCenter: background4.horizontalCenter
             anchors.top: text4.bottom
             text: "At 46%, your machine is summoning, downloading, and customizing a horde of packages tailored just for you.<br/>"+
                   "It’s not broken. It’s just... thinking very, very hard.<br/>"+
