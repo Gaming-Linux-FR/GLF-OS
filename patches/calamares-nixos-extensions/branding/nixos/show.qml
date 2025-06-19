@@ -120,6 +120,38 @@ Presentation
         }
     }
 
+    Slide {
+        Text {
+            id: text4
+            anchors.centerIn: parent
+            text: "What’s Happening at 46%"
+            font.pixelSize: 30
+            wrapMode: Text.WordWrap
+            width: presentation.width
+            horizontalAlignment: Text.Center
+            color: "#6586C8"
+        }
+        Image {
+            id: background4
+            source: "46.png"
+            width: 200; height: 200
+            fillMode: Image.PreserveAspectFit
+            anchors.bottom: text4.top
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        Text {
+            anchors.horizontalCenter: background3.horizontalCenter
+            anchors.top: text4.bottom
+            text: "At 46%, your machine is summoning, downloading, and customizing a horde of packages tailored just for you.<br/>"+
+                  "It’s not broken. It’s just... thinking very, very hard.<br/>"+
+                  "Health tip: Take a short break. It's time to stretch, grab some water, maybe blink for the first time in 10 minutes. You’ve earned it.<br/>"+
+                  "We’ll keep the summoning circle glowing in your absence."
+            wrapMode: Text.WordWrap
+            width: presentation.width
+            horizontalAlignment: Text.Center
+        }
+    }
+
     // When this slideshow is loaded as a V1 slideshow, only
     // activatedInCalamares is set, which starts the timer (see above).
     //
