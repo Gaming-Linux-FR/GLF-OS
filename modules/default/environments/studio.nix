@@ -66,6 +66,7 @@ systemd.tmpfiles.rules =
           ]
       else
         with pkgs-unstable; [
+          blender-hip
           davinci-resolve
           ];
   };
