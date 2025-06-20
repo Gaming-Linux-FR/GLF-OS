@@ -39,11 +39,6 @@ in
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Packages système
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    programs.kdeconnect = {
-      enable = true;
-      package = pkgs.gnomeExtensions.gsconnect;
-    };
-
     environment = {
       systemPackages = with pkgs; [
 
@@ -57,6 +52,7 @@ in
         gnome-tweaks
 
         # Extension
+        gnomeExtensions.gsconnect
         gnomeExtensions.caffeine
         gnomeExtensions.gsconnect
         gnomeExtensions.appindicator
