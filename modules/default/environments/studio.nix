@@ -39,7 +39,7 @@ systemd.tmpfiles.rules =
       paths = with pkgs-unstable.rocmPackages; [
         rocblas
         hipblas
-        #clr
+        clr
       ];
     };
   in [
