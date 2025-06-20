@@ -63,15 +63,9 @@ systemd.tmpfiles.rules =
         with pkgs-unstable; [
           davinci-resolve-studio
           ]
-        with pkgs; [
-          blender-hip
-          ]
       else
         with pkgs-unstable; [
           davinci-resolve
-          ]
-        with pkgs; [
-          blender-hip
-          ];
+         ];
   };
 }
