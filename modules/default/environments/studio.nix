@@ -61,13 +61,17 @@ systemd.tmpfiles.rules =
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
         with pkgs-unstable; [
-          blender-hip
           davinci-resolve-studio
+          ]
+        with pkgs; [
+          blender-hip
           ]
       else
         with pkgs-unstable; [
-          blender-hip
           davinci-resolve
+          ]
+        with pkgs; [
+          blender-hip
           ];
   };
 }
