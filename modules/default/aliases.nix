@@ -23,10 +23,10 @@
         gawk
       ];
       shellAliases = {
-        glf-update = "sudo nix flake update --flake /etc/nixos";
+        glf-update = "sudo nix flake update --flake /etc/nixos && nh os boot /etc/nixos -H GLF-OS";
         glf-build = "nh os build /etc/nixos -H GLF-OS";
-        glf-switch = "nh os switch /etc/nixos -H GLF-OS";
-        glf-boot = "nh os boot /etc/nixos -H GLF-OS";
+        glf-switch = "sudo nix flake update --flake /etc/nixos && nh os switch /etc/nixos -H GLF-OS";
+        glf-history = "nix store diff-closures $(ls -d1v /nix/var/nix/profiles/system-*-link | tail -n 2)";
         glf-systeminfo = ''
           	    echo -e "\n--- Infos ---"; \
           	    inxi -M; \
