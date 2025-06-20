@@ -44,10 +44,8 @@ in
 
         # theme
         adw-gtk3
-        graphite-gtk-theme
         tela-circle-icon-theme
-        vimix-cursors
-
+        
         # gnome
         gnome-tweaks
 
