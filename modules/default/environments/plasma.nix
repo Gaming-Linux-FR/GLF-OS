@@ -31,6 +31,7 @@
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Packages système
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    services.displayManager.sddm.autoNumlock = true;
     programs.kdeconnect.enable = true;
     environment = {
       plasma6.excludePackages = [ pkgs.kdePackages.discover ];
