@@ -13,9 +13,9 @@
         rocmEnv = pkgs.symlinkJoin {
           name = "rocm-combined";
            paths = with pkgs-unstable.rocmPackages; [
-             rocblas
-              hipblas
-              clr
+            rocblas
+            hipblas
+            clr
           ];
          };
       in [
