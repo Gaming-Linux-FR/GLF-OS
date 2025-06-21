@@ -10,17 +10,17 @@
   config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
     systemd.tmpfiles.rules =
       let
-        rocmEnv = pkgs.symlinkJoin {
-          name = "rocm-combined";
-          paths = with pkgs-unstable.rocmPackages; [
-            rocblas
-            hipblas
-            #clr A modifier avant release
-          ];
-        };
-      in [
-        "L+    /opt/rocm/hip  -    -    -      -    ${rocmEnv}"
-      ];
+        #rocmEnv = pkgs.symlinkJoin {
+         # name = "rocm-combined";
+          # paths = with pkgs-unstable.rocmPackages; [
+            # rocblas
+            #  hipblas
+            #  clr A modifier avant release
+          #];
+        # };
+     # in [
+      #  "L+    /opt/rocm/hip  -    -    -      -    ${rocmEnv}"
+      # ];
 
     hardware.graphics = {
       enable = true;
