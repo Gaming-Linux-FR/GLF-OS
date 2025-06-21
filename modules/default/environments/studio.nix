@@ -15,7 +15,7 @@
           paths = with pkgs-unstable.rocmPackages; [
             rocblas
             hipblas
-            clr
+            #clr A modifier avant release
           ];
         };
       in [
