@@ -31,7 +31,7 @@ python3Packages.buildPythonApplication rec {
     owner = "Gaming-Linux-FR";
     repo = "nix-disk-manager";
     rev = version;
-    sha256 = "";
+    sha256 = "sha256-/Hu7tqtTIGlmvpAQ2BX1Y6L/CikSNaR3kBE6BpDGZhg=";
   };
 
   format = "other";
