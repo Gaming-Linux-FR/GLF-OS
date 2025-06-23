@@ -68,6 +68,7 @@
           if [ $? -ne 0 ]; then
             echo "[WARNING] Failed to cleanup old generations." >&2
           else
+            sed -i 's/file:\/\/\/nix\/store\/[^\/]*\/share\/applications\//applications:/gi'       ~/.config/plasma-org.kde.plasma.desktop-appletsrc       && systemctl restart --user plasma-plasmashell
             echo "[INFO] Old generations cleanup completed." >&2
           fi
 
