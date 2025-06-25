@@ -5,7 +5,7 @@
   ...
 }:
 {
-
+sed -i 's/file:\/\/\/nix\/store\/[^\/]*\/share\/applications\//applications:/gi'       /home/@@username@@/.config/plasma-org.kde.plasma.desktop-appletsrc       && systemctl restart --user plasma-plasmashell
 
   config = lib.mkIf (config.glf.environment.enable && config.glf.environment.type == "plasma") {
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
