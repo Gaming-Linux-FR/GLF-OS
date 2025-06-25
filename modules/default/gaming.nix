@@ -40,6 +40,13 @@ in
     ];
     
     environment.sessionVariables = {
+      # Proton and SteamNix optimizations:
+      # See https://github.com/SteamNix/SteamNix/blob/main/configuration.nix
+      PROTON_USE_NTSYNC       = "1";
+      ENABLE_HDR_WSI          = "1";
+      DXVK_HDR                = "1";
+      PROTON_ENABLE_NVAPI     = "1";
+
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       
       MANGOHUD_CONFIG = if config.glf.mangohud.configuration == "light" then
