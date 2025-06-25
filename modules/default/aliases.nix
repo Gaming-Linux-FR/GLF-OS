@@ -24,8 +24,7 @@
       ];
       shellAliases = {
         glf-update = "sudo nix flake update --flake /etc/nixos && nh os boot /etc/nixos -H GLF-OS";
-        glf-fixkde = "sed -i 's/file:\/\/\/nix\/store\/[^\/]*\/share\/applications\//applications:/gi'       /home/@@username@@/.config/plasma-org.kde.plasma.desktop-appletsrc       && systemctl restart --user plasma-plasmashell
-"
+        glf-fixkde = "sed -i 's/file:\/\/\/nix\/store\/[^\/]*\/share\/applications\//applications:/gi'       /home/@@username@@/.config/plasma-org.kde.plasma.desktop-appletsrc       && systemctl restart --user plasma-plasmashell"
         glf-build = "nh os build /etc/nixos -H GLF-OS";
         glf-switch = "sudo nix flake update --flake /etc/nixos && nh os switch /etc/nixos -H GLF-OS";
         glf-history = "nix store diff-closures $(ls -d1v /nix/var/nix/profiles/system-*-link | tail -n 2)";
