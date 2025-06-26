@@ -58,8 +58,11 @@ in
       ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
       ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     '';
+  
+  #Activer udev pour oversteer
+    services.udev.packages = [ pkgs-unstable.oversteer ];
     
-    # Hardware support
+  # Hardware support
     hardware.fanatec.enable = true;
     hardware.new-lg4ff_vff.enable = true;
     hardware.steam-hardware.enable = true;
