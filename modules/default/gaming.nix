@@ -69,6 +69,9 @@ in
     hardware.xone.enable = true;
     hardware.xpadneo.enable = true;
     hardware.opentabletdriver.enable = true;
+    programs.steam.gamescopeSession.enable = true;
+    programs.gamemode.enable = true;
+
     
     # Gamescope configuration
     programs.gamescope = {
