@@ -12,22 +12,22 @@
       let
         rocmEnv = pkgs.symlinkJoin {
           name = "rocm-combined";
-          paths = with pkgs-unstable.rocmPackages; [
+           paths = with pkgs-unstable.rocmPackages; [
             rocblas
             hipblas
             clr
           ];
-        };
+         };
       in [
         "L+    /opt/rocm/hip  -    -    -      -    ${rocmEnv}"
-      ];
+       ];
 
     hardware.graphics = {
-      enable = true;
+     enable = true;
       extraPackages = with pkgs-unstable; [
         mesa.opencl
       ];
-    };
+     };
 
     environment.variables = {
       ROC_ENABLE_PRE_VEGA = "1";

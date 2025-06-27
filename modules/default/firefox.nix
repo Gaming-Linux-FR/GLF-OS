@@ -13,14 +13,14 @@
     programs.firefox = {
       enable = true;
       wrapperConfig.pipewireSupport = true;
-      languagePacks = [
+      languagePacks = if (config.i18n.defaultLocale == "fr_FR.UTF-8") then [
         "fr"
         "en-US"
-      ];
-      preferences = {
+      ] else [ ];
+      preferences = if (config.i18n.defaultLocale == "fr_FR.UTF-8") then {
         "intl.accept_languages" = "fr-fr,en-us,en";
         "intl.locale.requested" = "fr,en-US";
-      };
+      } else { };
     };
 
   };

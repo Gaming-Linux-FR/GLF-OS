@@ -19,11 +19,11 @@ in
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
-      kernelPackages = pkgs.linuxPackages_6_14;
+      kernelPackages = pkgs.linuxPackages_6_15;
       tmp.cleanOnBoot = true;
       supportedFilesystems.zfs = lib.mkForce false; # Force disable ZFS
       kernelParams =
-        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" ] else [ "nosplit_lock_mitigate" ];
+        if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" "nosplit_lock_mitigate" "clearcpuid=514" ] else [ "nosplit_lock_mitigate" ];
       plymouth = {
         enable = true;
         theme = "glfos";
@@ -34,6 +34,7 @@ in
         vm_vfs_cache_pressure = 50;
         vm_dirty_bytes = 268435456;
         "vm.page-cluster" = 0;
+        "vm.max_map_count" = 16777216;
         vm_dirty_background_bytes = 67108864;
         vm_dirty_writeback_centisecs = 1500;
         kernel_nmi_watchdog = 0;
