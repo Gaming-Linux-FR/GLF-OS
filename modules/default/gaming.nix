@@ -29,7 +29,7 @@ in
       winetricks
       joystickwake
       oversteer
-      linuxKernel.packages.linux_6_14.hid-tmff2
+      linuxKernel.packages.linux_6_12.hid-tmff2
       mesa
       glxinfo
     ];
