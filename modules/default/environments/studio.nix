@@ -8,6 +8,20 @@
 
 {
   config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
+    boot.extraModulePackages = [
+    (pkgs.linuxKernel.packages.linux_6_15.v4l2loopback.overrideAttrs
+      ({
+        version = "0.13.2-manual";
+        src = (pkgs.fetchFromGitHub {
+          owner = "umlaeute";
+          repo = "v4l2loopback";
+          rev = "v0.13.2";
+          hash = "sha256-rcwgOXnhRPTmNKUppupfe/2qNUBDUqVb3TeDbrP5pnU=";
+        });
+      })
+    )
+  ];
+
     systemd.tmpfiles.rules =
       let
         rocmEnv = pkgs.symlinkJoin {
