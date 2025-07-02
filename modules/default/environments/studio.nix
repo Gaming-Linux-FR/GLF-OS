@@ -12,7 +12,7 @@
       let
         rocmEnv = pkgs.symlinkJoin {
           name = "rocm-combined";
-           paths = with pkgs-unstable.rocmPackages; [
+           paths = with pkgs.rocmPackages; [
             rocblas
             hipblas
             clr
@@ -36,7 +36,7 @@
 
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
-        with pkgs-unstable; [
+        with pkgs; [
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
@@ -47,7 +47,7 @@
           freetube
         ]
       else
-        with pkgs-unstable; [
+        with pkgs; [
           blender-hip
           obs-studio
           obs-studio-plugins.obs-vkcapture
