@@ -1,0 +1,21 @@
+{
+  "lang_en": "English",
+  "lang_fr": "French",
+  "app_title": "Welcome",
+  "menu_home": "Home",
+  "menu_gaming": "Gaming",
+  "menu_studio": "Studio",
+  "menu_updates": "Updates",
+  "menu_diskManager": "Disk Management",
+  "menu_easyflatpak": "Software Center",
+  "menu_powerusers": "Advanced Users",
+  "menu_help": "Need help?",
+  "page_home_title": "Home",
+  "page_gaming_title": "Gaming-Oriented",
+  "page_studio_title": "Studio",
+  "page_updates_title": "Updates",
+  "page_diskmanager_title": "Disk Management",
+  "page_easyflatpak_title": "Software Center",
+  "page_help_title": "Need help?",
+  "bottom_show_window_next_time": "Show this window next time?"
+}

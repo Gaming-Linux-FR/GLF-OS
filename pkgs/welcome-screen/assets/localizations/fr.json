@@ -1,0 +1,21 @@
+{
+  "lang_en": "English",
+  "lang_fr": "Français",
+  "app_title": "Bienvenue",
+  "menu_home": "Accueil",
+  "menu_gaming": "Gaming",
+  "menu_studio": "Studio",
+  "menu_updates": "Mises à jour",
+  "menu_diskManager": "Gestion des disques",
+  "menu_easyflatpak": "Logithèque",
+  "menu_powerusers": "Utilisateurs avancés",
+  "menu_help": "Besoin d'aide ?",
+  "page_home_title": "Accueil",
+  "page_gaming_title": "Orientée Gaming",
+  "page_studio_title": "Studio",
+  "page_updates_title": "Mises à jour",
+  "page_diskmanager_title": "Gestion des disques",
+  "page_easyflatpak_title": "Logithèque",
+  "page_help_title": "Besoin d'aide ?",
+  "bottom_show_window_next_time": "Afficher au démarrage"
+}

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Name=Welcome screen
+Exec=glfos_welcome_screen %u
+Icon=glfosWelcomeScreen
+Categories=Utility;
