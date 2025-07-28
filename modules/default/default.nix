@@ -26,6 +26,7 @@
       ./glfos-mangohud-configuration.nix
       ./fanatec.nix
       ./new-lg4ff.nix
+      ./welcome.nix
     ];
  
 }
