@@ -6,11 +6,11 @@
 }:
 
 let
-  nix-disk-manager = pkgs.callPackage ../../pkgs/glfos-welcome-screen {};
+  nix-disk-manager = pkgs.callPackage ../../pkgs/welcome-screen {};
 in
 
 {
   environment.systemPackages = with pkgs; [
-      glfos-welcome-screen
+     welcome-screen
   ];
 }
