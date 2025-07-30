@@ -24,7 +24,7 @@
 
     hardware.graphics = {
      enable = true;
-      extraPackages = with pkgs-unstable; [
+      extraPackages = with pkgs; [
         mesa.opencl
       ];
      };
