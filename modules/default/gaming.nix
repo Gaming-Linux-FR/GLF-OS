@@ -30,7 +30,7 @@ in
       joystickwake
       oversteer
       linuxKernel.packages.linux_6_12.hid-tmff2
-      mesa
+      #mesa
       glxinfo
     ];
 
