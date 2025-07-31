@@ -24,26 +24,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Étape cruciale : On dit à Ruby de travailler DANS le dossier /docs
+      # 1. On installe Ruby, mais SANS installer les dépendances automatiquement
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
-          bundler-cache: true
+
+      # 2. On installe les dépendances manuellement DANS le bon dossier
+      - name: Install dependencies
+        run: bundle install
         working-directory: ./docs
 
       - name: Setup GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      # Étape cruciale : On construit le site DANS le dossier /docs
+      # 3. On construit le site, toujours en travaillant dans le bon dossier
       - name: Build Jekyll site
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
         working-directory: ./docs
 
-      # On charge le site construit qui se trouve dans docs/_site
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
