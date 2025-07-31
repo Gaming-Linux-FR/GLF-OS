@@ -3,7 +3,7 @@ name: Deploy Jekyll site to Pages
 on:
   push:
     branches:
-      - dev
+      - stable
     paths:
       - 'docs/**'
   workflow_dispatch:
@@ -24,29 +24,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Installe Ruby ET les dépendances du Gemfile en une seule étape
+      # Étape cruciale : On dit à Ruby de travailler DANS le dossier /docs
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
-          bundler-cache: true 
+          bundler-cache: true
+        working-directory: ./docs
 
-      # Configure l'URL de base pour GitHub Pages
       - name: Setup GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      # Construit le site depuis la racine du projet
+      # Étape cruciale : On construit le site DANS le dossier /docs
       - name: Build Jekyll site
-        run: bundle exec jekyll build --source ./docs --destination ./docs/_site --baseurl "${{ steps.pages.outputs.base_path }}"
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+        working-directory: ./docs
 
-      # Met en ligne l'artefact construit
+      # On charge le site construit qui se trouve dans docs/_site
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/_site/
+          path: 'docs/_site'
 
   deploy:
     environment:
