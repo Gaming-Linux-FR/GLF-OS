@@ -45,9 +45,10 @@ in
       configurationName = "GLF-OS";
       splashImage = ../../assets/wallpaper/dark.jpg;
       default = "saved";
+      efiInstallAsRemovable = "false";
+      efiSupport = true;
       enable = true;
       version = 2;
-      efiSupport = true;
       device = "nodev";
       extraInstallCommands = ''
         ${pkgs.coreutils}/bin/mkdir -p /boot/efi/EFI/glf-os
