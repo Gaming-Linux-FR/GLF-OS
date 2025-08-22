@@ -48,7 +48,6 @@ in
       efiInstallAsRemovable = false;
       efiSupport = true;
       enable = true;
-      version = 2;
       device = "nodev";
       extraInstallCommands = ''
         ${pkgs.coreutils}/bin/mkdir -p /boot/efi/EFI/glf-os
