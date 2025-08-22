@@ -39,9 +39,23 @@ in
       ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}="bfq"
     '';
 
-    boot.loader.grub.configurationName = "GLF-OS";
-    boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
-    boot.loader.grub.default = "saved";
+    boot.loader = {
+      efi.canTouchEfiVariables = true;
+      grub = {
+      configurationName = "GLF-OS";
+      splashImage = ../../assets/wallpaper/dark.jpg;
+      default = "saved";
+      enable = true;
+      version = 2;
+      efiSupport = true;
+      device = "nodev";
+      extraInstallCommands = ''
+        ${pkgs.coreutils}/bin/mkdir -p /boot/efi/EFI/glf-os
+        ${pkgs.coreutils}/bin/cp -f /boot/efi/EFI/NixOS/grubx64.efi /boot/efi/EFI/glf-os/
+        '';
+  };
+};
+
     boot = {
       kernelPackages = pkgs.linuxPackages;
       tmp.cleanOnBoot = true;
