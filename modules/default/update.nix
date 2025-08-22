@@ -61,13 +61,13 @@ FLAKE_LOCK_PATH="/etc/nixos/flake.lock"
 INITIAL_HASH=$(${pkgs.coreutils}/bin/sha256sum "$FLAKE_LOCK_PATH" | ${pkgs.gawk}/bin/awk '{print $1}')
 
 # Check network status
-if ! ${pkgs.networkmanager}/bin/nm-online -q; then
+if ! ${config.networking.networkmanager.package}/bin/nm-online -q; then
   echo "[ERROR] Network is not yet online" >&2
   exit 1
 fi
 
 echo "[INFO] Updating Flatpaks..." >&2
-${pkgs.flatpak}/bin/flatpak update -y
+${config.services.flatpak.package}/bin/flatpak update -y
 if [ $? -ne 0 ]; then
   echo "[ERROR] Flatpak update failed" >&2
   exit 1
@@ -75,7 +75,7 @@ fi
 echo "[INFO] Flatpak update completed successfully." >&2
 
 echo "[INFO] Starting flake update for $FLAKE_PATH" >&2
-${pkgs.nix}/bin/nix flake update --flake $FLAKE_PATH
+${config.nix.package}/bin/nix flake update --flake $FLAKE_PATH
 if [ $? -ne 0 ]; then
   echo "[ERROR] Flake update failed for $FLAKE_PATH" >&2
   exit 1
@@ -94,7 +94,7 @@ if [ "$INITIAL_HASH" != "$UPDATED_HASH" ]; then
 
   # On lance le clean
   echo "[INFO] Cleaning up old system generations..." >&2
-  ${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 2d
+  ${config.nix.package}/bin/nix-collect-garbage --delete-older-than 2d
   if [ $? -ne 0 ]; then
     echo "[WARNING] Failed to cleanup old generations." >&2
   else
