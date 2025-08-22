@@ -50,13 +50,13 @@ in
       enable = true;
       device = "nodev";
       extraInstallCommands = ''
-        ${pkgs.coreutils}/bin/mkdir -p /boot/efi/EFI/glf-os
-        ${pkgs.coreutils}/bin/cp -f /boot/efi/EFI/NixOS/grubx64.efi /boot/efi/EFI/glf-os/
-        disk=$(${pkgs.util-linux}/bin/findmnt -no SOURCE /boot/efi | sed 's/[0-9]*$//')
-        part=$(${pkgs.util-linux}/bin/findmnt -no SOURCE /boot/efi | grep -o '[0-9]*$')
-        ${pkgs.efibootmgr}/bin/efibootmgr -c -d "$disk" -p "$part" \
-          -L "GLF-OS" -l '\EFI\glf-os\grubx64.efi' || true
-        '';
+      # Installer GRUB explicitement avec ton ID EFI
+      ${pkgs.grub2}/bin/grub-install \
+        --target=x86_64-efi \
+        --efi-directory=/boot/efi \
+        --bootloader-id=glf-os \
+        --recheck
+      '';
   };
 };
 
