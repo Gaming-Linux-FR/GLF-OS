@@ -60,7 +60,6 @@ in
         --target=x86_64-efi \
         --efi-directory=/boot/efi \
         --bootloader-id=glf-os \
-        --directory=${pkgs.grub2}/lib/grub/x86_64-efi \
         --force \
         --recheck
       '';
