@@ -38,6 +38,7 @@ in
 
     environment.systemPackages = with pkgs; [
       grub2_efi
+      efibootmgr
     ];
 
     services.udev.extraRules = ''
