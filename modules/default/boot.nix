@@ -5,6 +5,11 @@
   pkgs-unstable,
   ...
 }:
+
+environment.systemPackages = with pkgs; [
+  grub2_efi
+];
+
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 in
