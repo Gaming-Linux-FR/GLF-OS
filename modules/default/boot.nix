@@ -6,7 +6,7 @@
   ...
 }:
 
-environment.systemPackages = with pkgs; [
+environment.systemPackages = with pkgs-unstable; [
   grub2_efi
 ];
 
