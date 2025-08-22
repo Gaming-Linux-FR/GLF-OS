@@ -45,7 +45,7 @@ in
       configurationName = "GLF-OS";
       splashImage = ../../assets/wallpaper/dark.jpg;
       default = "saved";
-      efiInstallAsRemovable = "false";
+      efiInstallAsRemovable = false;
       efiSupport = true;
       enable = true;
       version = 2;
