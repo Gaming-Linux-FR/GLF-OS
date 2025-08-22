@@ -39,6 +39,7 @@ in
       ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}="bfq"
     '';
 
+    boot.loader.grub.efiBootloaderId = "GLF-OS"
     boot.loader.grub.splashImage = ../../assets/wallpaper/dark.jpg;
     boot.loader.grub.default = "saved";
     boot = {
