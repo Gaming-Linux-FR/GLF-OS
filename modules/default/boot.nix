@@ -6,10 +6,6 @@
   ...
 }:
 
-environment.systemPackages = with pkgs-unstable; [
-  grub2_efi
-];
-
 let
   plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
 in
@@ -38,6 +34,10 @@ in
           };
         };
       })
+    ];
+
+    environment.systemPackages = with pkgs; [
+      grub2_efi
     ];
 
     services.udev.extraRules = ''
