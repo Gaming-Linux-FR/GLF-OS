@@ -51,7 +51,7 @@ in
       configurationName = "GLF-OS";
       splashImage = ../../assets/wallpaper/dark.jpg;
       default = "saved";
-      efiInstallAsRemovable = false;
+      efiInstallAsRemovable = true;
       efiSupport = true;
       enable = true;
       device = "nodev";
@@ -63,6 +63,18 @@ in
         --bootloader-id=glf-os \
         --force \
         --recheck
+
+      # Détection automatique du disque et de la partition de l'ESP
+        esp_dev=$(findmnt -no SOURCE /boot/efi)
+        disk=/dev/$(lsblk -no pkname $esp_dev)
+        part=$(lsblk -no partn $esp_dev)
+
+      # Création automatique de l'entrée NVRAM
+      efibootmgr --create \
+        --disk /dev/$disk \
+        --part $part \
+        --loader /EFI/glf-os/grubx64.efi \
+        --label "GLF-OS" || true
       '';
   };
 };
