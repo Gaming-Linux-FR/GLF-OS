@@ -51,7 +51,7 @@ in
       configurationName = "GLF-OS";
       splashImage = ../../assets/wallpaper/dark.jpg;
       default = "saved";
-      efiInstallAsRemovable = true;
+      efiInstallAsRemovable = false;
       efiSupport = true;
       enable = true;
       device = "nodev";
