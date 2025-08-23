@@ -76,6 +76,11 @@ in
         --part $part \
         --loader /EFI/glf-os/grubx64.efi \
         --label "GLF-OS" || true
+
+      # Add BOOTX64.EFI for safety
+      #mkdir -p /boot/efi/EFI/BOOT
+      #cp /boot/efi/EFI/glf-os/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI || true
+
       '';
   };
 };
