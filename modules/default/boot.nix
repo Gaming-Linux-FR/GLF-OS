@@ -60,7 +60,7 @@ in
       # Installer GRUB explicitement avec ton ID EFI
       ${pkgs.grub2_efi}/bin/grub-install \
         --target=x86_64-efi \
-        --efi-directory=/boot/efi \
+        --efi-directory=/boot \
         --bootloader-id=GLF-OS \
         --force \
         --recheck
@@ -70,7 +70,7 @@ in
       disk=/dev/$(lsblk -no pkname $esp_dev)
       part=$(basename $esp_dev | sed 's/[^0-9]*//g')
 
-      echo "EFI disk=$$disk part=$$part (esp_dev=$$esp_dev)"
+      echo "EFI disk=$disk part=$part (esp_dev=$esp_dev)"
 
       if ! efibootmgr | grep -iq "glf-os"; then
         efibootmgr --create \
