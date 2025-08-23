@@ -66,7 +66,7 @@ in
         --recheck
 
       # Création automatique de l'entrée NVRAM
-      esp_dev=$(findmnt -no SOURCE /boot/efi)
+      esp_dev=$(findmnt -no SOURCE /boot)
       disk=/dev/$(lsblk -no pkname $esp_dev)
       part=$(basename $esp_dev | sed 's/[^0-9]*//g')
 
