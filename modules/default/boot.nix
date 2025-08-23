@@ -61,7 +61,7 @@ in
       ${pkgs.grub2_efi}/bin/grub-install \
         --target=x86_64-efi \
         --efi-directory=/boot/efi \
-        --bootloader-id=glf-os \
+        --bootloader-id=GLF-OS \
         --force \
         --recheck
 
@@ -72,11 +72,13 @@ in
 
       echo "EFI disk=$$disk part=$$part (esp_dev=$$esp_dev)"
 
-      efibootmgr --create \
+      if ! efibootmgr | grep -iq "glf-os"; then
+        efibootmgr --create \
         --disk $disk \
         --part $part \
         --loader /EFI/glf-os/grubx64.efi \
         --label "GLF-OS" || true
+      fi
 
       # Add BOOTX64.EFI for safety
       #mkdir -p /boot/efi/EFI/BOOT
