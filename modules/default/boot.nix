@@ -65,15 +65,10 @@ in
         --force \
         --recheck
 
-      # Détection automatique du disque et de la partition de l'ESP
-        esp_dev=$(findmnt -no SOURCE /boot/efi)
-        disk=/dev/$(lsblk -no pkname $esp_dev)
-        part=$(lsblk -no partn $esp_dev)
-
       # Création automatique de l'entrée NVRAM
       efibootmgr --create \
-        --disk /dev/$disk \
-        --part $part \
+        --disk $(lsblk -no pkname $(df /boot/efi | tail -1 | awk '{print $1}') | sed 's|^|/dev/|') \
+        --part $(lsblk -no partn $(df /boot/efi | tail -1 | awk '{print $1}')) \
         --loader /EFI/glf-os/grubx64.efi \
         --label "GLF-OS" || true
 
