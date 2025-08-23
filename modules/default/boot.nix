@@ -66,9 +66,15 @@ in
         --recheck
 
       # Création automatique de l'entrée NVRAM
+      esp_dev=$(findmnt -no SOURCE /boot/efi)
+      disk=/dev/$(lsblk -no pkname $esp_dev)
+      part=$(basename $esp_dev | sed 's/[^0-9]*//g')
+
+      echo "EFI disk=$$disk part=$$part (esp_dev=$$esp_dev)"
+
       efibootmgr --create \
-        --disk $(lsblk -no pkname $(df /boot/efi | tail -1 | awk '{print $1}') | sed 's|^|/dev/|') \
-        --part $(lsblk -no partn $(df /boot/efi | tail -1 | awk '{print $1}')) \
+        --disk $disk \
+        --part $part \
         --loader /EFI/glf-os/grubx64.efi \
         --label "GLF-OS" || true
 
