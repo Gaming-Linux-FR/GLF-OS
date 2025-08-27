@@ -77,7 +77,10 @@ stdenvNoCC.mkDerivation rec {
 
       makeWrapper $out/glfos_welcome_screen $out/bin/glfos-welcome-screen \
       --set LD_LIBRARY_PATH "${lib.makeLibraryPath buildInputs}:$out/lib"
-  
+
+      mkdir -p $out/share/icons
+      cp data/flutter_assets/assets/images/512x512.png $out/share/icons/glfos-welcome-screen.png
+
       mkdir -p $out/etc/xdg/autostart
       cp ${desktopFile}/share/applications/glfos-welcome-screen.desktop $out/etc/xdg/autostart/glfos-welcome-screen.desktop
       mkdir -p $out/share/applications
