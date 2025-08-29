@@ -29,7 +29,8 @@
 
 #changement de flake.nix
 rm /etc/nixos/flake.nix
- cat <<EOF > /etc/nixos/flake.nix
+cat <<< '
+
 {
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
   
@@ -79,8 +80,7 @@ rm /etc/nixos/flake.nix
       };
     };
 }
-
-EOF
+fi' > /etc/nixos/flake.nix
 
 _notify() {
 lang="''${LANG:-en}"
