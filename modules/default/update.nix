@@ -79,6 +79,7 @@ rm /etc/nixos/flake.nix
       };
     };
 }
+
 EOF
 
 _notify() {
