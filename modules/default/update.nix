@@ -28,9 +28,11 @@
 #!${pkgs.bash}/bin/bash
 
 #changement de flake.nix
-rm /etc/nixos/flake.nix
+# Suppression de l'ancien flake.nix
+rm -f /etc/nixos/flake.nix
 
-echo "
+# Création du nouveau flake.nix
+cat <<'EOF' > /etc/nixos/flake.nix
 {
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
   
@@ -79,7 +81,8 @@ echo "
         };
       };
     };
-}" > /etc/nixos/flake.nix
+}
+EOF
 
 
 
