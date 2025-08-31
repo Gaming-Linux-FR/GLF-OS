@@ -37,7 +37,7 @@ cat <<'EOF' > /etc/nixos/flake.nix
   description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
   
   inputs = {
-    glf-channels.url = "git+https://framagit.org/gaming-linux-fr/glf-os/channels-glfos/testing-channels.git"; #Repos responsable de la bascule d'une stable à une autre
+    glf-channels.url = "git+https://framagit.org/gaming-linux-fr/glf-os/channels-glfos/testing-channels.git?ref=main"; #Repos responsable de la bascule d'une stable à une autre
     nixpkgs.follows = "glf-channels/nixpkgs";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     glf.url = "git+https://framagit.org/gaming-linux-fr/glf-os/glf-os.git?ref=testing"; # Référence le flake racine
