@@ -26,7 +26,69 @@
     environment.etc."glfos/update.sh" = {
       text = ''
 #!${pkgs.bash}/bin/bash
-        
+
+#changement de flake.nix
+# Suppression de l'ancien flake.nix
+rm -f /etc/nixos/flake.nix
+
+# Création du nouveau flake.nix
+cat <<'EOF' > /etc/nixos/flake.nix
+{
+  description = "GLF-OS ISO Configuration - Installer Evaluation Flake";
+  
+  inputs = {
+    glf-channels.url = "git+https://framagit.org/gaming-linux-fr/glf-os/channels-glfos/testing-channels.git?ref=main"; #Repos responsable de la bascule d'une stable à une autre
+    nixpkgs.follows = "glf-channels/nixpkgs";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    glf.url = "git+https://framagit.org/gaming-linux-fr/glf-os/glf-os.git?ref=testing"; # Référence le flake racine
+  };
+
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-unstable,
+      glf,
+      self,
+      ...
+    }: 
+
+    let
+      system = "x86_64-linux"; 
+
+      # Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
+      pkgsStable = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      # Configuration pour le nixpkgs unstable (sera passé en argument spécial)
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations."GLF-OS" = nixpkgs.lib.nixosSystem {
+        inherit system; # Maintenant 'system' est défini
+        pkgs = pkgsStable; 
+        modules = [
+          ./configuration.nix 
+          glf.nixosModules.default 
+        ];
+
+        specialArgs = {
+          pkgs-unstable = pkgsUnstable; 
+        };
+      };
+    };
+}
+EOF
+
+
+
+
+
+
 _notify() {
 lang="''${LANG:-en}"
 case "''${lang%%_*}" in
