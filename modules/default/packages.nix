@@ -33,8 +33,6 @@
       binfmt = true;
     };
 
-    services.hardware.openrgb.enable = true;
-
     environment.systemPackages = with pkgs; [
       # APP
       pciutils
@@ -75,7 +73,6 @@
       hyphen
       texlivePackages.hyphen-french
     ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
-      openrgb-with-all-plugins
       btop-rocm
       showtime
       discord
