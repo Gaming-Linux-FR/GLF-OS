@@ -26,6 +26,22 @@ in
       })
       
       # Gaming tools
+
+      (pkgs.writers.writeBashBin "gfn" { } ''
+          #!/usr/bin/env bash
+          # Geforce NOW client for NixOS unstable
+          # See https://blogs.nvidia.com/blog/geforce-now-thursday-linux/
+          # Prerequisite in NixOS:  services.flatpak.enable = true; # this line should be in your .nix configuration
+          GFN_ID="com.nvidia.geforcenow"
+          GEFORCENOW_URL="https://international.download.nvidia.com/GFNLinux/flatpak/geforcenow.flatpakrepo"
+          flatpak update
+          flatpak install -y --user flathub org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08
+          flatpak remote-add --user  --if-not-exists GeForceNOW $GEFORCENOW_URL
+          flatpak install -y --user GeForceNOW $GFN_ID
+          flatpak run $GFN_ID
+          # If you are on Wayland and the Window doesn't open: flatpak override --user --nosocket=wayland com.nvidia.geforcenow, then launch again.
+      '')
+
       glxinfo          # Show hardware information
       heroic           # Native GOG, Epic, and Amazon Games Launcher for Linux, Windows and Mac
       joystickwake     # Joystick-aware screen waker
